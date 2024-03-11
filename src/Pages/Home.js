@@ -1,7 +1,7 @@
 import React from "react";
-import HeroSection from "./Components/Home/HeroSection";
+import HeroSection from "../Components/Home/HeroSection";
 
-Home = () => {
+const Home = () => {
    return (
     <>
     <HeroSection />
