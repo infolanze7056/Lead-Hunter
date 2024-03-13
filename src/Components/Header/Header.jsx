@@ -34,7 +34,7 @@ function Header() {
 
 
   return (
-    <div className="">
+    <div className="font-family">
       <nav class="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4">
         <div class=" flex flex-wrap items-center justify-between mx-auto">
           <div>
