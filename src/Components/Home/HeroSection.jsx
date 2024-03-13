@@ -26,7 +26,7 @@ const HeroSection = () => {
                         </div>
                     </div>
                     <div className="lg:px-5 lg:order-2 order-1">
-                        <div><img className="w-[640px] mx-auto filter grayscale" src={img1} alt="" /></div>
+                        <div><img className="w-[640px] mx-auto" src={img1} alt="" /></div>
                     </div>
                 </div>
             </div>
