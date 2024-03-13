@@ -4,9 +4,9 @@ import "./Home.css";
 
 const HeroSection = () => {
     return (
-        <div className="lg:px-20 md:px-7 px-4 py-10 font-family bg-[--main-color]">
+        <div className="lg:px-20 md:px-7 px-5 py-10 font-family bg-[--main-color]">
                 <div className="grid lg:grid-cols-2 items-center">
-                    <div className="lg:px-5 px-0 lg:order-1 order-2">
+                    <div className="lg:order-1 order-2">
                         <div className="w-max bg-gray-200 p-2 px-3 rounded-lg uppercase shadow-md">Lead Generation</div>
                         <div className="text-6xl font-semibold pt-2">Lead Subscription</div>
                         <div className="text-lg py-5">
@@ -24,7 +24,7 @@ const HeroSection = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="lg:px-5 lg:order-2 order-1">
+                    <div className="lg:order-2 order-1">
                         <div><img className="w-[640px] mx-auto" src={img1} alt="" /></div>
                     </div>
                 </div>
