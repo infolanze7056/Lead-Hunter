@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FaBars } from "react-icons/fa6";
 import { AiOutlineClose } from "react-icons/ai";
@@ -14,36 +14,36 @@ function Header() {
     setIsOpen(true);
   };
 
-  // const [isSticky, setIsSticky] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 70) {
-  //       setIsSticky(true);
-  //     } else {
-  //       setIsSticky(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 70) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
 
-  //   window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
 
   return (
-    <div className="font-family">
-      <nav class="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4">
+    <div className={isSticky ? 'Header-p1 Sticky-p1' : 'Header-p1'}>
+      <nav class="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4 font-family">
         <div class=" flex flex-wrap items-center justify-between mx-auto">
-          <div>
+          <div className="z-40">
           <img className="w-40 lg:w-44 md:w-40 z-40 filter grayscale" src={Logo} alt="nishant" />
           </div>
           <div class="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
             <button
               type="button"
-              class=" lg:px-8 md:px-8 px-6 bg-white hover:bg-gray-900 text-black outline outline-2 hover:text-white outline-gray-900 font-medium rounded-md text-sm py-2 text-center "
+              class=" lg:px-8 md:px-8 px-6 z-40 bg-white hover:bg-gray-900 text-black outline outline-2 hover:text-white outline-gray-900 font-medium rounded-md text-sm py-2 text-center "
             >
               Sign In
             </button>
@@ -64,10 +64,11 @@ function Header() {
             </button>
           </div>
           <div
-            class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
+            className={`nav-menu lg:flex lg:pb-0 lg:py-0 md:py-7 py-7 lg:items-center text-base absolute  lg:static lg:z-auto z-30 right-0 w-full lg:w-auto md:pl-0 transition-all duration-500 ease-in 
+          ${isOpen ? "top-[-600px]" : "top-[29px]"}` }
             id="navbar-sticky"
           >
-            <ul class="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium border border-gray-100 rounded-lg bg-gray-50 lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul class="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium rounded-lg lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li className="text-gray-400">
               <NavLink
                 to="/"
