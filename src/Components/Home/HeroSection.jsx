@@ -25,7 +25,7 @@ const HeroSection = () => {
                         </div>
                     </div>
                     <div className="lg:order-2 order-1">
-                        <div><img className="w-[640px] mx-auto" src={img1} alt="" /></div>
+                        <div><img className="mx-auto" src={img1} alt="" /></div>
                     </div>
                 </div>
         </div>
