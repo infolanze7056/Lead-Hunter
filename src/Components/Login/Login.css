@@ -31,6 +31,20 @@ input {
    outline: none!important;
 }
 
+.button_1{
+   background-color: white;
+   color: black !important;
+   border: 1.5px solid black !important;
+   border-radius: 4px !important;
+   font-weight: 550 !important;
+}
+.button_1:hover{
+   background-color: black !important;
+   color: white !important;
+   border: 1.5px solid black !important;
+   border-radius: 4px !important;
+   font-weight: 550 !important;
+}
 h1 {
    text-align: center;
    text-transform: uppercase;
@@ -202,7 +216,7 @@ section#formHolder {
    border-color: var(--primaryColor) !important;
 }
 
-.form form .first {
+.form form label {
    font-size: 12px;
    font-weight: 400;
    text-transform: uppercase;
@@ -213,12 +227,12 @@ section#formHolder {
    z-index: -1;
 }
 
-.form form .first.active {
+.form form label.active {
    transform: translateY(10px);
    font-size: 10px;
 }
 
-.form form .first.fontSwitch {
+.form form label.fontSwitch {
    font-family: var(--mainFont) !important;
    font-weight: 600;
 }

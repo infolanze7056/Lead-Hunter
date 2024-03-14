@@ -121,9 +121,9 @@ function Login() {
                     )}
                   </div>
                   <div className="CTA">
-                    <input type="submit" value="Login" />
+                    <input className="button_1" type="submit" value="Login" />
                     <a href="#" className="switch" onClick={handleSwitchForm}>
-                      I'm New
+                      Registration?
                     </a>
                   </div>
                 </form>
@@ -203,9 +203,9 @@ function Login() {
                     )}
                   </div>
                   <div className="CTA">
-                    <input type="submit" value="Signup Now" id="submit" />
+                    <input type="submit" className="button_1" value="Sign Up" id="submit" />
                     <a href="#" className="switch" onClick={handleSwitchForm}>
-                      I have an account
+                      Login
                     </a>
                   </div>
                 </form>
