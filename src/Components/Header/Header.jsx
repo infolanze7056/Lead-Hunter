@@ -45,7 +45,14 @@ function Header() {
               type="button"
               class=" lg:px-8 md:px-8 px-6 z-40 bg-white hover:bg-gray-900 text-black outline outline-2 hover:text-white outline-gray-900 font-medium rounded-md text-sm py-2 text-center "
             >
-              Sign In
+              <NavLink to="/login" activeClassName="active"
+                id="0"
+                onClick={(e) => handleNavSelected(e)}
+                className={
+                  isActive === "0"
+                    ? "active  hover:text-white  cursor-pointer "
+                    : "  hover:text-white  cursor-pointer "
+                }>Sign In</NavLink>
             </button>
             <button
               data-collapse-toggle="navbar-sticky"
