@@ -35,7 +35,7 @@ function Header() {
 
   return (
     <div className={isSticky ? 'Header-p1 Sticky-p1' : 'Header-p1'}>
-      <nav class="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4 font-family">
+      <nav class="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b">
         <div class=" flex flex-wrap items-center justify-between mx-auto">
           <div className="z-40">
           <img className="w-40 lg:w-44 md:w-40 z-40 filter grayscale" src={Logo} alt="nishant" />

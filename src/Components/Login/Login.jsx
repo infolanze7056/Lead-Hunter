@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
+import LoginImg from "../../Images/login-img.png";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -14,22 +15,25 @@ function Login() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === "username") {
-      setUsername(value);
-      if (value.length === 0 || (value.length > 1 && value.length <= 6)) {
-        setUsernameError(true);
-      } else {
-        setUsernameError(false);
-      }
-    } else if (name === "email") {
-      setEmail(value);
-      setEmailError(value.length === 0);
-    } else if (name === "password") {
-      setPassword(value);
-      setPasswordError(value.length < 8);
-    } else if (name === "passwordConfirm") {
-      setPasswordConfirm(value);
-      setPasswordConfirmError(value !== password);
+    switch (name) {
+      case "username":
+        setUsername(value);
+        setUsernameError(value.length === 0 || value.length <= 6);
+        break;
+      case "email":
+        setEmail(value);
+        setEmailError(value.length === 0);
+        break;
+      case "password":
+        setPassword(value);
+        setPasswordError(value.length < 8);
+        break;
+      case "passwordConfirm":
+        setPasswordConfirm(value);
+        setPasswordConfirmError(value !== password);
+        break;
+      default:
+        break;
     }
   };
 
@@ -37,8 +41,12 @@ function Login() {
     e.preventDefault();
     if (usernameError || emailError || passwordError || passwordConfirmError) {
       // Handle form errors
+      if (!username) setUsernameError(true);
+      if (!email) setEmailError(true);
+      if (!password) setPasswordError(true);
+      if (!passwordConfirm) setPasswordConfirmError(true);
       return;
-    }
+    } else {
     // Form submission logic
     setIsLoginForm(false);
     setTimeout(() => {
@@ -46,47 +54,40 @@ function Login() {
       console.log("Form submitted successfully");
     }, 1500);
   };
+};
 
   const handleSwitchForm = () => {
     setIsLoginForm(!isLoginForm);
-  };
-
-  const handleProfileClick = () => {
-    window.location.reload(true);
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setPasswordConfirm("");
+    setUsernameError(false);
+    setEmailError(false);
+    setPasswordError(false);
+    setPasswordConfirmError(false);
   };
 
 
 
   return (
-    <div className="">
+    <div className="  bg-[--main-color]">
       <div className="container mx-auto font-family">
         <section id="formHolder">
           <div className="grid lg:grid-cols-2 md:grid-cols-1">
             {/* Brand Box */}
             <div className=" brand">
-              <a href="#" className="logo">
-                MR <span>.</span>
-              </a>
-              <div className="heading">
-                <h2>Marina</h2>
-                <p>Your Right Choice</p>
+              <div className="text-center lg:pt-20 pt-5 pb-5">
+                  <div className="text-4xl">Welcome to the Lead Hunter</div>
+                  <div><img className="w-72 mx-auto" src={LoginImg} alt="img" /></div>
+                  <div className="text-sm">Login / Registration</div>
               </div>
-              {isLoginForm ? null : (
-                <div className="success-msg">
-                  <p>Great! You are one of our members now</p>
-                  <a href="#" className="profile" onClick={handleProfileClick}>
-                    Your Profile
-                  </a>
-                </div>
-              )}
             </div>
 
             {/* Form Box */}
             <div className="form">
               {/* Login Form */}
-              <div
-                className={`login form-peice ${isLoginForm ? "switched" : ""}`}
-              >
+              <div className={`login form-peice ${isLoginForm ? "switched" : ""}`} >
                 <form className="login-form" onSubmit={handleFormSubmit}>
                   <div className="form-group">
                     <label htmlFor="loginemail">Email Address</label>
@@ -122,11 +123,13 @@ function Login() {
                   </div>
                   <div className="CTA">
                     <input className="button_1" type="submit" value="Login" />
-                    <a href="#" className="switch" onClick={handleSwitchForm}>
-                      Registration?
-                    </a>
+                    <div className="text-sm pt-2">Don't have an account? <a href="#" className="switch" onClick={handleSwitchForm}>
+                      Sign Up
+                    </a></div>
+                    
                   </div>
                 </form>
+                
               </div>
 
               {/* Signup Form */}
@@ -142,11 +145,12 @@ function Login() {
                       id="name"
                       value={username}
                       onChange={handleInputChange}
+                     //  onFocus={handleFocus}
                       className="name"
                     />
                     {usernameError && (
                       <span className="error">
-                        Please type your full name (at least 6 characters)
+                        Please type your full name
                       </span>
                     )}
                   </div>
@@ -204,9 +208,9 @@ function Login() {
                   </div>
                   <div className="CTA">
                     <input type="submit" className="button_1" value="Sign Up" id="submit" />
-                    <a href="#" className="switch" onClick={handleSwitchForm}>
+                    <div className="text-sm pt-2">Already have an account? <a href="#" className="switch" onClick={handleSwitchForm}>
                       Login
-                    </a>
+                    </a></div>
                   </div>
                 </form>
               </div>
