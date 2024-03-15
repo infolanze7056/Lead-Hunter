@@ -245,7 +245,7 @@ section#formHolder {
    color: #f95959;
  }
 
- @media (max-width: 850px) {
+ @media (max-width: 1023px) {
    .container {
      overflow: hidden;
    }
