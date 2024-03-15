@@ -1,7 +1,8 @@
 import './App.css';
+import React from 'react';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Pages/Home';
 import About from './Pages/About';
 import Service from './Pages/Service';
@@ -12,19 +13,34 @@ import Dashboard from './Components/Dashboard/Dashboard';
 function App() {
   return (
     <div>
-        <BrowserRouter>
-          <Header />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path='/service' element={<Service />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path='/login' element={<Login />}  />
-              <Route path='/dashboard' element={<Dashboard />} />
-            </Routes>
+        <BrowserRouter> 
+        <AppContent />
         </BrowserRouter>
 
-      <Footer />
+    </div>
+  );
+}
+
+function AppContent() {
+  // Get the current location
+  const location = useLocation();
+
+  // Check if the current location matches the Dashboard route
+  const isDashboardPage = location.pathname === '/dashboard';
+
+  return (
+    <div>
+      {/* Conditionally render Header and Footer based on the route */}
+      {!isDashboardPage && <Header />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path='/service' element={<Service />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+      </Routes>
+      {!isDashboardPage && <Footer />}
     </div>
   );
 }

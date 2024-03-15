@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
+import DashNav from './DashNav';
+import Leads from './Leads/Leads';
 
 function Dashboard() {
   return (
     <div>
-        <div>
-            dashboard
-        </div>
+        <DashNav />
+        <Leads />
     </div>
   )
 }
