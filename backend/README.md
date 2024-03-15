@@ -1,4 +1,5 @@
 npm install
+
 nodemon server.js
 
 1) Register API (create new email password to signup)
