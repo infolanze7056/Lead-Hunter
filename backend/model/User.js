@@ -27,11 +27,6 @@ const UserSchema = new Mongoose.Schema({
     match: /^[6-9]\d{9}$/,
     required: true,
   },
-  role: {
-    type: String,
-    default: "Basic",
-    required: true,
-  },
 })
 
 const User = Mongoose.model("user", UserSchema);
