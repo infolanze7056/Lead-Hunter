@@ -1,157 +1,213 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import LoginImg from "../../Images/login-img.png";
+import axios from "axios";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  const notifySuccess = (message) => toast.success(message);
+  const notifyError = (message) => toast.error(message);
+
+  // State variables for login form
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginEmailError, setLoginEmailError] = useState(false);
+  const [loginPasswordError, setLoginPasswordError] = useState(false);
+
+  // State variables for signup form
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [usernameError, setUsernameError] = useState(true);
-  const [emailError, setEmailError] = useState(true);
-  const [passwordError, setPasswordError] = useState(true);
-  const [passwordConfirmError, setPasswordConfirmError] = useState(true);
+  const [phonenumber, setPhoneNumber] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [phonenumberError, setPhonenumberError] = useState(false);
+  const [signupPasswordError, setSignupPasswordError] = useState(false);
   const [isLoginForm, setIsLoginForm] = useState(false);
 
-  const handleInputChange = (e) => {
+  const handleLoginInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "loginEmail") {
+      setLoginEmail(value);
+      setLoginEmailError(value.length === 0);
+    } else if (name === "loginPassword") {
+      setLoginPassword(value);
+      setLoginPasswordError(value.length === 0);
+    }
+  };
+
+  const handleSignupInputChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
-      case "username":
-        setUsername(value);
-        setUsernameError(value.length === 0 || value.length <= 6);
+      case "name":
+        setName(value);
+        setNameError(value.length === 0 || value.length <= 6);
         break;
       case "email":
         setEmail(value);
         setEmailError(value.length === 0);
         break;
-      case "password":
-        setPassword(value);
-        setPasswordError(value.length < 8);
+      case "phonenumber":
+        setPhoneNumber(value);
+        setPhonenumberError(value.length === 0 || value.length <= 10);
         break;
-      case "passwordConfirm":
-        setPasswordConfirm(value);
-        setPasswordConfirmError(value !== password);
+      case "signupPassword":
+        setSignupPassword(value);
+        setSignupPasswordError(value.length <= 6);
         break;
       default:
         break;
     }
   };
 
-  const handleFormSubmit = (e) => {
+  const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
-    if (usernameError || emailError || passwordError || passwordConfirmError) {
-      // Handle form errors
-      if (!username) setUsernameError(true);
-      if (!email) setEmailError(true);
-      if (!password) setPasswordError(true);
-      if (!passwordConfirm) setPasswordConfirmError(true);
+    // Validation for login form fields
+    if (!loginEmail || !loginPassword) {
+      setLoginEmailError(!loginEmail);
+      setLoginPasswordError(!loginPassword);
       return;
-    } else {
-    // Form submission logic
-    setIsLoginForm(false);
-    setTimeout(() => {
-      // Additional actions after successful form submission
-      console.log("Form submitted successfully");
-    }, 1500);
+    }
+    // Send login request to the API
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          email: loginEmail,
+          password: loginPassword,
+        }
+      );
+      // Handle successful login
+      console.log("Login successful", response.data);
+      notifySuccess("Login successful");
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Login failed", error);
+      notifyError("Login failed");
+      // Handle login error
+    }
   };
-};
+
+  const handleSignupFormSubmit = async (e) => {
+    e.preventDefault();
+    // Validation for signup form fields
+    if (!name || !email || !phonenumber || !signupPassword) {
+      setNameError(!name);
+      setEmailError(!email);
+      setPhonenumberError(!phonenumber);
+      setSignupPasswordError(!signupPassword);
+      return;
+    }
+    // Send signup request to the API
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        {
+          name,
+          email,
+          phonenumber,
+          password: signupPassword,
+        }
+      );
+      // Handle successful signup
+      console.log("Signup successful", response.data);
+      notifySuccess("Signup successful");
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Signup failed", error);
+      notifyError("Signup failed");
+      // Handle signup error
+    }
+  };
 
   const handleSwitchForm = () => {
     setIsLoginForm(!isLoginForm);
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setPasswordConfirm("");
-    setUsernameError(false);
-    setEmailError(false);
-    setPasswordError(false);
-    setPasswordConfirmError(false);
   };
 
-
-
   return (
-    <div className="  bg-[--main-color]">
+    <div className="bg-[--main-color]">
+    {/* <ToastContainer />   */}
       <div className="container mx-auto font-family">
         <section id="formHolder">
           <div className="grid lg:grid-cols-2 md:grid-cols-1">
             {/* Brand Box */}
             <div className=" brand">
               <div className="text-center lg:pt-20 pt-5 pb-5">
-                  <div className="text-4xl">Welcome to the Lead Hunter</div>
-                  <div><img className="w-72 mx-auto" src={LoginImg} alt="img" /></div>
-                  <div className="text-sm">Login / Registration</div>
+                <div className="text-4xl">Welcome to the Lead Hunter</div>
+                <div>
+                  <img className="w-72 mx-auto" src={LoginImg} alt="img" />
+                </div>
+                <div className="text-sm">Login / Registration</div>
               </div>
             </div>
 
             {/* Form Box */}
             <div className="form">
               {/* Login Form */}
-              <div className={`login form-peice ${isLoginForm ? "switched" : ""}`} >
-                <form className="login-form" onSubmit={handleFormSubmit}>
+              <div className={`login form-peice ${isLoginForm ? "switched" : ""}`}>
+                <form className="login-form" onSubmit={handleLoginFormSubmit}>
                   <div className="form-group">
                     <label htmlFor="loginemail">Email Address</label>
                     <input
                       type="email"
-                      name="email"
+                      name="loginEmail"
                       id="loginemail"
-                      value={email}
-                      onChange={handleInputChange}
+                      value={loginEmail}
+                      onChange={handleLoginInputChange}
                       required
                     />
-                    {emailError && (
-                      <span className="error">
-                        Please type your email address
-                      </span>
+                    {loginEmailError && (
+                      <span className="error">Please enter your email address</span>
                     )}
                   </div>
                   <div className="form-group">
                     <label htmlFor="loginPassword">Password</label>
                     <input
                       type="password"
-                      name="password"
+                      name="loginPassword"
                       id="loginPassword"
-                      value={password}
-                      onChange={handleInputChange}
+                      value={loginPassword}
+                      onChange={handleLoginInputChange}
                       required
                     />
-                    {passwordError && (
-                      <span className="error">
-                        Please type at least 8 characters
-                      </span>
+                    {loginPasswordError && (
+                      <span className="error">Please enter your password</span>
                     )}
                   </div>
                   <div className="CTA">
                     <input className="button_1" type="submit" value="Login" />
-                    <div className="text-sm pt-2 flex justify-center">Don't have an account?&nbsp;<div className="switch hover:cursor-pointer hover:text-red-600" onClick={handleSwitchForm}>
-                      Sign Up
-                    </div></div>
-                    
+                    <div className="text-sm pt-2 flex justify-center">
+                      Don't have an account?&nbsp;
+                      <div
+                        className="switch hover:cursor-pointer hover:text-red-600"
+                        onClick={handleSwitchForm}
+                      >
+                        Sign Up
+                      </div>
+                    </div>
                   </div>
                 </form>
-                
               </div>
 
               {/* Signup Form */}
-              <div
-                className={`signup form-peice ${isLoginForm ? "" : "switched"}`}
-              >
-                <form className="signup-form" onSubmit={handleFormSubmit}>
+              <div className={`signup form-peice ${isLoginForm ? "" : "switched"}`}>
+                <form className="signup-form" onSubmit={handleSignupFormSubmit}>
                   <div className="form-group">
                     <label htmlFor="name">Full Name</label>
                     <input
                       type="text"
-                      name="username"
+                      name="name"
                       id="name"
-                      value={username}
-                      onChange={handleInputChange}
-                     //  onFocus={handleFocus}
-                      className="name"
+                      value={name}
+                      onChange={handleSignupInputChange}
+                      required
                     />
-                    {usernameError && (
-                      <span className="error">
-                        Please type your full name
-                      </span>
+                    {nameError && (
+                      <span className="error">Please enter your full name</span>
                     )}
                   </div>
                   <div className="form-group">
@@ -161,56 +217,52 @@ function Login() {
                       name="email"
                       id="email"
                       value={email}
-                      onChange={handleInputChange}
-                      className="email"
+                      onChange={handleSignupInputChange}
+                      required
                     />
                     {emailError && (
-                      <span className="error">
-                        Please type your email address
-                      </span>
+                      <span className="error">Please enter your email address</span>
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="phone">
-                      Phone Number - <small>Optional</small>
-                    </label>
-                    <input type="text" name="phone" id="phone" />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="phonenumber">Phone Number</label>
                     <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      value={password}
-                      onChange={handleInputChange}
-                      className="pass"
+                      type="text"
+                      name="phonenumber"
+                      id="phonenumber"
+                      value={phonenumber}
+                      onChange={handleSignupInputChange}
+                      required
                     />
-                    {passwordError && (
-                      <span className="error">
-                        Please type at least 8 characters
-                      </span>
+                    {phonenumberError && (
+                      <span className="error">Please enter your phone number</span>
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="passwordCon">Confirm Password</label>
+                    <label htmlFor="signupPassword">Password</label>
                     <input
                       type="password"
-                      name="passwordConfirm"
-                      id="passwordCon"
-                      value={passwordConfirm}
-                      onChange={handleInputChange}
-                      className="passConfirm"
+                      name="signupPassword"
+                      id="signupPassword"
+                      value={signupPassword}
+                      onChange={handleSignupInputChange}
+                      required
                     />
-                    {passwordConfirmError && (
-                      <span className="error">Passwords don't match</span>
+                    {signupPasswordError && (
+                      <span className="error">Password must be at least 8 characters</span>
                     )}
                   </div>
                   <div className="CTA">
-                    <input type="submit" className="button_1" value="Sign Up" id="submit" />
-                    <div className="text-sm pt-2 flex justify-center">Already have an account?&nbsp;<div className="switch hover:cursor-pointer hover:text-red-600" onClick={handleSwitchForm}>
-                      Login
-                    </div></div>
+                    <input className="button_1" type="submit" value="Sign Up" />
+                    <div className="text-sm pt-2 flex justify-center">
+                      Already have an account?&nbsp;
+                      <div
+                        className="switch hover:cursor-pointer hover:text-red-600"
+                        onClick={handleSwitchForm}
+                      >
+                        Login
+                      </div>
+                    </div>
                   </div>
                 </form>
               </div>
