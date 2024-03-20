@@ -32,6 +32,11 @@ function Header() {
     };
   }, []);
 
+  // const logout = () => {
+  //   localStorage.clear('user');
+  //   window.location.href = "/login";
+  // }
+
 
   return (
     <div className={isSticky ? 'Header-p1 Sticky-p1' : 'Header-p1'}>
@@ -41,19 +46,17 @@ function Header() {
           <img className="w-40 lg:w-44 md:w-40 z-40 filter grayscale" src={Logo} alt="nishant" />
           </div>
           <div class="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
-            <button
-              type="button"
-              class=" lg:px-8 md:px-8 px-6 z-40 bg-white hover:bg-gray-900 text-black outline outline-2 hover:text-white outline-gray-900 font-medium rounded-md text-sm py-2 text-center "
-            >
-              <NavLink to="/register" activeClassName="active"
-                id="0"
-                onClick={(e) => handleNavSelected(e)}
-                className={
-                  isActive === "0"
-                    ? "active  hover:text-white  cursor-pointer "
-                    : "  hover:text-white  cursor-pointer "
-                }>Sign In</NavLink>
-            </button>
+          <NavLink 
+            to="/register" 
+            activeClassName="active"
+            id="0"
+            onClick={(e) => handleNavSelected(e)}
+            className={`lg:px-8 md:px-8 px-6 z-40 bg-white hover:bg-gray-900 text-black outline outline-2 hover:text-white outline-gray-900 font-medium rounded-md text-sm py-2 text-center ${
+              isActive === "0" ? "active hover:text-white cursor-pointer" : "hover:text-white cursor-pointer"
+            }`}
+          >
+            Sign In
+          </NavLink>
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"

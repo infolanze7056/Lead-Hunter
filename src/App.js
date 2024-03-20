@@ -10,12 +10,14 @@ import Contact from './Pages/Contact';
 import Login from './Components/Login/Login';
 import Dashboard from './Components/Dashboard/Dashboard';
 import { ToastContainer } from 'react-toastify';
+import Forgot from './Components/Login/Forgot';
+import Admin from './Components/Admin/Admin';
 
 function App() {
   return (
     <div>
         <BrowserRouter> 
-        <AppContent />
+          <AppContent />
         </BrowserRouter>
 
     </div>
@@ -27,12 +29,11 @@ function AppContent() {
   const location = useLocation();
 
   // Check if the current location matches the Dashboard route
-  const isDashboardPage = location.pathname === '/dashboard';
+  const isDashboardPage = location.pathname === '/dashboard' || location.pathname === "/admin" ;
 
   return (
     <div>
       {/* Conditionally render Header and Footer based on the route */}
-      <ToastContainer />
       {!isDashboardPage && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -41,7 +42,10 @@ function AppContent() {
         <Route path="/contact" element={<Contact />} />
         <Route path='/register' element={<Login />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path="/forgot-password" element={<Forgot />} />
+        <Route path='/admin' element={<Admin />} />
       </Routes>
+      <ToastContainer />
       {!isDashboardPage && <Footer />}
     </div>
   );

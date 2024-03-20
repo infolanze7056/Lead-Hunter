@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
@@ -126,7 +126,14 @@ function Login() {
 
   const handleSwitchForm = () => {
     setIsLoginForm(!isLoginForm);
+    setName("");
+    setEmail("");
+    setPhoneNumber("");
+    setSignupPassword("");
+    setLoginEmail("");
+    setLoginPassword("");
   };
+
 
   return (
     <div className="bg-[--main-color]">
@@ -178,8 +185,9 @@ function Login() {
                       <span className="error">Please enter your password</span>
                     )}
                   </div>
+                  <div className="text-end"><NavLink to="/forgot-password" className="text-xs hover:text-gray-600">Forgot Password?</NavLink></div>
                   <div className="CTA">
-                    <input className="button_1" type="submit" value="Login" />
+                    <input className="button_1 hover:cursor-pointer" type="submit" value="Login" />
                     <div className="text-sm pt-2 flex justify-center">
                       Don't have an account?&nbsp;
                       <div
@@ -253,7 +261,7 @@ function Login() {
                     )}
                   </div>
                   <div className="CTA">
-                    <input className="button_1" type="submit" value="Sign Up" />
+                    <input className="button_1 hover:cursor-pointer" type="submit" value="Sign Up" />
                     <div className="text-sm pt-2 flex justify-center">
                       Already have an account?&nbsp;
                       <div
