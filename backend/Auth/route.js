@@ -15,6 +15,9 @@ router.post('/', leadController.createLead);
 // GET /leads - Get all leads
 router.get('/', leadController.getAllLeads);
 
+// DELETE /leads/:id - Delete a lead by ID
+router.delete('/:id', leadController.deleteLeadById);
+
 
 
 
