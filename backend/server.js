@@ -18,6 +18,8 @@ app.use("/api/auth", require("./Auth/route"))
 app.use("/api/routes", routes);
 app.use("/api/passwordReset", passwordReset);
 
+app.use('/api/leads', routes);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server Connected to port ${PORT}`))
 

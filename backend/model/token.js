@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const crypto = require("crypto");
 
 const tokenSchema = new Schema({
     userId: {
