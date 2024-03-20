@@ -208,7 +208,7 @@ function Login() {
                     <label htmlFor="name">Full Name</label>
                     <input
                       type="text"
-                      name="name"
+                      name="name"  
                       id="name"
                       value={name}
                       onChange={handleSignupInputChange}
