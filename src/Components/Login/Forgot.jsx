@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import { BsExclamationCircle } from "react-icons/bs";
 import { SiGmail } from "react-icons/si";
 import { NavLink } from 'react-router-dom';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Forgot() {
   // State variables for email input and error message
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
 
+  const notifySuccess = (message) => toast.success(message);
+  const notifyError = (message) => toast.error(message);
+
   // Function to handle the API call
   const handleSubmit = async () => {
     try {
       // Perform your API call here
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('http://localhost:5000/api/passwordReset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,15 +30,17 @@ function Forgot() {
         // Success: Reset email input and clear error message
         setEmail('');
         setError('');
+        notifySuccess("Email send successfully");
         // Handle success scenario, for example redirect to a success page
       } else {
         // Error: Set error message based on response
         const data = await response.json();
         setError(data.message || 'Something went wrong.');
+        notifyError("Send failed");
       }
     } catch (error) {
       console.error('Error:', error);
-      setError('Something went wrong. Please try again later.');
+      setError('User with given email does not exist.');
     }
   };
 

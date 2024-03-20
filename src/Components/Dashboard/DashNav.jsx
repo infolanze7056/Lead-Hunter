@@ -20,6 +20,3 @@ function DashNav() {
 
 export default DashNav;
 
-
-// app.use(cors({ origin: 'http://localhost:3000' }));
-// const cors = require('cors');

@@ -41,8 +41,8 @@ function AppContent() {
         <Route path='/service' element={<Service />} />
         <Route path="/contact" element={<Contact />} />
         <Route path='/register' element={<Login />} />
-        <Route path='/dashboard' element={<Dashboard />} />
         <Route path="/forgot-password" element={<Forgot />} />
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
       </Routes>
       <ToastContainer />
