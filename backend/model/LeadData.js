@@ -6,6 +6,7 @@ const leadDataSchema = new Schema({
     description: { type: String, required: true },
     tags: { type: String, required: true },
     level: { type: String, required: true },
+    timestamp: String,
     duration: String,
     budget: String,
     link: String
