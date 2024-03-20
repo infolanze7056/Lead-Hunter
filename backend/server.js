@@ -13,9 +13,12 @@ app.use(express.json());
 
 
 app.use(cors({ origin: 'http://localhost:3000' }));
+
+// Authentication routes
 app.use("/api/auth", require("./Auth/route"))
 
 app.use("/api/routes", routes);
+
 app.use("/api/passwordReset", passwordReset);
 
 app.use('/api/leads', routes);

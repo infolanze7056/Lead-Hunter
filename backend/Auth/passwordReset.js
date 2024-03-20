@@ -57,7 +57,7 @@ router.post("/:userId/:token", async (req, res) => {
 
         user.password = req.body.password;
         await user.save();
-        await token.delete();
+        await token.deleteOne();
 
         res.send("password reset sucessfully.");
     } catch (error) {
@@ -66,4 +66,4 @@ router.post("/:userId/:token", async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router;    
