@@ -45,7 +45,7 @@ function AppContent() {
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path='/api/passwordReset/:userId/:token' element={<ResetPassword />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <ToastContainer />

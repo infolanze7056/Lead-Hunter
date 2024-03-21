@@ -8,14 +8,14 @@
   function DashNav() {
     const [isActive, setIsActive] = useState(1);
     const [isOpen, setIsOpen] = useState(true);
+    const [isSticky, setIsSticky] = useState(false);
 
     const handleNavSelected = (e) => {
       setIsActive(e.target.id);
       setIsOpen(true);
     };
 
-    const [isSticky, setIsSticky] = useState(false);
-
+    
     useEffect(() => {
       const handleScroll = () => {
         if (window.scrollY > 70) {
@@ -75,7 +75,7 @@
             >
               <ul class="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium rounded-lg lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li className="text-gray-400">
-                {/* {loginEmail === "nishanttimbadiya987@gmail.com" && ( */}
+                {/* {loginId === "admin" && ( */}
                 <NavLink
                   id="1"
                   to='/admin'

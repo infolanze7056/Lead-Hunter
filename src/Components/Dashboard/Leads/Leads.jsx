@@ -95,7 +95,7 @@ function Leads() {
               )}
               </div>
               <div className='text-xs flex justify-between font-semibold'>
-                <div className='me-2'>{leadDetails.duretion}</div>
+                <div className='me-2'>{leadDetails.duration}</div>
                 <div>{leadDetails.budget}</div>
               </div>
               </div>
