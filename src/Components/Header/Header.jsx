@@ -32,11 +32,6 @@ function Header() {
     };
   }, []);
 
-  // const logout = () => {
-  //   localStorage.clear('user');
-  //   window.location.href = "/login";
-  // }
-
 
   return (
     <div className={isSticky ? 'Header-p1 Sticky-p1' : 'Header-p1'}>

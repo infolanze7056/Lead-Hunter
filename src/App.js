@@ -12,8 +12,10 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import { ToastContainer } from 'react-toastify';
 import Forgot from './Components/Login/Forgot';
 import Admin from './Components/Admin/Admin';
+import ResetPassword from './Components/Login/ResetPassword';
 
 function App() {
+  
   return (
     <div>
         <BrowserRouter> 
@@ -30,7 +32,6 @@ function AppContent() {
 
   // Check if the current location matches the Dashboard route
   const isDashboardPage = location.pathname === '/dashboard' || location.pathname === "/admin" ;
-
   return (
     <div>
       {/* Conditionally render Header and Footer based on the route */}
@@ -44,6 +45,8 @@ function AppContent() {
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path="*" element={<Home />} />
       </Routes>
       <ToastContainer />
       {!isDashboardPage && <Footer />}
