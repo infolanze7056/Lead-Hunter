@@ -61,7 +61,7 @@ function Leads() {
         ))}
       </div>
       {showPopup && (
-        <div className='fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 p-2'>
+        <div className='fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 p-2 z-50'>
           <div className='bg-white p-8 rounded-lg lg:w-[900px] md:w-[650px] w-[500px]'>
             <div className='flex justify-between items-center border-b pb-3'>
                 <button className='text-gray-600 hover:text-black' onClick={closePopup}><FaArrowLeft className='' /></button>

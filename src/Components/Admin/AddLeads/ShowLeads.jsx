@@ -53,7 +53,7 @@ function ShowLeads() {
                 <p><strong>Budget:</strong> {lead.budget}</p>
                 <p><strong>Link:</strong> <a href={lead.link}>{lead.link}</a></p>
                 <div className='text-center pt-3'>
-                  <button onClick={() => handleDeleteLead(lead._id)} className='font-semibold text-gray-600 hover:text-black cursor-pointer border p-2 px-5 rounded-md hover:bg-gray-300'>Delete</button>
+                  <button onClick={() => handleDeleteLead(lead._id)} className='font-semibold text-gray-600 hover:text-black shadow-md cursor-pointer border p-2 px-5 rounded-md hover:bg-gray-300'>Delete</button>
                 </div>
               </div>
             ))}

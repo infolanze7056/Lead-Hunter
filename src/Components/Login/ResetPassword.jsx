@@ -41,7 +41,7 @@ function ResetPassword() {
 
     // Make API call to update password
     try {
-      const response = await fetch('http://localhost:5000/api/password-reset/:userId/:token', {
+      const response = await fetch('http://localhost:5000/api/passwordReset/:userId/:token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
