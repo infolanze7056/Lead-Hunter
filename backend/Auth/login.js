@@ -20,9 +20,6 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: "Login not successful", error: "User not found" });
         }
   
-        // Log hashed password from database and login attempt for debugging
-        // console.log("Hashed password from database:", user.password);
-        // console.log("Hashed password from login attempt:", bcrypt.hashSync(password, 10));
   
         // Compare passwords
         const passwordMatch = await bcrypt.compare(password, user.password);
