@@ -58,6 +58,9 @@ function ResetPassword() {
 
       // Password updated successfully
       console.log('Password updated successfully');
+      setPassword("");
+      setConfirmPassword("");
+      setPasswordError("");
     } catch (error) {
       console.error('Error updating password:', error.message);
     }
