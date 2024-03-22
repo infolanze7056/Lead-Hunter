@@ -2,8 +2,8 @@ const express = require("express")
 const router = express.Router()
 const { register} = require("./register")
 const { login  } = require("./login")
-// const { User, validate } = require("../model/User")
 const leadController = require("../controllers/leadController")
+const { adminAuth } = require("../middleware/auth")
 
 
 router.route("/register").post(register)
@@ -17,8 +17,6 @@ router.get('/', leadController.getAllLeads);
 
 // DELETE /leads/:id - Delete a lead by ID
 router.delete('/:id', leadController.deleteLeadById);
-
-
 
 
 module.exports = router
