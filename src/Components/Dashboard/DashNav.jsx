@@ -1,4 +1,4 @@
-  import React, { useState, useEffect } from "react";
+  import React, { useState } from "react";
   import { NavLink } from "react-router-dom";
   import { FaBars } from "react-icons/fa6";
   import { AiOutlineClose } from "react-icons/ai";
@@ -15,27 +15,10 @@
       setIsOpen(true);
     };
 
-    
-    useEffect(() => {
-      const handleScroll = () => {
-        if (window.scrollY > 70) {
-          setIsSticky(true);
-        } else {
-          setIsSticky(false);
-        }
-      };
-
-      window.addEventListener("scroll", handleScroll);
-
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
-
 
     return (
-      <div className={isSticky ? 'Header-p1 Sticky-p1' : 'Header-p1'}>
-        <nav className="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b">
+      <div className="fixed w-full z-50">
+        <nav className="bg-white w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b ">
           <div className=" flex flex-wrap items-center justify-between mx-auto">
             <div className="z-40">
             <img className="w-40 lg:w-44 md:w-40 z-40 filter grayscale" src={Logo} alt="nishant" />

@@ -34,7 +34,7 @@ function Header() {
 
 
   return (
-    <div className={isSticky ? 'Header-p1 Sticky-p1' : 'Header-p1'}>
+    <div className="fixed w-full z-50">
       <nav className="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b">
         <div className=" flex flex-wrap items-center justify-between mx-auto">
           <div className="z-40">

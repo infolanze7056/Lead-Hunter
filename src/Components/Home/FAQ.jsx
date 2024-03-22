@@ -48,7 +48,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <BiSupport className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <BiSupport className="bg-[--second-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5 pe-7">
                         Is Lead Hunter for me?
@@ -105,7 +105,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <MdAccountBalanceWallet className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <MdAccountBalanceWallet className="bg-[--second-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
                         Where are the leads from?
@@ -163,7 +163,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <BsPersonCircle className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <BsPersonCircle className="bg-[--second-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
                         Is this another lead generation tool?
@@ -220,7 +220,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <FaRegThumbsUp className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <FaRegThumbsUp className="bg-[--second-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
                         Does this work for a freelancer?
@@ -277,7 +277,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <FaRegThumbsUp className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <FaRegThumbsUp className="bg-[--second-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
                         What do I need to do?
