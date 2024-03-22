@@ -46,11 +46,11 @@ function Leads() {
   };
 
   return (
-    <div className='px-4 lg:px-28 md:px-20 py-10 bg-[--main-color] font-family'>
-      <div className=' p-5 bg-white rounded-lg shadow-lg'>
-        <div className='text-center pb-5 uppercase text-3xl'>Get Your Leads Here</div>
+    <div className='px-4 lg:px-28 md:px-20 py-16 bg-[--main-color] font-family'>
+      <div className='bg-white rounded-lg shadow-lg pb-5'>
+        <div className='text-center py-8 text-[--three-color] uppercase text-4xl border-b mb-10'>Get Your Leads Here</div>
         {leads.map((lead) => (
-          <div key={lead.id} className='grid lg:grid-cols-6 grid-col-3 border rounded-lg hover:shadow-md cursor-pointer items-center lead mb-5'>
+          <div key={lead.id} className='grid lg:grid-cols-6 grid-col-3 border rounded-lg hover:shadow-md shadow-sm cursor-pointer items-center lead mb-5 m-4'>
             <div className='lg:col-span-4 col-span-2 p-5' onClick={() => handleLeadClick(lead)}>
               <div className='title font-semibold'>{lead.title}</div>
               <div className='text-sm'>{renderFirstParagraph(lead.description)}</div>
@@ -62,18 +62,19 @@ function Leads() {
       </div>
       {showPopup && (
         <div className='fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 p-2 z-50'>
-          <div className='bg-white p-8 rounded-lg lg:w-[900px] md:w-[650px] w-[500px]'>
-            <div className='flex justify-between items-center border-b pb-3'>
+          <div className='bg-white rounded-lg lg:w-[800px] md:w-[650px] w-[500px]'>
+            <div className='flex justify-between items-center border-b p-5 md:p-8 lg:p-8'>
                 <button className='text-gray-600 hover:text-black' onClick={closePopup}><FaArrowLeft className='' /></button>
-                <div><button onClick={redirectToLink} className='uppercase text-sm bg-yellow-300 p-2 px-3 rounded-md hover:bg-yellow-200 flex items-center'>Send A Pitch&nbsp;<MdKeyboardDoubleArrowRight className='text-lg'/></button></div>
+                <div><button onClick={redirectToLink} className='uppercase text-sm bg-[--three-color] text-white p-2 px-3 rounded-md hover:bg-white hover:text-[--three-color] outline outline-2 outline-[--three-color] flex items-center'>Send A Pitch&nbsp;<MdKeyboardDoubleArrowRight className='text-lg'/></button></div>
             </div>
-            <div className='pt-2'>
-              <div className='text-2xl font-semibold text-center'>Lead Details</div>
+            <div className='p-5 md:p-8 lg:p-8 rounded-b-lg'>
+            <div className=''>
+              <div className='text-3xl font-semibold text-center text-[--three-color]'>Lead Details</div>
             </div>
             <div className='mt-4'>
               <div className='flex justify-between items-center pb-2'>
               <p className='font-semibold text-lg'>{leadDetails.title}</p>
-              {leadDetails.level && <div className='bg-gray-200 text-xs px-2 py-1 rounded'>{leadDetails.level}</div>}
+              {leadDetails.level && <div className='bg-[--second-color] text-xs px-2 py-1 rounded'>{leadDetails.level}</div>}
               </div>
               <div className='text-sm'>
                 {Array.isArray(leadDetails.description) ? (
@@ -88,10 +89,10 @@ function Leads() {
               <div className='flex flex-wrap mt-2 justify-center'>
               {Array.isArray(leadDetails.tags) ? (
                 leadDetails.tags.map((tag, index) => (
-                  <span key={index} className='bg-gray-200 text-xs px-2 py-1 mr-2 mb-2 rounded'>{tag}</span>
+                  <span key={index} className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{tag}</span>
                 ))
               ) : (
-                <span className='bg-gray-200 text-xs px-2 py-1 mr-2 mb-2 rounded'>{leadDetails.tags}</span>
+                <span className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{leadDetails.tags}</span>
               )}
               </div>
               <div className='text-xs flex justify-between font-semibold'>
@@ -100,6 +101,7 @@ function Leads() {
               </div>
               </div>
               <p className='text-gray-500 mt-2 text-sm'>{leadDetails.timestamp}</p>
+            </div>
             </div>
           </div>
         </div>

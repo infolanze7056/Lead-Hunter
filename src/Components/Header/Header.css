@@ -6,7 +6,8 @@
 } */
 
 .nav-menu .active{
-    color: black;
+    color: var(--three-color);
+    border-bottom: 2px solid var(--three-color);
 }
 
 /* .nav-menu a{

@@ -19,16 +19,16 @@
  }
  
  .button_1{
-   background-color: white;
-   color: black !important;
-   border: 1.5px solid black !important;
+   background-color: var(--three-color);
+   color: white !important;
+   border: 1.5px solid var(--three-color) !important;
    border-radius: 4px !important;
    font-weight: 550 !important;
 }
 .button_1:hover{
-   background-color: black !important;
-   color: white !important;
-   border: 1.5px solid black !important;
+   background-color: white !important;
+   color: var(--three-color) !important;
+   border: 1.5px solid var(--three-color) !important;
    border-radius: 4px !important;
    font-weight: 550 !important;
 }
@@ -173,12 +173,12 @@ section#formHolder {
    color: #f95959 !important;
  }
  .form form label {
-   font-size: 12px;
+   font-size: 11px;
    font-weight: 400;
    text-transform: uppercase;
    font-family: "Montserrat", sans-serif;
-   transform: translateY(40px);
-   transition: all 0.4s;
+   /* transform: translateY(40px); */
+   /* transition: all 0.4s; */
    cursor: text;
    z-index: -1;
  }
@@ -199,7 +199,7 @@ section#formHolder {
    width: 100%;
    border: 1px solid #eee;
    border-radius: 4px;
-   height: 40px;
+   height: 33px;
    color: #444;
    font-size: 15px;
    font-family: "Montserrat", sans-serif;
@@ -218,10 +218,10 @@ section#formHolder {
    display: none;
  }
  .form form input[type=password] {
-   color: #f95959;
+   color: black;
  }
  .form form .CTA {
-   padding-top: 25px;
+   padding-top: 15px;
    text-align: center;
  }
  .form form .CTA input {

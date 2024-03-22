@@ -24,9 +24,9 @@ exports.login = async (req, res) => {
     // Compare passwords
     bcrypt.compare(password, user.password).then(function (result) {
       if (result) {
-        const maxAge = 3 * 60 * 60;
+        const maxAge = 60;
         const token = jwt.sign(
-          { id: user._id, name, role: user.role },
+          { id: user._id, email, role: user.role },
           process.env.JWTSECRET,
           { expiresIn: maxAge } // 3hrs in sec
         );

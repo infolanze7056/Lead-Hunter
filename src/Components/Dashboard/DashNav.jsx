@@ -8,7 +8,6 @@
   function DashNav() {
     const [isActive, setIsActive] = useState(1);
     const [isOpen, setIsOpen] = useState(true);
-    const [isSticky, setIsSticky] = useState(false);
 
     const handleNavSelected = (e) => {
       setIsActive(e.target.id);
@@ -21,7 +20,7 @@
         <nav className="bg-white w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b ">
           <div className=" flex flex-wrap items-center justify-between mx-auto">
             <div className="z-40">
-            <img className="w-40 lg:w-44 md:w-40 z-40 filter grayscale" src={Logo} alt="nishant" />
+            <img className="w-40 lg:w-44 md:w-40 z-40 " src={Logo} alt="nishant" />
             </div>
             <div className="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
             <NavLink 
@@ -29,7 +28,7 @@
               activeClassName="active"
               id="0"
               onClick={(e) => handleNavSelected(e)}
-              className={`lg:px-8 md:px-8 px-6 z-40 bg-white hover:bg-gray-900 text-black outline outline-2 hover:text-white outline-gray-900 font-medium rounded-md text-sm py-2 text-center ${
+              className={`lg:px-8 md:px-8 px-6 z-40 hover:bg-[--three-color] bg-white text-[--three-color] outline outline-2 hover:text-white outline-[--three-color] font-medium rounded-md text-sm py-2 text-center ${
                 isActive === "0" ? "active hover:text-white cursor-pointer" : "hover:text-white cursor-pointer"
               }`}
             >
@@ -53,7 +52,7 @@
             </div>
             <div
               className={`nav-menu lg:flex lg:pb-0 lg:py-0 md:py-7 py-7 lg:items-center text-base absolute  lg:static lg:z-auto z-30 right-0 w-full lg:w-auto md:pl-0 transition-all duration-500 ease-in 
-            ${isOpen ? "top-[-600px]" : "top-[29px]"}` }
+            ${isOpen ? "top-[-200px]" : "top-[29px]"}` }
               id="navbar-sticky"
             >
               <ul className="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium rounded-lg lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">

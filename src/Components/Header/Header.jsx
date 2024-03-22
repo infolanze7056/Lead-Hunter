@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaBars } from "react-icons/fa6";
 import { AiOutlineClose } from "react-icons/ai";
@@ -14,23 +14,6 @@ function Header() {
     setIsOpen(true);
   };
 
-  const [isSticky, setIsSticky] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 70) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
 
   return (
@@ -46,7 +29,7 @@ function Header() {
             activeClassName="active"
             id="0"
             onClick={(e) => handleNavSelected(e)}
-            className={`lg:px-8 md:px-8 px-6 z-40 bg-white hover:bg-gray-900 text-black outline outline-2 hover:text-white outline-gray-900 font-medium rounded-md text-sm py-2 text-center ${
+            className={`lg:px-8 md:px-8 px-6 z-40 bg-white hover:bg-[--three-color] outline outline-2 hover:text-white outline-[--three-color] text-[--three-color] font-medium rounded-md text-sm py-2 text-center ${
               isActive === "0" ? "active hover:text-white cursor-pointer" : "hover:text-white cursor-pointer"
             }`}
           >
@@ -70,7 +53,7 @@ function Header() {
           </div>
           <div
             className={`nav-menu lg:flex lg:pb-0 lg:py-0 md:py-7 py-7 lg:items-center text-base absolute  lg:static lg:z-auto z-30 right-0 w-full lg:w-auto md:pl-0 transition-all duration-500 ease-in 
-          ${isOpen ? "top-[-600px]" : "top-[29px]"}` }
+          ${isOpen ? "top-[-200px]" : "top-[29px]"}` }
             id="navbar-sticky"
           >
             <ul className="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium rounded-lg lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">

@@ -7,14 +7,15 @@ import WorkSection from "../Components/Home/WorkSection";
 import ContactSection from "../Components/Home/ContactSection";
 
 const Home = () => {
+
    return (
     <>
       <HeroSection />
       <AboutSection />
-      <ServiceSection />
       <FAQ />
-      <WorkSection />
+      <ServiceSection />
       <ContactSection />
+      <WorkSection />
     </>
    );
 };
