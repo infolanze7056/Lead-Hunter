@@ -7,7 +7,7 @@ const HeroSection = () => {
         <div className="lg:px-20 md:px-7 px-5 py-10 font-family bg-[--main-color]">
                 <div className="grid lg:grid-cols-2 items-center">
                     <div className="lg:order-1 order-2">
-                        <div className="w-max bg-gray-200 p-2 px-3 rounded-lg uppercase shadow-md">Lead Generation</div>
+                        <div className="w-max bg-[#CBF1F5] p-2 px-3 rounded-lg uppercase shadow-md">Lead Generation</div>
                         <div className="text-5xl lg:text-6xl md:text-6xl font-semibold pt-2">Lead Subscription</div>
                         <div className="text-lg py-5">
                             <p className="pb-4">Looking for a consistent stream of leads for your content? Our Lead Subscription model gets you up to five lead gen campaigns, targeting firmographic and behavior-based data. All this with added optimization and customization features.</p>
