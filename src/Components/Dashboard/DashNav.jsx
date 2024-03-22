@@ -8,14 +8,14 @@
   function DashNav() {
     const [isActive, setIsActive] = useState(1);
     const [isOpen, setIsOpen] = useState(true);
+    const [isSticky, setIsSticky] = useState(false);
 
     const handleNavSelected = (e) => {
       setIsActive(e.target.id);
       setIsOpen(true);
     };
 
-    const [isSticky, setIsSticky] = useState(false);
-
+    
     useEffect(() => {
       const handleScroll = () => {
         if (window.scrollY > 70) {
@@ -35,12 +35,12 @@
 
     return (
       <div className={isSticky ? 'Header-p1 Sticky-p1' : 'Header-p1'}>
-        <nav class="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b">
-          <div class=" flex flex-wrap items-center justify-between mx-auto">
+        <nav className="bg-white dark:bg-gray-900 w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b">
+          <div className=" flex flex-wrap items-center justify-between mx-auto">
             <div className="z-40">
             <img className="w-40 lg:w-44 md:w-40 z-40 filter grayscale" src={Logo} alt="nishant" />
             </div>
-            <div class="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
+            <div className="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
             <NavLink 
               to="/" 
               activeClassName="active"
@@ -55,11 +55,11 @@
               <button
                 data-collapse-toggle="navbar-sticky"
                 type="button"
-                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 aria-controls="navbar-sticky"
                 aria-expanded="false"
               >
-                <span class="sr-only">Open main menu</span>
+                <span className="sr-only">Open main menu</span>
                 <div
                   onClick={() => setIsOpen(!isOpen)}
                   className="lg:hidden absolute md:right-8 right-6 top-7 cursor-pointer h-fit z-40"
@@ -73,9 +73,9 @@
             ${isOpen ? "top-[-600px]" : "top-[29px]"}` }
               id="navbar-sticky"
             >
-              <ul class="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium rounded-lg lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <ul className="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium rounded-lg lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li className="text-gray-400">
-                {/* {loginEmail === "nishanttimbadiya987@gmail.com" && ( */}
+                {/* {loginId === "admin" && ( */}
                 <NavLink
                   id="1"
                   to='/admin'

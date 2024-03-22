@@ -13,28 +13,30 @@ import { ToastContainer } from 'react-toastify';
 import Forgot from './Components/Login/Forgot';
 import Admin from './Components/Admin/Admin';
 import ResetPassword from './Components/Login/ResetPassword';
+import { AuthProvider } from './AuthContext';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   
   return (
     <div>
-        <BrowserRouter> 
-          <AppContent />
-        </BrowserRouter>
-
+        <AuthProvider>
+            <BrowserRouter> 
+              <AppContent />
+            </BrowserRouter>
+        </AuthProvider>
     </div>
   );
 }
 
 function AppContent() {
-  // Get the current location
+
   const location = useLocation();
 
-  // Check if the current location matches the Dashboard route
+
   const isDashboardPage = location.pathname === '/dashboard' || location.pathname === "/admin" ;
   return (
     <div>
-      {/* Conditionally render Header and Footer based on the route */}
       {!isDashboardPage && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -45,8 +47,14 @@ function AppContent() {
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path='/api/passwordReset/:userId/:token' element={<ResetPassword />} />
         <Route path="*" element={<Home />} />
+        <Route element={<React.Fragment> 
+          <PrivateRoute path="/dashboard" element={<Dashboard />} />
+          <PrivateRoute path="/admin" element={<Admin />} />
+        </React.Fragment>} />
+        {/* <PrivateRoute path='/dashboard' element={<Dashboard />} />
+        <PrivateRoute path='/admin' element={<Admin />} /> */}
       </Routes>
       <ToastContainer />
       {!isDashboardPage && <Footer />}

@@ -60,7 +60,7 @@ function AddLeads() {
         <div>
           <div>
             <div className="mx-auto bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-semibold mb-4 text-center">Input Leads Details</h2>
+              <div className="text-4xl font-semibold mb-4 text-center">Input Leads Details</div>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="title" className="block font-medium mb-1">Add Title:</label>

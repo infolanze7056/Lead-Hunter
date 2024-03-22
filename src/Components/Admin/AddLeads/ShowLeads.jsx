@@ -39,11 +39,11 @@ function ShowLeads() {
   return (
     <div className='font-family bg-[--main-color]'>
       <div className='px-4 lg:px-28 md:px-20 py-10'>
-        <div className='bg-white p-10 rounded-lg shadow-lg'>
+        <div className='bg-white lg:p-10 md:p-10 p-2 rounded-lg shadow-lg'>
           <div className="">
-            <h2 className="text-2xl font-semibold mb-4 text-center">All Leads Display</h2>
+            <div className="text-4xl font-semibold mb-6 mt-4 text-center">All Leads Display</div>
             {showLeadsDetails.map(lead => (
-              <div key={lead._id} className="p-10 border rounded-md shadow-lg mb-5">
+              <div key={lead._id} className="lg:p-10 md:p-10 p-2 border rounded-md shadow-lg mb-5">
                 <p><strong>Title:</strong> {lead.title}</p>
                 <p><strong>Description:</strong> {Array.isArray(lead.description) ? lead.description.reduce((acc, cur, idx) => acc + (idx !== 0 ? ', ' : '') + cur, '') : lead.description}</p>
                 <p><strong>Tags:</strong> {Array.isArray(lead.tags) ? lead.tags.reduce((acc, cur, idx) => acc + (idx !== 0 ? ', ' : '') + cur, '') : lead.tags}</p>
@@ -51,7 +51,7 @@ function ShowLeads() {
                 <p><strong>Level:</strong> {lead.level}</p>
                 <p><strong>Duration:</strong> {lead.duration}</p>
                 <p><strong>Budget:</strong> {lead.budget}</p>
-                <p><strong>Link:</strong> <a href={lead.link}>{lead.link}</a></p>
+                <p><strong>Link:</strong> {lead.link}</p>
                 <div className='text-center pt-3'>
                   <button onClick={() => handleDeleteLead(lead._id)} className='font-semibold text-gray-600 hover:text-black shadow-md cursor-pointer border p-2 px-5 rounded-md hover:bg-gray-300'>Delete</button>
                 </div>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdKey, MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 function ResetPassword() {
+  const { userId, token } = useParams();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -41,7 +42,7 @@ function ResetPassword() {
 
     // Make API call to update password
     try {
-      const response = await fetch('http://localhost:5000/api/passwordReset/:userId/:token', {
+      const response = await fetch(`http://localhost:5000/api/passwordReset/${userId}/${token}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,6 +58,9 @@ function ResetPassword() {
 
       // Password updated successfully
       console.log('Password updated successfully');
+      setPassword("");
+      setConfirmPassword("");
+      setPasswordError("");
     } catch (error) {
       console.error('Error updating password:', error.message);
     }
