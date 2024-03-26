@@ -1,5 +1,5 @@
 import React from 'react'
-import Img1 from "../../Images/62d793472484c762d31391d6_leadsify-15987.jpg";
+import Img1 from "../../Images/sign-up.png";
 
 function WorkSection() {
   return (

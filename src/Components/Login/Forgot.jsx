@@ -48,7 +48,7 @@ function Forgot() {
     <div className='bg-[--main-color] font-family'>
       <div className='lg:max-w-lg md:max-w-lg px-5 lg:py-20 md:py-10 py-10 mx-auto'>
         <div className='border rounded-md lg:p-10 md:p-10 p-5 py-10 text-center bg-white'>
-          <div><BsExclamationCircle className='text-6xl mx-auto text-blue-600' /></div>
+          <div><BsExclamationCircle className='text-6xl mx-auto text-[--three-color]' /></div>
           <div className='text-2xl font-semibold pt-5 pb-2'>Forgot Password</div>
           <div className='text-sm text-gray-500'>Enter your email and we'll send you a link to reset your password.</div>
           <div className='pt-4 pb-5'>
@@ -67,9 +67,9 @@ function Forgot() {
               />
             </div>
             {error && <div className="text-red-500 mt-2 text-xs text-end">{error}</div>}
-            <button className='bg-blue-600 hover:bg-blue-500 p-2 px-5 rounded-md text-sm text-white uppercase mt-5' onClick={handleSubmit}>Submit</button>
+            <button className=' bg-[--three-color] text-white hover:text-[--three-color] p-2 px-5 hover:bg-white outline outline-[--three-color] rounded-md text-sm text-[--three-color] uppercase mt-5' onClick={handleSubmit}>Submit</button>
           </div>
-          <div><NavLink to="/register" className="text-sm text-gray-500 hover:text-black">Back To Login</NavLink></div>
+          <div><NavLink to="/register" className="text-sm text-[--three-color] hover:text-black">Back To Login</NavLink></div>
         </div>
       </div>
     </div>

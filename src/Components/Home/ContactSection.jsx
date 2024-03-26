@@ -116,7 +116,7 @@ function ContactSection() {
           <div className=" lg:px-10 md:px-4">
             <div className='pb-1 font-semibold text-lg'>Get in touch!</div>
             <div className="text-4xl font-bold pb-5">
-              Explore how to our services can be integrated with <span className="text-gray-400">Your Business.</span>
+              Explore how to our services can be integrated with <span className=" text-[--three-color]">Your Business.</span>
             </div>
             <div className="font-semibold">We're just a conversation away!</div>
           </div>
@@ -192,7 +192,7 @@ function ContactSection() {
                 
                 <div>
                   <button
-                    className="text-black hover:text-white outline outline-2 hover:outline-black bg-white hover:bg-black font-semibold rounded-md text-sm px-6 py-3 mt-4 block"
+                    className=" hover:text-[--three-color] text-white outline outline-2 outline-[--three-color] bg-[--three-color] hover:bg-white font-semibold rounded-md text-sm px-6 py-3 mt-4 block"
                     type="submit"
                     onClick={handleSubmit}
                   >

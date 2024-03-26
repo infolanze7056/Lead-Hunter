@@ -15,6 +15,7 @@ import Admin from './Components/Admin/Admin';
 import ResetPassword from './Components/Login/ResetPassword';
 import { AuthProvider } from './AuthContext';
 import PrivateRoute from './PrivateRoute';
+import Free from './Components/Free';
 
 function App() {
   
@@ -38,6 +39,7 @@ function AppContent() {
   return (
     <div>
       {!isDashboardPage && <Header />}
+      {!isDashboardPage && <Free />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

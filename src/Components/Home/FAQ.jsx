@@ -1,9 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { BiSupport } from "react-icons/bi";
-import { MdAccountBalanceWallet } from "react-icons/md";
-import { BsPersonCircle } from "react-icons/bs";
+import { SiSemanticweb } from "react-icons/si";
+import { MdLeaderboard } from "react-icons/md";
+import { GoTools } from "react-icons/go";
 import { FaRegThumbsUp } from "react-icons/fa6";
+import { MdGppGood } from "react-icons/md";
 
 function FAQ() {
   const [activeAccordion, setActiveAccordion] = useState(0);
@@ -25,8 +26,8 @@ function FAQ() {
   }
 
   return (
-    <div className="font-family">
-      <div className="pt-20 pb-5">
+    <div className="font-family bg-[--main-color]">
+      <div className="pt-16 pb-10">
         <div className="text-center text-4xl font-bold mx-auto lg:w-[500px]">
           You have questions and we have answers
         </div>
@@ -34,10 +35,10 @@ function FAQ() {
           <div className="lg:px-56 md:px-16 px-4 lg:py-10 md:py-10 py-10">
             <div id="accordionFlushExample">
               {/* First Accordion Item */}
-              <div className="rounded-none shadow-lg border mb-7 bg-white border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
+              <div className="rounded-lg shadow-lg border mb-7 bg-white border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
                 <h2 className="mb-0" id="flush-headingOne">
                   <button
-                    className="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
+                    className="group relative flex w-full items-center rounded-lg border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
                     type="button"
                     onClick={() => {
                       toggleAccordion(0);
@@ -48,7 +49,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <BiSupport className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <SiSemanticweb className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5 pe-7">
                         Is Lead Hunter for me?
@@ -91,10 +92,10 @@ function FAQ() {
               </div>
 
               {/* Second Accordion Item */}
-              <div className="rounded-none border mb-7 shadow-lg bg-white border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
+              <div className="rounded-lg border mb-7 shadow-lg bg-white border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
                 <h2 className="mb-0" id="flush-headingTwo">
                   <button
-                    className="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
+                    className="group relative flex w-full items-center rounded-lg border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
                     type="button"
                     onClick={() => {
                       toggleAccordion(1);
@@ -105,7 +106,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <MdAccountBalanceWallet className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <MdLeaderboard className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
                         Where are the leads from?
@@ -149,10 +150,10 @@ function FAQ() {
               </div>
 
               {/* Third Accordion Item */}
-              <div className="rounded-none border mb-7 shadow-lg bg-white border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
+              <div className="rounded-lg border mb-7 shadow-lg bg-white border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
                 <h2 className="mb-0" id="flush-headingThree">
                   <button
-                    className="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
+                    className="group relative flex w-full items-center rounded-lg border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
                     type="button"
                     onClick={() => {
                       toggleAccordion(2);
@@ -163,10 +164,10 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <BsPersonCircle className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <GoTools className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
-                        Is this another lead generation tool?
+                        Is this another lead generation tools?
                       </div>
                     </div>
                     <span
@@ -206,10 +207,10 @@ function FAQ() {
                 </div>
               </div>
               {/* four Accordion Item */}
-              <div className="rounded-none border mb-7 bg-white shadow-lg border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
+              <div className="rounded-lg border mb-7 bg-white shadow-lg border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
                 <h2 className="mb-0" id="flush-headingFour">
                   <button
-                    className="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
+                    className="group relative flex w-full items-center rounded-lg border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
                     type="button"
                     onClick={() => {
                       toggleAccordion(3);
@@ -220,7 +221,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <FaRegThumbsUp className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <FaRegThumbsUp className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
                         Does this work for a freelancer?
@@ -263,10 +264,10 @@ function FAQ() {
                 </div>
               </div>
               {/* five Accordion Item */}
-              <div className="rounded-none border bg-white shadow-lg border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
+              <div className="rounded-lg border bg-white shadow-lg border-neutral-200 dark:border-neutral-600 dark:bg-body-dark">
                 <h2 className="mb-0" id="flush-headingFour">
                   <button
-                    className="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
+                    className="group relative flex w-full items-center rounded-lg border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition overflow-anchor:none hover:z-[2] focus:z-[3] focus:outline-none dark:bg-body-dark dark:text-white"
                     type="button"
                     onClick={() => {
                       toggleAccordion(4);
@@ -277,7 +278,7 @@ function FAQ() {
                   >
                     <div className="flex items-center">
                       <div>
-                        <FaRegThumbsUp className="bg-gray-200 text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
+                        <MdGppGood className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
                         What do I need to do?

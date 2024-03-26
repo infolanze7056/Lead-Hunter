@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import LoginImg from "../../Images/login-img.png";
+import { RiLoginBoxLine } from "react-icons/ri";
+import { SiGnuprivacyguard } from "react-icons/si";
 import axios from "axios";
 
 function Login() {
@@ -143,12 +145,12 @@ function Login() {
           <div className="grid lg:grid-cols-2 md:grid-cols-1">
             {/* Brand Box */}
             <div className=" brand">
-              <div className="text-center lg:pt-20 pt-5 pb-5">
-                <div className="text-4xl">Welcome to the Lead Hunter</div>
+              <div className="text-center lg:pt-16 pt-5 pb-5">
+                <div className="text-4xl pb-2 text-[--three-color]">Welcome to the Lead Hunter</div>
                 <div>
                   <img className="w-72 mx-auto" src={LoginImg} alt="img" />
                 </div>
-                <div className="text-sm">Login / Registration</div>
+                <div className="text-sm font-semibold text-gray-600 pt-3">Login / Registration</div>
               </div>
             </div>
 
@@ -157,12 +159,17 @@ function Login() {
               {/* Login Form */}
               <div className={`login form-peice ${isLoginForm ? "switched" : ""}`}>
                 <form className="login-form" onSubmit={handleLoginFormSubmit}>
+                <div className="text-center">
+                  <div><SiGnuprivacyguard className='text-5xl mx-auto text-[--three-color]' /></div>
+                  <div  className='text-3xl font-semibold pt-3 pb-4 uppercase'>Sign In</div>
+                </div>
                   <div className="form-group">
-                    <label htmlFor="loginemail">Email Address</label>
+                    <label htmlFor="loginemail">Email Address :</label>
                     <input
                       type="email"
                       name="loginEmail"
                       id="loginemail"
+                      className="shadow-sm"
                       value={loginEmail}
                       onChange={handleLoginInputChange}
                       required
@@ -172,11 +179,12 @@ function Login() {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="loginPassword">Password</label>
+                    <label htmlFor="loginPassword">Password :</label>
                     <input
                       type="password"
                       name="loginPassword"
                       id="loginPassword"
+                      className="shadow-sm"
                       value={loginPassword}
                       onChange={handleLoginInputChange}
                       required
@@ -185,13 +193,13 @@ function Login() {
                       <span className="error">Please enter your password</span>
                     )}
                   </div>
-                  <div className="text-end"><NavLink to="/forgot-password" className="text-xs hover:text-gray-600">Forgot Password?</NavLink></div>
+                  <div className="text-end"><NavLink to="/forgot-password" className="text-xs text-[--three-color] hover:text-gray-600">Forgot Password?</NavLink></div>
                   <div className="CTA">
                     <input className="button_1 hover:cursor-pointer" type="submit" value="Login" />
-                    <div className="text-sm pt-2 flex justify-center">
+                    <div className="text-sm pt-4 flex justify-center">
                       Don't have an account?&nbsp;
                       <div
-                        className="switch hover:cursor-pointer hover:text-red-600"
+                        className="switch text-[--three-color] hover:cursor-pointer hover:text-red-600"
                         onClick={handleSwitchForm}
                       >
                         Sign Up
@@ -204,12 +212,17 @@ function Login() {
               {/* Signup Form */}
               <div className={`signup form-peice ${isLoginForm ? "" : "switched"}`}>
                 <form className="signup-form" onSubmit={handleSignupFormSubmit}>
+                <div className="text-center">
+                  <div><RiLoginBoxLine className='text-5xl mx-auto text-[--three-color]' /></div>
+                  <div  className='text-3xl font-semibold pt-2 pb-4 uppercase'>Sign Up</div>
+                </div>
                   <div className="form-group">
-                    <label htmlFor="name">Full Name</label>
+                    <label htmlFor="name">Full Name :</label>
                     <input
                       type="text"
                       name="name"  
                       id="name"
+                      className="shadow-sm"
                       value={name}
                       onChange={handleSignupInputChange}
                       required
@@ -219,11 +232,12 @@ function Login() {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="email">Email Address</label>
+                    <label htmlFor="email">Email Address :</label>
                     <input
                       type="email"
                       name="email"
                       id="email"
+                      className="shadow-sm"
                       value={email}
                       onChange={handleSignupInputChange}
                       required
@@ -233,11 +247,12 @@ function Login() {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="phonenumber">Phone Number</label>
+                    <label htmlFor="phonenumber">Phone Number :</label>
                     <input
                       type="text"
                       name="phonenumber"
                       id="phonenumber"
+                      className="shadow-sm"
                       value={phonenumber}
                       onChange={handleSignupInputChange}
                       required
@@ -247,11 +262,12 @@ function Login() {
                     )}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="signupPassword">Password</label>
+                    <label htmlFor="signupPassword">Password :</label>
                     <input
                       type="password"
                       name="signupPassword"
                       id="signupPassword"
+                      className="shadow-sm"
                       value={signupPassword}
                       onChange={handleSignupInputChange}
                       required
@@ -262,10 +278,10 @@ function Login() {
                   </div>
                   <div className="CTA">
                     <input className="button_1 hover:cursor-pointer" type="submit" value="Sign Up" />
-                    <div className="text-sm pt-2 flex justify-center">
+                    <div className="text-sm pt-3 flex justify-center">
                       Already have an account?&nbsp;
                       <div
-                        className="switch hover:cursor-pointer hover:text-red-600"
+                        className="switch text-[--three-color] hover:cursor-pointer hover:text-red-600"
                         onClick={handleSwitchForm}
                       >
                         Login

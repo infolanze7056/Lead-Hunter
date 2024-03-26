@@ -70,7 +70,7 @@ function ResetPassword() {
     <div className='bg-[--main-color] font-family'>
       <div className='lg:max-w-lg md:max-w-lg px-5 lg:py-20 md:py-10 py-10 mx-auto'>
         <div className='border rounded-md lg:p-10 md:p-10 p-5 py-10 text-center bg-white'>
-          <div><RiLockPasswordLine className='text-6xl mx-auto text-blue-600' /></div>
+          <div><RiLockPasswordLine className='text-6xl mx-auto text-[--three-color]' /></div>
           <div className='text-2xl font-semibold pt-5 pb-2'>Reset Password</div>
           <div className='text-sm text-gray-500'>Enter your email and we'll send you a link to reset your password.</div>
           <div className='pt-4 pb-5'>
@@ -109,9 +109,9 @@ function ResetPassword() {
               </span>
             </div>
             {passwordError && <div className="text-red-500 text-sm mt-1">{passwordError}</div>}
-            <button className='bg-blue-600 hover:bg-blue-500 p-2 px-5 rounded-md text-sm text-white uppercase mt-5' onClick={handleSubmit}>Submit</button>
+            <button className='bg-[--three-color] hover:bg-white hover:text-[--three-color] outline outline-[--three-color] p-2 px-5 rounded-md text-sm text-white uppercase mt-5' onClick={handleSubmit}>Submit</button>
           </div>
-          <div><NavLink to="/register" className="text-sm text-gray-500 hover:text-black">Back To Login</NavLink></div>
+          <div><NavLink to="/register" className="text-sm text-[--three-color] hover:text-black">Back To Login</NavLink></div>
         </div>
       </div>
     </div>

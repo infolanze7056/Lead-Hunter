@@ -6,7 +6,8 @@
 } */
 
 .nav-menu .active{
-    color: black;
+    color: var(--three-color);
+    border-bottom: 2px solid var(--three-color);
 }
 
 /* .nav-menu a{
@@ -57,7 +58,7 @@
 
 
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
     0% {
       opacity: 0.1;
       transform: translateY(-70px);
@@ -80,4 +81,4 @@
     left: 0;
     z-index: 1000;
     animation: fadeIn 0.6s ease-in !important;
-  }
+  } */
