@@ -7,6 +7,8 @@ const cors = require('cors');
 const routes = require("./Auth/route");
 const passwordReset = require("./Auth/passwordReset");
 const{ adminAuth, userAuth} = require("./middleware/auth")
+const phonepeRoute = require("./routes/phoneperoute")
+
 
 connectDB();
 
@@ -21,6 +23,8 @@ app.use("/api/auth", require("./Auth/route"));
 // Additional routes with authentication middleware
 app.use("/api/routes", routes);
 app.use("/api/passwordReset", passwordReset);
+
+app.use("/api/phonepe",phonepeRoute)
 
 // Adding admin and basic routes with their respective middleware
 app.get("/api/admin", adminAuth, (req, res) => res.send("Admin Route"));
