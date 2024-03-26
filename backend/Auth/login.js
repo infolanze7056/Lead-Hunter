@@ -24,7 +24,7 @@ exports.login = async (req, res) => {
     // Compare passwords
     bcrypt.compare(password, user.password).then(function (result) {
       if (result) {
-        const maxAge = 60;
+        const maxAge = 2 * 60;
         const token = jwt.sign(
           { id: user._id, email, role: user.role },
           process.env.JWTSECRET,
@@ -37,6 +37,7 @@ exports.login = async (req, res) => {
         res.status(200).json({
           message: "User successfully Logged in",
           user: user._id,
+          token: token
         });
       } else {
         res.status(400).json({ message: "Login not successful" });

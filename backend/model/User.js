@@ -32,7 +32,16 @@ const UserSchema = new Mongoose.Schema({
     default: "Basic",
     required: true,
   },
-})
+  transaction_id: {
+    type : String,
+    // required : true,
+  },
+  payment_status: {
+    type : String,
+    enum : ['PENDING','SUCCESSFUL','FAILED'],
+    default : "PENDING"
+  }
+},{timestamps : true})
 
 const User = Mongoose.model("user", UserSchema);
 

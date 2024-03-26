@@ -4,6 +4,8 @@ const { register} = require("./register")
 const { login  } = require("./login")
 const leadController = require("../controllers/leadController")
 const { adminAuth } = require("../middleware/auth")
+// const { newPayment, statusCheck } = require("../controllers/paymentphoneController")
+
 
 
 router.route("/register").post(register)
@@ -17,6 +19,11 @@ router.get('/', leadController.getAllLeads);
 
 // DELETE /leads/:id - Delete a lead by ID
 router.delete('/:id', leadController.deleteLeadById);
+
+
+// router.route("/payment").post(newPayment)
+
+// router.route('/status').post(statusCheck);
 
 
 module.exports = router
