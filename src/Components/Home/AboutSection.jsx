@@ -1,5 +1,6 @@
 import React from 'react'
 import { IoMdCheckboxOutline } from "react-icons/io";
+import { NavLink } from 'react-router-dom';
 
 function AboutSection() {
 
@@ -63,12 +64,12 @@ function AboutSection() {
                 </p>
                     </div>
                 </div>
-                <a
-                  href="/"
+                <NavLink
+                  to="/register"
                   className="mt-10 block w-full rounded-md bg-[--three-color] outline outline-2 outline-[--three-color] hover:bg-white hover:text-[--three-color] px-3 py-2 text-center text-sm font-semibold text-white shadow-sm"
                 >
                   Get access
-                </a>
+                </NavLink>
                 <p className="mt-6 text-xs leading-5 text-gray-600">
                   Invoices and receipts available for easy company reimbursement
                 </p>
