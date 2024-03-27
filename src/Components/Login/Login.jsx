@@ -3,10 +3,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
-import LoginImg from "../../Images/login-img.png";
+import LoginImg from "../../Images/6310507-Photoroom.png-Photoroom.png";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { SiGnuprivacyguard } from "react-icons/si";
 import axios from "axios";
+import { IoClose } from "react-icons/io5";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,6 +31,9 @@ function Login() {
   const [phonenumberError, setPhonenumberError] = useState(false);
   const [signupPasswordError, setSignupPasswordError] = useState(false);
   const [isLoginForm, setIsLoginForm] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [paymentStatusError, setPaymentStatusError] = useState(false);
 
   const handleLoginInputChange = (e) => {
     const { name, value } = e.target;
@@ -60,6 +64,10 @@ function Login() {
       case "signupPassword":
         setSignupPassword(value);
         setSignupPasswordError(value.length <= 6);
+        break;
+      case "paymentStatus": 
+        setPaymentStatus(value);
+        setPaymentStatusError(value.length === 0);
         break;
       default:
         break;
@@ -104,7 +112,27 @@ function Login() {
       setSignupPasswordError(!signupPassword);
       return;
     }
-    // Send signup request to the API
+    handlePopup();
+  };
+
+  const handlePopup = () => {
+    setShowPopup(true);
+  };
+
+  const handlePaymentSubmit = async () => {
+    if (!paymentStatus) {
+      setPaymentStatusError(true);
+    } else {
+      // Proceed with the payment status
+      console.log("Payment status selected:", paymentStatus);
+      // Close the popup
+      setShowPopup(false);
+      setName("");
+      setEmail("");
+      setPhoneNumber("");
+      setSignupPassword("");
+    }
+    
     try {
       const response = await axios.post(
         "http://localhost:5000/api/auth/register",
@@ -113,6 +141,7 @@ function Login() {
           email,
           phonenumber,
           password: signupPassword,
+          payment_status: paymentStatus,
         }
       );
       // Handle successful signup
@@ -136,7 +165,6 @@ function Login() {
     setLoginPassword("");
   };
 
-
   return (
     <div className="bg-[--main-color]">
     {/* <ToastContainer />   */}
@@ -144,12 +172,12 @@ function Login() {
         <section id="formHolder">
           <div className="grid lg:grid-cols-2 md:grid-cols-1">
             {/* Brand Box */}
-            <div className=" brand">
+            <div className=" brand lg:rounded-md  rounded-b-md">
               <div className="text-center lg:pt-16 pt-5 pb-5">
-                <div className="text-4xl pb-2 text-[--three-color]">Welcome to the Lead Hunter</div>
                 <div>
-                  <img className="w-72 mx-auto" src={LoginImg} alt="img" />
+                  <img className="w-64 mx-auto" src={LoginImg} alt="img" />
                 </div>
+                <div className="lg:text-4xl text-3xl pt-3 text-[--three-color]">Welcome to the Lead Hunter</div>
                 <div className="text-sm font-semibold text-gray-600 pt-3">Login / Registration</div>
               </div>
             </div>
@@ -157,7 +185,7 @@ function Login() {
             {/* Form Box */}
             <div className="form">
               {/* Login Form */}
-              <div className={`login form-peice ${isLoginForm ? "switched" : ""}`}>
+              <div className={`login lg:rounded-md rounded-b-md form-peice ${isLoginForm ? "switched" : ""}`}>
                 <form className="login-form" onSubmit={handleLoginFormSubmit}>
                 <div className="text-center">
                   <div><SiGnuprivacyguard className='text-5xl mx-auto text-[--three-color]' /></div>
@@ -169,7 +197,7 @@ function Login() {
                       type="email"
                       name="loginEmail"
                       id="loginemail"
-                      className="shadow-sm"
+                      className="shadow-sm input_1"
                       value={loginEmail}
                       onChange={handleLoginInputChange}
                       required
@@ -184,7 +212,7 @@ function Login() {
                       type="password"
                       name="loginPassword"
                       id="loginPassword"
-                      className="shadow-sm"
+                      className="shadow-sm input_1"
                       value={loginPassword}
                       onChange={handleLoginInputChange}
                       required
@@ -210,7 +238,10 @@ function Login() {
               </div>
 
               {/* Signup Form */}
-              <div className={`signup form-peice ${isLoginForm ? "" : "switched"}`}>
+
+              {/* onSubmit={handleSignupFormSubmit} */}
+
+              <div className={`signup lg:rounded-md rounded-b-md form-peice ${isLoginForm ? "" : "switched"}`}>
                 <form className="signup-form" onSubmit={handleSignupFormSubmit}>
                 <div className="text-center">
                   <div><RiLoginBoxLine className='text-5xl mx-auto text-[--three-color]' /></div>
@@ -222,7 +253,7 @@ function Login() {
                       type="text"
                       name="name"  
                       id="name"
-                      className="shadow-sm"
+                      className="shadow-sm input_1"
                       value={name}
                       onChange={handleSignupInputChange}
                       required
@@ -237,7 +268,7 @@ function Login() {
                       type="email"
                       name="email"
                       id="email"
-                      className="shadow-sm"
+                      className="shadow-sm input_1"
                       value={email}
                       onChange={handleSignupInputChange}
                       required
@@ -252,7 +283,7 @@ function Login() {
                       type="text"
                       name="phonenumber"
                       id="phonenumber"
-                      className="shadow-sm"
+                      className="shadow-sm input_1"
                       value={phonenumber}
                       onChange={handleSignupInputChange}
                       required
@@ -267,7 +298,7 @@ function Login() {
                       type="password"
                       name="signupPassword"
                       id="signupPassword"
-                      className="shadow-sm"
+                      className="shadow-sm input_1"
                       value={signupPassword}
                       onChange={handleSignupInputChange}
                       required
@@ -278,6 +309,7 @@ function Login() {
                   </div>
                   <div className="CTA">
                     <input className="button_1 hover:cursor-pointer" type="submit" value="Sign Up" />
+                    {/* <button onClick={handlePopup}>Submit</button> */}
                     <div className="text-sm pt-3 flex justify-center">
                       Already have an account?&nbsp;
                       <div
@@ -288,6 +320,48 @@ function Login() {
                       </div>
                     </div>
                   </div>
+                  {showPopup && (
+                    <div className="popup fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 p-5 z-50">
+                      <div className="bg-white rounded-md p-5">
+                      <div className="justify-between flex pb-3">
+                        <div className="text-lg">Choose Subscribtion:</div>
+                        <button className="hover:text-red-700" onClick={() => setShowPopup(false)}><IoClose className="text-xl" /></button>
+                      </div>
+                      <div className="grid grid-cols-2 max-w-xl mx-auto gap-3">
+                        <div className="border p-7 text-center rounded-md shadow-md">
+                          <div className="text-3xl font-semibold">
+                            99 <sub>/ INR</sub>
+                          </div>
+                          <div className="pt-2">
+                            <input
+                              type="checkbox"
+                              checked={paymentStatus === '99'}
+                              onChange={() => setPaymentStatus('99')}
+                            />
+                          </div>
+                        </div>
+                        <div className="border p-7 text-center rounded-md shadow-md">
+                          <div className="text-3xl font-semibold">
+                            999 <sub>/ INR</sub>
+                          </div>
+                          <div className="pt-2">
+                            <input
+                              type="checkbox"
+                              checked={paymentStatus === '999'}
+                              onChange={() => setPaymentStatus('999')}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      {paymentStatusError && (
+                      <span className="error">Please select one option</span>
+                    )}
+                    <div className="CTA">
+                      <button className="button_1 p-1 px-3"  onClick={handlePaymentSubmit}>Submit Payment</button>
+                    </div>
+                      </div>
+                    </div>
+                  )}
                 </form>
               </div>
             </div>
