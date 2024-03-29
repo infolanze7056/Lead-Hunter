@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
       if (result) {
         const maxAge = 2 * 60;
         const token = jwt.sign(
-          { id: user._id, email, role: user.role },
+          { id: user._id, email: user.email, role: user.role },
           process.env.JWTSECRET,
           { expiresIn: maxAge } // 3hrs in sec
         );
@@ -36,7 +36,11 @@ exports.login = async (req, res) => {
         });
         res.status(200).json({
           message: "User successfully Logged in",
-          user: user._id,
+          user: {
+            _id: user._id,
+            email: user.email,
+            role: user.role
+          },
           token: token
         });
       } else {
