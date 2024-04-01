@@ -16,9 +16,9 @@ exports.register = async (req, res, next) => {
   }
 
   // If payment is not successful, do not proceed with registration
-  // if (payment_status !== 'SUCCESSFUL') {
-  //   return res.status(400).json({ message: "Payment not successful. Cannot proceed with registration." });
-  // }
+  if (payment_status !== 'SUCCESSFUL') {
+    return res.status(400).json({ message: "Payment not successful. Cannot proceed with registration." });
+  }
   
   try {
     // Hash the password
