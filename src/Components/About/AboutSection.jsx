@@ -5,7 +5,7 @@ function AboutSection() {
   return (
     <div className="font-family">
       <div className="lg:px-36 md:px-20 px-5 py-10">
-        <div className="grid lg:grid-cols-2 grid-cols-1 items-center">
+        <div className="grid lg:grid-cols-2 grid-cols-1 gap-16 items-center">
             <div>
             <div className="text-5xl font-semibold absolute">Our Story.</div>
             <img className="mx-auto" src={AboutImg} alt="" />

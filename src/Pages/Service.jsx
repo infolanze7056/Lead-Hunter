@@ -6,8 +6,8 @@ import ServiceData from '../Components/Service/ServiceData'
 function Service() {
   return (
     <>
-      <ServiceSection />
       <ServiceContent />
+      <ServiceSection />
       <ServiceData />
     </>
   )

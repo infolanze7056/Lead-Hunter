@@ -34,8 +34,7 @@ function App() {
 function AppContent() {
 
   const location = useLocation();
-
-
+  
   const isDashboardPage = location.pathname === '/dashboard' || location.pathname === "/admin" ;
   return (
     <div>

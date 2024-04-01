@@ -5,7 +5,7 @@
   import "../../Components/Header/Header.css";
   import Logo from "../../Images/Lead Hunter Logo.png";
 
-  function DashNav() {
+  function DashNav({ email }) {
     const [isActive, setIsActive] = useState(1);
     const [isOpen, setIsOpen] = useState(true);
 
@@ -57,7 +57,7 @@
             >
               <ul className="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium rounded-lg lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li className="text-gray-400">
-                {/* {loginId === "admin" && ( */}
+                {/* {email === "darshil@gmail.com" &&  ( */}
                 <NavLink
                   id="1"
                   to='/admin'

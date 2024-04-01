@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { FaBars } from "react-icons/fa6";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Header.css";
@@ -8,6 +8,28 @@ import Logo from "../../Images/Lead Hunter Logo.png";
 function Header() {
   const [isActive, setIsActive] = useState(1);
   const [isOpen, setIsOpen] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Update isActive based on the current location
+    switch (location.pathname) {
+      case "/":
+        setIsActive(1);
+        break;
+      case "/about":
+        setIsActive(2);
+        break;
+      case "/contact":
+        setIsActive(3);
+        break;
+      case "/service":
+        setIsActive(4);
+        break;
+      default:
+        setIsActive(1);
+    }
+    window.scrollTo(0, 0);
+  }, [location]);
 
   const handleNavSelected = (e) => {
     setIsActive(e.target.id);

@@ -9,6 +9,9 @@ import { SiGnuprivacyguard } from "react-icons/si";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
 
+
+
+
 function Login() {
   const navigate = useNavigate();
 
@@ -81,7 +84,7 @@ function Login() {
       setLoginEmailError(!loginEmail);
       setLoginPasswordError(!loginPassword);
       return;
-    }
+    } 
     // Send login request to the API
     try {
       const response = await axios.post(
@@ -94,7 +97,24 @@ function Login() {
       // Handle successful login
       console.log("Login successful", response.data);
       notifySuccess("Login successful");
-      navigate("/dashboard");
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+
+      const tokenParts = token.split('.');
+      const payload = JSON.parse(atob(tokenParts[1]));
+      const currentTime = Math.floor(Date.now() / 1000);
+      console.log("Token expiration time:", payload.exp);
+      console.log("Current time:", currentTime);
+
+
+
+      if (payload.exp < currentTime) {
+        localStorage.removeItem("token");
+        navigate("/register");
+      } else {
+        navigate("/dashboard");
+      }
+
     } catch (error) {
       console.error("Login failed", error);
       notifyError("Login failed");
