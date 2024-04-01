@@ -47,7 +47,7 @@ function AppContent() {
         <Route path="/contact" element={<Contact />} />
         <Route path='/register' element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
-        <Route path='/payment' element={<Payment />}  />
+        <Route path='/pay-success/:transaction_id' element={<Payment />}  />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/api/passwordReset/:userId/:token' element={<ResetPassword />} />
