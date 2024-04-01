@@ -1,10 +1,8 @@
 const express = require("express")
 const router = express.Router()
-// const { register, payment} = require("./register")
 const { login  } = require("./login")
 const leadController = require("../controllers/leadController")
 const { adminAuth } = require("../middleware/auth")
-// const { newPayment, statusCheck } = require("../controllers/paymentphoneController");
 
 const { addUser } = require("../Auth/register")
 
@@ -21,13 +19,9 @@ router.post('/', leadController.createLead);
 router.get('/', leadController.getAllLeads);
 
 // DELETE /leads/:id - Delete a lead by ID
-router.delete('/:id', leadController.deleteLeadById);
+// router.delete('/:id', leadController.deleteLeadById);
+router.delete("/:id", adminAuth, leadController.deleteLeadById);
 
-
-// router.route("/payment").get(payment)
-
-// router.route("/payment").post(newPayment)
-// router.route('/status').post(statusCheck);
 
 router.route("/user").post(addUser)
 
