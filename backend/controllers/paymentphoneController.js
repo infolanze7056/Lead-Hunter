@@ -149,15 +149,15 @@ async function statusCheck(req, res) {
 
         await req_data.save();
 
-        const url = `http://localhost:5000/pay-success?transaction_id=${transaction_id}`;
+        const url = `http://localhost:3000/pay-success/${transaction_id}`;
         return res.redirect(url);
       } else {
-        const url = `http://localhost:5000/register?status=failed`;
+        const url = `http://localhost:3000/register?status=failed`;
         return res.redirect(url);
       }
     })
     .catch((error) => {
-      const url = `http://localhost:5000/register?status=failed`;
+      const url = `http://localhost:3000/register?status=failed`;
       return res.redirect(url);
       console.error(error);
     });
