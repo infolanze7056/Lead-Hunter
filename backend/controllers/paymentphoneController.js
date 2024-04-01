@@ -66,7 +66,7 @@ async function newPayment(req, res) {
 
         try {
           const user_found = await User.findOne({
-            $or: [{ name }, { phonenumber }],
+            $or: [{ email }, { phonenumber }],
           });
 
           if (user_found) {
