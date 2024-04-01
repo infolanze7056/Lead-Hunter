@@ -5,18 +5,22 @@ const Mongoose = require("mongoose")
 const UserSchema = new Mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true,"Name is required"]
   },
   email: {
     type: String,
-    unique: true,
-    required: true,
+    required : [true, "Email not found"],
+    unique: [true,"Email is already registered"],
     match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   },
   password: {
     type: String,
     minlength: 6,
-    required: true,
+    required: [true,"Password is required"]
+  },
+  amount: {
+    type: Number,
+    required: [true, "Amount required"]
   },
   phonenumber: {
     type: String,
@@ -25,7 +29,7 @@ const UserSchema = new Mongoose.Schema({
     maxlength: 10,
     // Regular expression for Indian phone number validation
     match: /^[6-9]\d{9}$/,
-    required: true,
+    required: [true,"Phonenumber is required"],
   },
   role: {
     type: String,
@@ -34,7 +38,7 @@ const UserSchema = new Mongoose.Schema({
   },
   transaction_id: {
     type : String,
-    // required : true,
+    required : [true, "id not provided"]
   },
   payment_status: {
     type : String,
@@ -42,6 +46,7 @@ const UserSchema = new Mongoose.Schema({
     default : "PENDING"
   }
 },{timestamps : true})
+
 
 const User = Mongoose.model("user", UserSchema);
 

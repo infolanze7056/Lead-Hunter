@@ -1,54 +1,47 @@
+const bcrypt = require("bcryptjs"); // Import bcrypt for password hashing
 const User = require("../model/User");
-const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
-const axios = require('axios');
 
-exports.register = async (req, res, next) => {
-  const { name, email, password, phonenumber, payment_status } = req.body;
-
-  // Validate email, password, and phone number
-  if (!name || !email || !password || !phonenumber || !payment_status) {
-    return res.status(400).json({ message: "Please provide all required fields" });
-  }
-
-  if (password.length < 6) {
-    return res.status(400).json({ message: "Password must be at least 6 characters long" });
-  }
-
-  // If payment is not successful, do not proceed with registration
-  if (payment_status !== 'SUCCESSFUL') {
-    return res.status(400).json({ message: "Payment not successful. Cannot proceed with registration." });
-  }
-  
+const addUser = async (req, res) => {
   try {
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const data = req.body;
+    console.log("user-data", data);
 
-    // Create the user
-    const user = await User.create({ name, email, password: hashedPassword, phonenumber });
+    // Create a new user
+    const newUser = await createNewUser(data);
 
-    // Generate JWT token
-    const maxAge = 3 * 60 * 60; // 3 hours in seconds
-    const token = jwt.sign(
-      { id: user._id, name, role: user.role },
-      process.env.JWTSECRET,
-      { expiresIn: maxAge }
-    );
-
-    // Set JWT token in cookie
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      maxAge: maxAge * 1000, // Convert to milliseconds
+    res.json({
+      status: 200,
+      success: true,
+      data: { user: newUser },
     });
-
-    // Respond with success message and user ID
-    res.status(201).json({
-      message: "User successfully created",
-      user: user._id,
-    });
-
   } catch (error) {
-    // Handle any errors that occur during user creation or token generation
-    res.status(400).json({ message: "User not successfully created", error: error.message });
+    console.log(error);
+
+    res.json({
+      status: 500,
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
+
+async function createNewUser(user) {
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(user.password, 10);
+
+  const newUser = new User({
+    transaction_id: user.transaction_id,
+    name: user.name,
+    email: user.email,
+    phonenumber: user.phonenumber,
+    role: user.role,
+    password: hashedPassword, // Assign hashed password to user object
+    amount: user.amount,
+  });
+  // Save the new user to the database
+  await newUser.save();
+  // Return the newly created user
+  return newUser;
+}
+
+module.exports = { createNewUser, addUser };
