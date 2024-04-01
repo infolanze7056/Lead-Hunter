@@ -4,7 +4,6 @@ const { newPayment, statusCheck } = require("../controllers/paymentphoneControll
 const router = express.Router()
 
 router.route("/payment").post(newPayment)
-
 router.route('/status').post(statusCheck);
 
-module.exports = router; // Change export to module.exports
+module.exports = router;

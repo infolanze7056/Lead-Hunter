@@ -347,7 +347,7 @@ function Login() {
                         <div className="text-lg">Choose Subscribtion:</div>
                         <button className="hover:text-red-700" onClick={() => setShowPopup(false)}><IoClose className="text-xl" /></button>
                       </div>
-                      <div className="grid grid-cols-2 max-w-xl mx-auto gap-3">
+                      {/* <div className="grid grid-cols-2 max-w-xl mx-auto gap-3">
                         <div className="border p-7 text-center rounded-md shadow-md">
                           <div className="text-3xl font-semibold">
                             99 <sub>/ INR</sub>
@@ -375,7 +375,8 @@ function Login() {
                       </div>
                       {paymentStatusError && (
                       <span className="error">Please select one option</span>
-                    )}
+                    )} */}
+                    
                     <div className="CTA">
                       <button className="button_1 p-1 px-3"  onClick={handlePaymentSubmit}>Submit Payment</button>
                     </div>
