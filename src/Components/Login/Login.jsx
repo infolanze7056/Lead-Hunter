@@ -8,8 +8,9 @@ import { RiLoginBoxLine } from "react-icons/ri";
 import { SiGnuprivacyguard } from "react-icons/si";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
+import { useAuth } from "../../AuthContext";
 
-function Login() {
+function Login({role}) {
   const navigate = useNavigate();
 
   const notifySuccess = (message) => toast.success(message);
@@ -20,6 +21,7 @@ function Login() {
   const [loginPassword, setLoginPassword] = useState("");
   const [loginEmailError, setLoginEmailError] = useState(false);
   const [loginPasswordError, setLoginPasswordError] = useState(false);
+  const { login } = useAuth();
 
   // State variables for signup form
   const [name, setName] = useState("");
@@ -74,47 +76,63 @@ function Login() {
     }
   };
 
+
   const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
-    // Validation for login form fields
     if (!loginEmail || !loginPassword) {
-      setLoginEmailError(!loginEmail);
-      setLoginPasswordError(!loginPassword);
-      return;
+        setLoginEmailError(!loginEmail);
+        setLoginPasswordError(!loginPassword);
+        return;
     }
     // Send login request to the API
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        {
-          email: loginEmail,
-          password: loginPassword,
+        const response = await axios.post(
+            "http://localhost:5000/api/auth/login",
+            {
+                email: loginEmail,
+                password: loginPassword,
+            }
+        );
+
+        // Handle successful login
+        console.log("Login successful", response.data);
+        notifySuccess("Login successful");
+        login();
+        const { token } = response.data;
+        localStorage.setItem("token", token);
+
+        setTimeout(() => {
+          // Remove token after 120 seconds
+          localStorage.removeItem("token");
+          navigate("/register");
+      }, 600000); // 120 seconds = 120000 milliseconds
+
+        const tokenParts = token.split(".");
+        const payload = JSON.parse(atob(tokenParts[1]));
+        const currentTime = Math.floor(Date.now() / 1000);
+        console.log("Token expiration time:", payload.exp);
+        console.log("Current time:", currentTime);
+
+        if (payload.exp < currentTime) {
+            localStorage.removeItem("token");
+            navigate("/register");
+        } else {
+            const role = response.data.user.role; // Extract role from response data
+            console.log("role", role);
+            // Redirect based on role
+            if (role && role === "Admin") {
+                navigate("/admin");
+            } else {
+                navigate("/dashboard");
+            }
         }
-      );
-      // Handle successful login
-      console.log("Login successful", response.data);
-      notifySuccess("Login successful");
-      const { token } = response.data;
-      localStorage.setItem("token", token);
-
-      const tokenParts = token.split(".");
-      const payload = JSON.parse(atob(tokenParts[1]));
-      const currentTime = Math.floor(Date.now() / 1000);
-      console.log("Token expiration time:", payload.exp);
-      console.log("Current time:", currentTime);
-
-      if (payload.exp < currentTime) {
-        localStorage.removeItem("token");
-        navigate("/register");
-      } else {
-        navigate("/dashboard");
-      }
     } catch (error) {
-      console.error("Login failed", error);
-      notifyError("Login failed");
-      // Handle login error
+        console.error("Login failed", error);
+        notifyError("Login failed");
     }
-  };
+};
+
+
 
   const handleSignupFormSubmit = async (e) => {
     e.preventDefault();

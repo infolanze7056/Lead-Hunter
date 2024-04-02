@@ -5,13 +5,34 @@
   import "../../Components/Header/Header.css";
   import Logo from "../../Images/Lead Hunter Logo.png";
 
-  function DashNav({ email }) {
+  function DashNav({ role }) {
     const [isActive, setIsActive] = useState(1);
     const [isOpen, setIsOpen] = useState(true);
 
     const handleNavSelected = (e) => {
       setIsActive(e.target.id);
       setIsOpen(true);
+    };
+
+    const handleLogout = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/logout", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        localStorage.removeItem("token");
+        
+        if (response.ok) {
+          // Clear local session state if needed
+          console.log("Logged out successfully");
+          window.location.href = "/";
+        } else {
+          console.error("Logout failed");
+        }
+      } catch (error) {
+        console.error("Error occurred during logout", error);
+      }
     };
 
 
@@ -24,10 +45,11 @@
             </div>
             <div className="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
             <NavLink 
-              to="/" 
+              // to="/" 
               activeClassName="active"
               id="0"
-              onClick={(e) => handleNavSelected(e)}
+              // onClick={(e) => handleNavSelected(e)}
+              onClick={(e) => handleLogout()}
               className={`lg:px-8 md:px-8 px-6 z-40 hover:bg-[--three-color] bg-white text-[--three-color] outline outline-2 hover:text-white outline-[--three-color] font-medium rounded-md text-sm py-2 text-center ${
                 isActive === "0" ? "active hover:text-white cursor-pointer" : "hover:text-white cursor-pointer"
               }`}
@@ -56,8 +78,8 @@
               id="navbar-sticky"
             >
               <ul className="flex flex-col nav-menu p-4 lg::p-0 mt-4 lg:mb-0 md:mb-4 mb-4 font-medium rounded-lg lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              {role === "Admin" && (
                 <li className="text-gray-400">
-                {/* {email === "darshil@gmail.com" &&  ( */}
                 <NavLink
                   id="1"
                   to='/admin'
@@ -71,8 +93,9 @@
                 >
                 Admin Panel
                 </NavLink>
-                {/* )} */}
                 </li>
+                )}
+                {role !== "Admin" && (
                 <li className="text-gray-400">
                 <NavLink
                   to="/dashboard"
@@ -88,6 +111,7 @@
                   Dashboard
                 </NavLink>
                 </li>
+                 )}
               </ul>
             </div>
           </div>

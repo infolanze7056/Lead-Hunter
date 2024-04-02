@@ -1,35 +1,22 @@
-// AuthContext.js
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // Check if the user is already logged in (e.g., token exists in localStorage)
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const login = () => {
-    // Perform login logic (e.g., authenticate user with backend, store token)
-    // Update isLoggedIn state accordingly
-    setIsLoggedIn(true);
-    localStorage.setItem('token', 'example_token'); // Example: Store token in localStorage
+    // Your login logic here
+    setIsAuthenticated(true);
   };
 
   const logout = () => {
-    // Perform logout logic (e.g., clear authentication token)
-    // Update isLoggedIn state accordingly
-    setIsLoggedIn(false);
-    localStorage.removeItem('token'); // Remove token from localStorage on logout
+    // Your logout logic here
+    setIsAuthenticated(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

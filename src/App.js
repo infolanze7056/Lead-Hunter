@@ -14,14 +14,13 @@ import Forgot from './Components/Login/Forgot';
 import Admin from './Components/Admin/Admin';
 import ResetPassword from './Components/Login/ResetPassword';
 import { AuthProvider } from './AuthContext';
-import PrivateRoute from './PrivateRoute';
+// import PrivateRoute from './PrivateRoute';
 import Free from './Components/Free';
 import Payment from './Components/Payment/Payment';
 
 function App() {
-  
   return (
-    <div>
+    <div> 
         <AuthProvider>
             <BrowserRouter> 
               <AppContent />
@@ -52,12 +51,10 @@ function AppContent() {
         <Route path='/admin' element={<Admin />} />
         <Route path='/api/passwordReset/:userId/:token' element={<ResetPassword />} />
         <Route path="*" element={<Home />} />
-        <Route element={<React.Fragment> 
+        {/* <Route element={<React.Fragment> 
           <PrivateRoute path="/dashboard" element={<Dashboard />} />
           <PrivateRoute path="/admin" element={<Admin />} />
-        </React.Fragment>} />
-        {/* <PrivateRoute path='/dashboard' element={<Dashboard />} />
-        <PrivateRoute path='/admin' element={<Admin />} /> */}
+        </React.Fragment>} /> */}
       </Routes>
       <ToastContainer />
       {!isDashboardPage && <Footer />}
