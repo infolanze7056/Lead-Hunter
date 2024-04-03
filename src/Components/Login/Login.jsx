@@ -75,16 +75,15 @@ function Login({role}) {
   };
 
 
-
-
   const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
+    
     if (!loginEmail || !loginPassword) {
         setLoginEmailError(!loginEmail);
         setLoginPasswordError(!loginPassword);
         return;
     }
-    // Send login request to the API
+    
     try {
         const response = await axios.post(
             "http://localhost:5000/api/auth/payment",
@@ -94,47 +93,127 @@ function Login({role}) {
             }
         );
 
-        // Handle successful login
-        console.log("Login successful", response.data);
-        notifySuccess("Login successful");
-        // window.location.href = response.data;
-        const { token } = response.data;
-        localStorage.setItem("token", token);
-        const role = response.data.user.role;
-        localStorage.setItem("role", role);
+      if(response.data.user === true) {
+        console.log(response.data.payment_status ,"sdfsdf")
+        if (response.data.payment_status === "SUCCESSFUL") {
+          // Handle successful login
+          console.log("Login successful", response.data);
+          const { token } = response.data;
+          notifySuccess("Login successful");
+          
+          localStorage.setItem("token", token);
+          const role = response.data.role;
+          localStorage.setItem("role", role);
 
-        setTimeout(() => {
-          // Remove token after 120 seconds
-          localStorage.removeItem("token");
-          localStorage.removeItem("role");
-          navigate("/register");
-      }, 600000); // 120 seconds = 120000 milliseconds 10min = 600000
+          setTimeout(() => {
+              // Remove token after 10 minutes
+              localStorage.removeItem("token");
+              localStorage.removeItem("role");
+              navigate("/register");
+          }, 600000); // 10 minutes
 
-        const tokenParts = token.split(".");
-        const payload = JSON.parse(atob(tokenParts[1]));
-        const currentTime = Math.floor(Date.now() / 1000);
-        console.log("Token expiration time:", payload.exp);
-        console.log("Current time:", currentTime);
+          const tokenParts = token.split(".");
+          const payload = JSON.parse(atob(tokenParts[1]));
+          const currentTime = Math.floor(Date.now() / 1000);
+          console.log("Token expiration time:", payload.exp);
+          console.log("Current time:", currentTime);
 
-        if (payload.exp < currentTime) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("role");
-            navigate("/register");
-        } else {
-            const role = response.data.user.role; // Extract role from response data
-            console.log("role", role);
-            // Redirect based on role
-            if (role && role === "Admin") {
-                navigate("/admin");
-            } else {
-                navigate("/dashboard");
-            }
-        }
+          if (payload.exp < currentTime) {
+              localStorage.removeItem("token");
+              localStorage.removeItem("role");
+              navigate("/register");
+          } else {
+              const role = response.data.role; // Extract role from response data
+              console.log("Role:", role);
+              // Redirect based on role
+              if (role && role === "Admin") {
+                  navigate("/admin");
+              } else {
+                  navigate("/dashboard");
+              }
+          }
+      } else if (response.data.payment_status === "PENDING") {
+       
+          const paymentLink = response.data.payment_link; // Assuming 'payment_link' is the key for the generated payment link in the response data
+          window.location.href = paymentLink;
+      } else {
+          // Handle other payment statuses
+          console.log("Payment status is neither SUCCESSFUL nor PENDING");
+          notifyError("Payment failed");
+      }
+      }  
     } catch (error) {
         console.error("Login failed", error);
         notifyError("Login failed");
     }
 };
+
+
+
+
+
+
+
+
+//   const handleLoginFormSubmit = async (e) => {
+//     e.preventDefault();
+//     if (!loginEmail || !loginPassword) {
+//         setLoginEmailError(!loginEmail);
+//         setLoginPasswordError(!loginPassword);
+//         return;
+//     }
+//     // Send login request to the API
+//     try {
+//         const response = await axios.post(
+//             "http://localhost:5000/api/auth/payment",
+//             {
+//                 email: loginEmail,
+//                 password: loginPassword,
+//                 payment_status,
+//             }
+//         );
+
+//         // Handle successful login
+//         console.log("Login successful", response.data);
+//         notifySuccess("Login successful");
+//         // window.location.href = response.data;
+//         const { token } = response.data;
+//         localStorage.setItem("token", token);
+//         const role = response.data.user.role;
+//         localStorage.setItem("role", role);
+
+//         setTimeout(() => {
+//           // Remove token after 120 seconds
+//           localStorage.removeItem("token");
+//           localStorage.removeItem("role");
+//           navigate("/register");
+//       }, 600000); // 120 seconds = 120000 milliseconds 10min = 600000
+
+//         const tokenParts = token.split(".");
+//         const payload = JSON.parse(atob(tokenParts[1]));
+//         const currentTime = Math.floor(Date.now() / 1000);
+//         console.log("Token expiration time:", payload.exp);
+//         console.log("Current time:", currentTime);
+
+//         if (payload.exp < currentTime) {
+//             localStorage.removeItem("token");
+//             localStorage.removeItem("role");
+//             navigate("/register");
+//         } else {
+//             const role = response.data.user.role; // Extract role from response data
+//             console.log("role", role);
+//             // Redirect based on role
+//             if (role && role === "Admin") {
+//                 navigate("/admin");
+//             } else {
+//                 navigate("/dashboard");
+//             }
+//         }
+//     } catch (error) {
+//         console.error("Login failed", error);
+//         notifyError("Login failed");
+//     }
+// };
 
 
 

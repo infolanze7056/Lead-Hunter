@@ -14,6 +14,7 @@ function Leads() {
       try {
         const response = await axios.get('http://localhost:5000/api/leads');
         setLeads(response.data); // Assuming your API returns an array of leads
+        // console.log("data", response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
