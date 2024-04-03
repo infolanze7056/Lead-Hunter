@@ -87,7 +87,7 @@ function Login({role}) {
     // Send login request to the API
     try {
         const response = await axios.post(
-            "http://localhost:5000/api/auth/login",
+            "http://localhost:5000/api/auth/payment",
             {
                 email: loginEmail,
                 password: loginPassword,
