@@ -9,7 +9,7 @@ const passwordReset = require("./Auth/passwordReset");
 const { adminAuth, userAuth } = require("./middleware/auth");
 const phonepeRoute = require("./routes/phoneperoute");
 
-const phonepeRouteTwo = require("./Auth/route")
+// const phonepeRouteTwo = require("./Auth/route")
 
 const { userRouter } = require("./Auth/route");
 
@@ -38,7 +38,7 @@ app.use("/api/routes", routes);
 app.use("/api/passwordReset", passwordReset);
 
 app.use("/api/phonepe", phonepeRoute);
-app.use("/api/phonepe", phonepeRouteTwo);
+// app.use("/api/phonepe", phonepeRouteTwo);
 
 // Adding admin and basic routes with their respective middleware
 app.get("/api/admin", adminAuth, (req, res) => res.send("Admin Route"));

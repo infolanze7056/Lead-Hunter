@@ -27,7 +27,7 @@ async function login(req, res) {
 
     // Check if user exists
     if (!user) {
-      return res.status(400).json({ message: "User not found" });
+      return res.status(400).json({user:false, message: "User not found" });
     }
 
     // Compare passwords
@@ -56,11 +56,11 @@ async function login(req, res) {
       // Send success response
       return res.status(200).json({
         message: "User successfully logged in",
-        user: {
-          _id: user._id,
-          email: user.email,
-          role: user.role
-        },
+        user: true,
+        _id: user._id,
+        email: user.email,
+        role: user.role,
+        payment_status: user.payment_status,
         token: token
       });
     } else if (user.payment_status === "PENDING") {
@@ -108,7 +108,11 @@ async function login(req, res) {
       const response = await axios(options);
 
       // Return payment page URL
-      return res.status(200).send(response.data.data.instrumentResponse.redirectInfo.url);
+      return res.status(200).json({
+        user:true,
+        payment_status: user.payment_status,
+        payment_link: response.data.data.instrumentResponse.redirectInfo.url
+    });
     } else {
       // Handle other payment statuses
       return res.status(400).json({ message: "Login not successful" });
