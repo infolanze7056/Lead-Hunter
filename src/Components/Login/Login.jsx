@@ -168,6 +168,7 @@ function Login({ role }) {
 
     if (!termsChecked) {
       alert("Please agree to the Terms and Conditions.");
+      return;
   }
 
     try {
