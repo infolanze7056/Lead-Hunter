@@ -22,6 +22,7 @@
         });
 
         localStorage.removeItem("token");
+        localStorage.removeItem("role");
         
         if (response.ok) {
           // Clear local session state if needed

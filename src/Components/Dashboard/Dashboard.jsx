@@ -9,11 +9,15 @@ function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      navigate('/register')
-    }
-  });
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
 
+    if (!token) {
+      navigate('/register');
+    } else if (role === 'Admin') {
+      navigate('/admin');
+    }
+  }, [navigate]);
   return (
     <div>
         <DashNav />

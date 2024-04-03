@@ -9,10 +9,15 @@ function Admin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      navigate('/register')
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+
+    if (!token) {
+      navigate('/register');
+    } else if (role === 'Basic') {
+      navigate('/dashboard');
     }
-  });
+  }, [navigate]);
   
   return (
     <div>
