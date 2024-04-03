@@ -17,7 +17,7 @@ function Forgot() {
   const handleSubmit = async () => {
     try {
       // Perform your API call here
-      const response = await fetch('http://localhost:5000/api/passwordReset', {
+      const response = await fetch('https://backend-lead.vercel.app/api/passwordReset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

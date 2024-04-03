@@ -9,7 +9,7 @@ import { SiGnuprivacyguard } from "react-icons/si";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
 
-function Login({role}) {
+function Login({ role }) {
   const navigate = useNavigate();
 
   const notifySuccess = (message) => toast.success(message);
@@ -34,6 +34,7 @@ function Login({role}) {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("");
   const [paymentStatusError, setPaymentStatusError] = useState(false);
+  const [termsChecked, setTermsChecked] = useState(false);
 
   const handleLoginInputChange = (e) => {
     const { name, value } = e.target;
@@ -74,42 +75,41 @@ function Login({role}) {
     }
   };
 
-
   const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!loginEmail || !loginPassword) {
-        setLoginEmailError(!loginEmail);
-        setLoginPasswordError(!loginPassword);
-        return;
-    }
-    
-    try {
-        const response = await axios.post(
-            "http://localhost:5000/api/auth/payment",
-            {
-                email: loginEmail,
-                password: loginPassword,
-            }
-        );
 
-      if(response.data.user === true) {
-        console.log(response.data.payment_status ,"sdfsdf")
+    if (!loginEmail || !loginPassword) {
+      setLoginEmailError(!loginEmail);
+      setLoginPasswordError(!loginPassword);
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "https://backend-lead.vercel.app/api/auth/payment",
+        {
+          email: loginEmail,
+          password: loginPassword,
+        }
+      );
+
+      if (response.data.user === true) {
+        console.log(response.data.payment_status, "sdfsdf");
         if (response.data.payment_status === "SUCCESSFUL") {
           // Handle successful login
           console.log("Login successful", response.data);
           const { token } = response.data;
           notifySuccess("Login successful");
-          
+
           localStorage.setItem("token", token);
           const role = response.data.role;
           localStorage.setItem("role", role);
 
           setTimeout(() => {
-              // Remove token after 10 minutes
-              localStorage.removeItem("token");
-              localStorage.removeItem("role");
-              navigate("/register");
+            // Remove token after 10 minutes
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+            navigate("/register");
           }, 600000); // 10 minutes
 
           const tokenParts = token.split(".");
@@ -119,103 +119,33 @@ function Login({role}) {
           console.log("Current time:", currentTime);
 
           if (payload.exp < currentTime) {
-              localStorage.removeItem("token");
-              localStorage.removeItem("role");
-              navigate("/register");
+            localStorage.removeItem("token");
+            localStorage.removeItem("role");
+            navigate("/register");
           } else {
-              const role = response.data.role; // Extract role from response data
-              console.log("Role:", role);
-              // Redirect based on role
-              if (role && role === "Admin") {
-                  navigate("/admin");
-              } else {
-                  navigate("/dashboard");
-              }
+            const role = response.data.role; // Extract role from response data
+            console.log("Role:", role);
+            // Redirect based on role
+            if (role && role === "Admin") {
+              navigate("/admin");
+            } else {
+              navigate("/dashboard");
+            }
           }
-      } else if (response.data.payment_status === "PENDING") {
-       
+        } else if (response.data.payment_status === "PENDING") {
           const paymentLink = response.data.payment_link; // Assuming 'payment_link' is the key for the generated payment link in the response data
           window.location.href = paymentLink;
-      } else {
+        } else {
           // Handle other payment statuses
           console.log("Payment status is neither SUCCESSFUL nor PENDING");
           notifyError("Payment failed");
+        }
       }
-      }  
     } catch (error) {
-        console.error("Login failed", error);
-        notifyError("Login failed");
+      console.error("Login failed", error);
+      notifyError("Login failed");
     }
-};
-
-
-
-
-
-
-
-
-//   const handleLoginFormSubmit = async (e) => {
-//     e.preventDefault();
-//     if (!loginEmail || !loginPassword) {
-//         setLoginEmailError(!loginEmail);
-//         setLoginPasswordError(!loginPassword);
-//         return;
-//     }
-//     // Send login request to the API
-//     try {
-//         const response = await axios.post(
-//             "http://localhost:5000/api/auth/payment",
-//             {
-//                 email: loginEmail,
-//                 password: loginPassword,
-//                 payment_status,
-//             }
-//         );
-
-//         // Handle successful login
-//         console.log("Login successful", response.data);
-//         notifySuccess("Login successful");
-//         // window.location.href = response.data;
-//         const { token } = response.data;
-//         localStorage.setItem("token", token);
-//         const role = response.data.user.role;
-//         localStorage.setItem("role", role);
-
-//         setTimeout(() => {
-//           // Remove token after 120 seconds
-//           localStorage.removeItem("token");
-//           localStorage.removeItem("role");
-//           navigate("/register");
-//       }, 600000); // 120 seconds = 120000 milliseconds 10min = 600000
-
-//         const tokenParts = token.split(".");
-//         const payload = JSON.parse(atob(tokenParts[1]));
-//         const currentTime = Math.floor(Date.now() / 1000);
-//         console.log("Token expiration time:", payload.exp);
-//         console.log("Current time:", currentTime);
-
-//         if (payload.exp < currentTime) {
-//             localStorage.removeItem("token");
-//             localStorage.removeItem("role");
-//             navigate("/register");
-//         } else {
-//             const role = response.data.user.role; // Extract role from response data
-//             console.log("role", role);
-//             // Redirect based on role
-//             if (role && role === "Admin") {
-//                 navigate("/admin");
-//             } else {
-//                 navigate("/dashboard");
-//             }
-//         }
-//     } catch (error) {
-//         console.error("Login failed", error);
-//         notifyError("Login failed");
-//     }
-// };
-
-
+  };
 
   const handleSignupFormSubmit = async (e) => {
     e.preventDefault();
@@ -235,9 +165,13 @@ function Login({role}) {
   };
 
   const handlePaymentSubmit = async () => {
+
+    if (!termsChecked) {
+      alert("Please agree to the Terms and Conditions.");
+  }
+
     try {
       let amount;
-      // Determine the amount based on the selected paymentStatus
       if (paymentStatus === "99") {
         amount = 99;
       } else if (paymentStatus === "999") {
@@ -246,9 +180,9 @@ function Login({role}) {
         setPaymentStatusError(true);
         return;
       }
-  
+
       const response = await axios.post(
-        "http://localhost:5000/api/phonepe/payment",
+        "https://backend-lead.vercel.app/api/phonepe/payment",
         {
           name,
           email,
@@ -257,7 +191,7 @@ function Login({role}) {
           amount,
         }
       );
-  
+
       // Check if response contains existence flag
       if (response.data.exist) {
         alert(response.data.exist); // Alert user about existence
@@ -266,7 +200,6 @@ function Login({role}) {
         console.log("Signup successful", response.data);
         notifySuccess("Signup successful");
         window.location.href = response.data;
-        // window.location.href = response.data.paymentUrl;
         // navigate("/dashboard");
       }
     } catch (error) {
@@ -275,7 +208,6 @@ function Login({role}) {
       // Handle signup error
     }
   };
-  
 
   const handleSwitchForm = () => {
     setIsLoginForm(!isLoginForm);
@@ -532,11 +464,24 @@ function Login({role}) {
                             Please select one option
                           </span>
                         )}
-
+                        <div className="mt-3">
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              className="mr-2"
+                              checked={termsChecked}
+                              onChange={() => setTermsChecked(!termsChecked)}
+                            />
+                            <span className="text-sm">
+                              I agree to the Terms and Conditions
+                            </span>
+                          </label>
+                        </div>
                         <div className="CTA">
                           <button
                             className="button_1 p-1 px-3"
                             onClick={handlePaymentSubmit}
+                            disabled={!termsChecked}
                           >
                             Submit Payment
                           </button>
