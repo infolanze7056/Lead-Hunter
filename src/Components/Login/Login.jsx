@@ -86,7 +86,7 @@ function Login({ role }) {
 
     try {
       const response = await axios.post(
-        "https://backend-lead.vercel.app/api/auth/payment",
+        "https://lead-backend.vercel.app/api/auth/payment",
         {
           email: loginEmail,
           password: loginPassword,
@@ -182,7 +182,7 @@ function Login({ role }) {
       }
 
       const response = await axios.post(
-        "https://backend-lead.vercel.app/api/phonepe/payment",
+        "https://lead-backend.vercel.app/api/phonepe/payment",
         {
           name,
           email,

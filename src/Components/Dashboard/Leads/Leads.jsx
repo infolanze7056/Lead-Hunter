@@ -12,7 +12,7 @@ function Leads() {
     // Fetch data from API when component mounts
     async function fetchData() {
       try {
-        const response = await axios.get('https://backend-lead.vercel.app/api/leads');
+        const response = await axios.get('https://lead-backend.vercel.app/api/leads');
         setLeads(response.data); // Assuming your API returns an array of leads
         // console.log("data", response.data);
       } catch (error) {
