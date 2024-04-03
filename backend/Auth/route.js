@@ -34,10 +34,10 @@
 
 const express = require("express")
 const router = express.Router()
-const { login  } = require("./login")
+const { login  } = require("../Auth/login.js")
 const leadController = require("../controllers/leadController")
 const { adminAuth } = require("../middleware/auth")
-const {newPayment} = require("../Auth/login")
+// const {newPayment} = require("../Auth/login")
 const { addUser } = require("../Auth/register")
 
 
@@ -56,7 +56,7 @@ router.get('/', leadController.getAllLeads);
 // router.delete('/:id', leadController.deleteLeadById);
 router.delete("/:id", adminAuth, leadController.deleteLeadById);
 
-router.route("/payment").post(newPayment)
+// router.route("/payment").post(newPayment)
 
 
 router.route("/user").post(addUser)
