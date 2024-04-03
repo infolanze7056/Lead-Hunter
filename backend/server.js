@@ -18,14 +18,15 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 // 01/04/2024
 app.get("/", (req, res) => res.render("home"));
 
 app.get("/logout", (req, res) => {
-    res.cookie("jwt", "", { maxAge: "1" });
-    res.redirect("/");
+    res.cookie("jwt", "", { maxAge: "0" });
+    // res.redirect("/");
+    res.status(200).json({ message: 'Logged out successfully' });
 });
   // 01/04/2024
 
@@ -58,3 +59,4 @@ process.on("unhandledRejection", err => {
     console.log(`An error occurred: ${err.message}`);
     server.close(() => process.exit(1));
 });
+
