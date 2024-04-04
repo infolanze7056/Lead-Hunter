@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdKey, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ResetPassword() {
   const { userId, token } = useParams();
@@ -58,6 +60,7 @@ function ResetPassword() {
 
       // Password updated successfully
       console.log('Password updated successfully');
+      toast.success("Password reset successful!");
       setPassword("");
       setConfirmPassword("");
       setPasswordError("");

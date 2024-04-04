@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import HeroSection from "../Components/Home/HeroSection";
 import AboutSection from "../Components/Home/AboutSection";
 import FAQ from "../Components/Home/FAQ";
@@ -7,6 +8,16 @@ import WorkSection from "../Components/Home/WorkSection";
 import ContactSection from "../Components/Home/ContactSection";
 
 const Home = () => {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Redirect to dashboard if token exists
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
    return (
     <>

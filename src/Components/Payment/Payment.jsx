@@ -1,8 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { NavLink } from "react-router-dom";
 import { TbDiscountCheckFilled } from "react-icons/tb";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Payment() {
+
+  useEffect(() => {
+    // Show success notification when component mounts
+    toast.success("Signup Successful!");
+  }, []);
 
   return (
     <div className='bg-[--main-color] font-family'>

@@ -10,6 +10,7 @@ import Contact from './Pages/Contact';
 import Login from './Components/Login/Login';
 import Dashboard from './Components/Dashboard/Dashboard';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Forgot from './Components/Login/Forgot';
 import Admin from './Components/Admin/Admin';
 import ResetPassword from './Components/Login/ResetPassword';
@@ -17,6 +18,7 @@ import { AuthProvider } from './AuthContext';
 // import PrivateRoute from './PrivateRoute';
 import Free from './Components/Free';
 import Payment from './Components/Payment/Payment';
+import Terms from './Components/Terms';
 
 function App() {
   return (
@@ -33,8 +35,8 @@ function App() {
 function AppContent() {
 
   const location = useLocation();
-  
   const isDashboardPage = location.pathname === '/dashboard' || location.pathname === "/admin" ;
+  
   return (
     <div>
       {!isDashboardPage && <Header />}
@@ -47,7 +49,7 @@ function AppContent() {
         <Route path='/register' element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path='/pay-success/:transaction_id' element={<Payment />}  />
-        {/* <Route path='/pay-success' element={<Payment />}  /> */}
+        <Route path='terms' element={<Terms />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/api/passwordReset/:userId/:token' element={<ResetPassword />} />

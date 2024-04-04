@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeft } from "react-icons/fa";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import axios from 'axios';
+import { MdClose } from "react-icons/md";
 
 function Leads() {
   const [showPopup, setShowPopup] = useState(false);
   const [leadDetails, setLeadDetails] = useState(null);
   const [leads, setLeads] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     // Fetch data from API when component mounts
@@ -46,18 +48,74 @@ function Leads() {
     }
   };
 
+  const fetchLeadsByTag = async () => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads/tag`, {
+            params: {
+                tags: searchTerm
+            }
+        });
+        setLeads(response.data); // Update leads state with fetched data
+        console.log("data", response.data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+
+const clearSearchFilter = async () => {
+  setSearchTerm('');
+  try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads`);
+      setLeads(response.data);
+  } catch (error) {
+      console.error('Error fetching data:', error);
+  }
+};
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    fetchLeadsByTag();
+  };
+
   return (
-    <div className='px-4 lg:px-28 md:px-20 py-16 bg-[--main-color] font-family'>
+    <div className='px-4 lg:px-28 md:px-20 lg:py-16 md:py-16 py-4 bg-[--main-color] font-family'>
       <div className='bg-white rounded-lg shadow-lg pb-5'>
-        <div className='text-center py-8 text-[--three-color] uppercase text-4xl border-b mb-10'>Get Your Leads Here</div>
-        {leads.map((lead) => (
+        {/* <div className='text-center py-8 text-[--three-color] uppercase text-4xl border-b mb-10'>Get Your Leads Here</div> */}
+        <div className='border-b px-4 py-7 mb-10'>
+          <form onSubmit={handleSearchSubmit} class="flex items-center max-w-lg mx-auto">   
+              <label for="voice-search" class="sr-only">Search</label>
+              <div class="relative w-full">
+                  <input type="text" id="voice-search" value={searchTerm} onChange={handleSearchChange} class="bg-[--main-color] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3 " placeholder="Search HTML, CSS..." required />
+                  <button onClick={clearSearchFilter} type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
+                      <MdClose className='text-xl' />
+                  </button>
+              </div>
+              <button type="submit" class="inline-flex items-center p-3 ms-2 text-sm font-medium text-white bg-[--three-color] rounded-lg border border-[--three-color] hover:bg-white hover:text-[--three-color] ">
+                  <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                  </svg>Search
+              </button>
+          </form>
+        </div>
+        {leads.map((lead, index) => (
           <div key={lead.id} className='grid lg:grid-cols-6 grid-col-3 border rounded-lg hover:shadow-md shadow-sm cursor-pointer items-center lead mb-5 m-4'>
             <div className='lg:col-span-4 col-span-2 p-5' onClick={() => handleLeadClick(lead)}>
-              <div className='title font-semibold'>{lead.title}</div>
-              <div className='text-sm'>{renderFirstParagraph(lead.description)}</div>
+            <div className='flex items-center'>
+              <div className='p-4 px-5 bg-[--main-color] w-max rounded-md me-4'>
+                {index + 1}.
+              </div>
+              <div>
+                <div className='title font-semibold'>{lead.title}</div>
+                <div className='text-sm'>{renderFirstParagraph(lead.description)}</div>
+              </div>
+            </div>
             </div>
             <div className='p-5 text-center' onClick={() => handleLeadClick(lead)}>{Array.isArray(lead.tags) ? lead.tags.reduce((acc, cur, idx) => acc + (idx !== 0 ? ', ' : '') + cur, '') : lead.tags}</div>
-            <div className='p-5 text-center' onClick={() => handleLeadClick(lead)}>{lead.timestamp}</div>
+            <div className='p-5 text-center' onClick={() => handleLeadClick(lead)}>{lead.formattedCreatedAt}</div>
           </div>
         ))}
       </div>
@@ -98,10 +156,10 @@ function Leads() {
               </div>
               <div className='text-xs flex justify-between font-semibold'>
                 <div className='me-2'>{leadDetails.duration}</div>
-                <div>{leadDetails.budget}</div>
+                <div>{leadDetails.project_budget}</div>
               </div>
               </div>
-              <p className='text-gray-500 mt-2 text-sm'>{leadDetails.timestamp}</p>
+              <p className='text-gray-500 mt-2 text-sm'>{leadDetails.formattedCreatedAt}</p>
             </div>
             </div>
           </div>

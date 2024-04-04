@@ -77,13 +77,13 @@ function Login({ role }) {
 
   const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!loginEmail || !loginPassword) {
       setLoginEmailError(!loginEmail);
       setLoginPasswordError(!loginPassword);
       return;
     }
-
+  
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/auth/payment`,
@@ -92,7 +92,7 @@ function Login({ role }) {
           password: loginPassword,
         }
       );
-
+  
       if (response.data.user === true) {
         console.log(response.data.payment_status, "sdfsdf");
         if (response.data.payment_status === "SUCCESSFUL") {
@@ -100,24 +100,24 @@ function Login({ role }) {
           console.log("Login successful", response.data);
           const { token } = response.data;
           notifySuccess("Login successful");
-
+  
           localStorage.setItem("token", token);
           const role = response.data.role;
           localStorage.setItem("role", role);
-
+  
           setTimeout(() => {
             // Remove token after 10 minutes
             localStorage.removeItem("token");
             localStorage.removeItem("role");
             navigate("/register");
-          }, 600000); // 10 minutes
-
+          }, 120000); // 10 minutes
+  
           const tokenParts = token.split(".");
           const payload = JSON.parse(atob(tokenParts[1]));
           const currentTime = Math.floor(Date.now() / 1000);
           console.log("Token expiration time:", payload.exp);
           console.log("Current time:", currentTime);
-
+  
           if (payload.exp < currentTime) {
             localStorage.removeItem("token");
             localStorage.removeItem("role");
@@ -135,17 +135,28 @@ function Login({ role }) {
         } else if (response.data.payment_status === "PENDING") {
           const paymentLink = response.data.payment_link; // Assuming 'payment_link' is the key for the generated payment link in the response data
           window.location.href = paymentLink;
+          // window.PhonePeCheckout.transact({ paymentLink });
         } else {
           // Handle other payment statuses
           console.log("Payment status is neither SUCCESSFUL nor PENDING");
           notifyError("Payment failed");
         }
+      } else {
+        // User not found
+        notifyError("User does not exist");
       }
     } catch (error) {
-      console.error("Login failed", error);
-      notifyError("Login failed");
+      if (error.response && error.response.status === 400) {
+        // Unauthorized - Password invalid
+        notifyError("Invalid password");
+      } else {
+        console.error("Login failed", error);
+        notifyError("Login failed");
+      }
     }
   };
+  
+
 
   const handleSignupFormSubmit = async (e) => {
     e.preventDefault();
@@ -165,23 +176,29 @@ function Login({ role }) {
   };
 
   const handlePaymentSubmit = async () => {
-
-    if (!termsChecked) {
-      alert("Please agree to the Terms and Conditions.");
-      return;
-  }
-
     try {
-      let amount;
-      if (paymentStatus === "99") {
-        amount = 99;
-      } else if (paymentStatus === "999") {
-        amount = 999;
-      } else {
-        setPaymentStatusError(true);
+      // Check if terms are checked
+      if (!termsChecked) {
+        // Notify user if terms are not checked
+        toast.error("Please agree to the Terms and Conditions!");
         return;
       }
-
+  
+      let amount;
+  
+      // Determine the amount based on paymentStatus
+      switch (paymentStatus) {
+        case "99":
+          amount = 99;
+          break;
+        case "999":
+          amount = 999;
+          break;
+        default:
+          setPaymentStatusError(true);
+          return;
+      }
+  
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/phonepe/payment`,
         {
@@ -192,14 +209,14 @@ function Login({ role }) {
           amount,
         }
       );
-
+  
       // Check if response contains existence flag
       if (response.data.exist) {
         alert(response.data.exist); // Alert user about existence
       } else {
         // Handle successful signup
         console.log("Signup successful", response.data);
-        notifySuccess("Signup successful");
+        // notifySuccess("Signup successful");
         window.location.href = response.data;
         // navigate("/dashboard");
       }
@@ -209,6 +226,7 @@ function Login({ role }) {
       // Handle signup error
     }
   };
+  
 
   const handleSwitchForm = () => {
     setIsLoginForm(!isLoginForm);
@@ -425,7 +443,7 @@ function Login({ role }) {
                   {showPopup && (
                     <div className="popup fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 p-5 z-50">
                       <div className="bg-white rounded-md p-5">
-                        <div className="justify-between flex pb-3">
+                        <div className="justify-between flex pb-5">
                           <div className="text-lg">Choose Subscribtion:</div>
                           <button
                             className="hover:text-red-700"
@@ -435,9 +453,9 @@ function Login({ role }) {
                           </button>
                         </div>
                         <div className="grid grid-cols-2 max-w-xl mx-auto gap-3">
-                          <div className="border p-7 text-center rounded-md shadow-md">
+                          <div className="border text-center p-7 rounded shadow-md bg-[--main-color]">
                             <div className="text-3xl font-semibold">
-                              99 <sub>/ INR</sub>
+                              99<sub>/Month</sub>
                             </div>
                             <div className="pt-2">
                               <input
@@ -447,9 +465,9 @@ function Login({ role }) {
                               />
                             </div>
                           </div>
-                          <div className="border p-7 text-center rounded-md shadow-md">
+                          <div className="border p-7 text-center rounded shadow-md bg-[--main-color]">
                             <div className="text-3xl font-semibold">
-                              999 <sub>/ INR</sub>
+                              999<sub>/Year</sub>
                             </div>
                             <div className="pt-2">
                               <input
@@ -465,24 +483,27 @@ function Login({ role }) {
                             Please select one option
                           </span>
                         )}
-                        <div className="mt-3">
-                          <label className="flex items-center">
+                        <div className="mt-10 flex items-center">
+                        <div>
+                          <label className="">
                             <input
                               type="checkbox"
                               className="mr-2"
                               checked={termsChecked}
                               onChange={() => setTermsChecked(!termsChecked)}
                             />
-                            <span className="text-sm">
-                              I agree to the Terms and Conditions
-                            </span>
+                            
                           </label>
+                          </div>
+                          <div className="text-sm pt-1">
+                          I agree to the <NavLink to="/terms" className="text-[--three-color] hover:text-black">Terms and Conditions!</NavLink>
+                            </div>
                         </div>
                         <div className="CTA">
                           <button
                             className="button_1 p-1 px-3"
                             onClick={handlePaymentSubmit}
-                            disabled={!termsChecked}
+                            // disabled={!termsChecked}
                           >
                             Submit Payment
                           </button>

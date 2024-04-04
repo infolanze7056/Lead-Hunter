@@ -40,7 +40,8 @@ function Forgot() {
       }
     } catch (error) {
       console.error('Error:', error);
-      setError('User with given email does not exist.');
+      // setError('User with given email does not exist.');
+      notifyError("User with given email does not exist.")
     }
   };
 
