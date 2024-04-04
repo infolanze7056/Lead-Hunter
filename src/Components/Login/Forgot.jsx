@@ -17,7 +17,7 @@ function Forgot() {
   const handleSubmit = async () => {
     try {
       // Perform your API call here
-      const response = await fetch('https://lead-backend.vercel.app/api/passwordReset', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/passwordReset`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

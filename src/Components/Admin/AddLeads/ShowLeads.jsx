@@ -9,7 +9,7 @@ function ShowLeads() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://lead-backend.vercel.app/api/leads');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/leads`);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -22,7 +22,7 @@ function ShowLeads() {
 
   const handleDeleteLead = async (_id) => {
     try {
-      const response = await fetch(`https://lead-backend.vercel.app/api/leads/${_id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/leads/${_id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

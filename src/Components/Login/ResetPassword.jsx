@@ -42,7 +42,7 @@ function ResetPassword() {
 
     // Make API call to update password
     try {
-      const response = await fetch(`https://lead-backend.vercel.app/api/passwordReset/${userId}/${token}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/passwordReset/${userId}/${token}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

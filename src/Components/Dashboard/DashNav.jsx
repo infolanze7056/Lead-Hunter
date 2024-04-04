@@ -16,7 +16,7 @@
 
     const handleLogout = async () => {
       try {
-        const response = await fetch("https://lead-backend.vercel.app/logout", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/logout`, {
           method: "GET",
           credentials: "include",
         });

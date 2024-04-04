@@ -24,7 +24,7 @@ function AddLeads() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://lead-backend.vercel.app/api/leads', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/leads`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
