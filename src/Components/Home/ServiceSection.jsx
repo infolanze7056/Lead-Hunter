@@ -16,7 +16,7 @@ function ServiceSection() {
                 <div className='p-7 py-20 rounded-md shadow-lg border'>
                     <div className=''><FaInbox className='text-7xl bg-[--second-color] text-[--three-color] p-5 rounded-lg mx-auto' /></div>
                     <div className='text-3xl font-medium py-3'>Quality leads</div>
-                    <div className='text-gray-700'>Our team works around the clock finding companies that need your help.</div>
+                    <div className='text-gray-700'>Quality leads show high interest and engagement with products or services.</div>
                 </div>
                 <div className='p-7 py-20 rounded-md shadow-lg border'>
                     <div className=''><BsFillPersonCheckFill className='text-7xl bg-[--second-color] text-[--three-color] p-5 rounded-lg mx-auto' /></div>
@@ -26,7 +26,7 @@ function ServiceSection() {
                 <div className='p-7 py-20 rounded-md shadow-lg border'>
                     <div className=''><MdAccessTime className='text-7xl bg-[--second-color] text-[--three-color] p-5 rounded-lg mx-auto' /></div>
                     <div className='text-3xl font-medium py-3'>Save time</div>
-                    <div className='text-gray-700'>The only source of leads you'll need to grow your web design business.</div>
+                    <div className='text-gray-700'>The only source of leads you'll need to grow your business.</div>
                 </div>
                 <div className='p-7 py-20 rounded-md shadow-lg border'>
                     <div className=''><IoMdCheckboxOutline className='text-7xl bg-[--second-color] text-[--three-color] p-5 rounded-lg mx-auto' /></div>
@@ -36,7 +36,7 @@ function ServiceSection() {
                 <div className='p-7 py-20 rounded-md shadow-lg border'>
                     <div className=''><FiLock className='text-7xl bg-[--second-color] text-[--three-color] p-5 rounded-lg mx-auto' /></div>
                     <div className='text-3xl font-medium py-3'>Exclusive leads</div>
-                    <div className='text-gray-700'>Our exclusive web design leads have not been purchased from any other sources.</div>
+                    <div className='text-gray-700'>Our exclusive leads have not been purchased from any other sources.</div>
                 </div>
                 <div className='p-7 py-20 rounded-md shadow-lg border'>
                     <div className=''><GrDocumentText className='text-7xl bg-[--second-color] text-[--three-color] p-5 rounded-lg mx-auto' /></div>

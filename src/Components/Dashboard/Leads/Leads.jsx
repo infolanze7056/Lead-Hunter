@@ -3,12 +3,16 @@ import { FaArrowLeft } from "react-icons/fa";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import axios from 'axios';
 import { MdClose } from "react-icons/md";
+import { FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft } from "react-icons/fa";
+import "./Leads.css";
 
 function Leads() {
   const [showPopup, setShowPopup] = useState(false);
   const [leadDetails, setLeadDetails] = useState(null);
   const [leads, setLeads] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     // Fetch data from API when component mounts
@@ -67,6 +71,7 @@ const clearSearchFilter = async () => {
   try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads`);
       setLeads(response.data);
+      setCurrentPage(1);
   } catch (error) {
       console.error('Error fetching data:', error);
   }
@@ -81,6 +86,20 @@ const clearSearchFilter = async () => {
     fetchLeadsByTag();
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
+  const totalPages = Math.ceil(leads.length / 10);
+
+  // Pagination logic
+  const indexOfLastLead = currentPage * 10;
+  const indexOfFirstLead = indexOfLastLead - 10;
+  const currentLeads = leads.slice(indexOfFirstLead, indexOfLastLead);
+
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
   return (
     <div className='px-4 lg:px-28 md:px-20 lg:py-16 md:py-16 py-4 bg-[--main-color] font-family'>
       <div className='bg-white rounded-lg shadow-lg pb-5'>
@@ -90,8 +109,8 @@ const clearSearchFilter = async () => {
               <label for="voice-search" class="sr-only">Search</label>
               <div class="relative w-full">
                   <input type="text" id="voice-search" value={searchTerm} onChange={handleSearchChange} class="bg-[--main-color] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3 " placeholder="Search HTML, CSS..." required />
-                  <button onClick={clearSearchFilter} type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
-                      <MdClose className='text-xl' />
+                  <button onClick={clearSearchFilter} type="button" class="absolute inset-y-0 end-0 flex outline-none items-center pe-3">
+                      <MdClose className='text-xl text-gray-500 hover:text-black' />
                   </button>
               </div>
               <button type="submit" class="inline-flex items-center p-3 ms-2 text-sm font-medium text-white bg-[--three-color] rounded-lg border border-[--three-color] hover:bg-white hover:text-[--three-color] ">
@@ -101,23 +120,64 @@ const clearSearchFilter = async () => {
               </button>
           </form>
         </div>
-        {leads.map((lead, index) => (
+        {currentLeads.map((lead, index) => (
           <div key={lead.id} className='grid lg:grid-cols-6 grid-col-3 border rounded-lg hover:shadow-md shadow-sm cursor-pointer items-center lead mb-5 m-4'>
             <div className='lg:col-span-4 col-span-2 p-5' onClick={() => handleLeadClick(lead)}>
-            <div className='flex items-center'>
-              <div className='p-4 px-5 bg-[--main-color] w-max rounded-md me-4'>
-                {index + 1}.
-              </div>
-              <div>
-                <div className='title font-semibold'>{lead.title}</div>
-                <div className='text-sm'>{renderFirstParagraph(lead.description)}</div>
+              <div className='flex items-center'>
+                <div className='p-4 px-5 bg-[--main-color] w-max rounded-md me-4'>
+                {index + 1 + (currentPage - 1) * 10}.
+                </div>
+                <div>
+                  <div className='title font-semibold'>{lead.title}</div>
+                  <div className='text-sm'>{renderFirstParagraph(lead.description)}</div>
+                </div>
               </div>
             </div>
+            <div className='p-5 text-center' onClick={() => handleLeadClick(lead)}>
+              {Array.isArray(lead.tags) 
+                ? lead.tags.map(tag => <div key={tag}>{tag}</div>)
+                : lead.tags.split('\r\n').map(tag => <div key={tag}>{tag}</div>)
+              }
             </div>
-            <div className='p-5 text-center' onClick={() => handleLeadClick(lead)}>{Array.isArray(lead.tags) ? lead.tags.reduce((acc, cur, idx) => acc + (idx !== 0 ? ', ' : '') + cur, '') : lead.tags}</div>
             <div className='p-5 text-center' onClick={() => handleLeadClick(lead)}>{lead.formattedCreatedAt}</div>
           </div>
         ))}
+        <div className="flex justify-center mt-8 mb-3">
+          <nav aria-label="Page navigation example" className="pagination-container flex space-x-2">
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="disabled:opacity-50 px-3 py-1 bg-[--second-color] hover:bg-[--three-color] hover:text-white rounded h-full"
+                >
+                  <FaChevronLeft />
+                </button>
+            <ul className="flex space-x-2 pagination-list">
+            {Array.from({ length: Math.min(totalPages, 4) }, (_, i) => {
+              const start = Math.max(0, currentPage - 4);
+              const pageNumber = start + i + 1;
+              return (
+                <li key={pageNumber}>
+                  <button
+                    onClick={() => paginate(pageNumber)}
+                    className={`px-3 py-1 ${
+                      currentPage === pageNumber ? 'bg-[--three-color] text-white' : 'bg-[--second-color] hover:bg-[--three-color] hover:text-white'
+                    } rounded`}
+                  >
+                    {pageNumber}
+                  </button>
+                </li>
+              );
+            })}
+            </ul>
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="disabled:opacity-50 px-3 py-1 bg-[--second-color] hover:bg-[--three-color] hover:text-white rounded h-full"
+                >
+                  <FaChevronRight />
+                </button>
+          </nav>  
+        </div>
       </div>
       {showPopup && (
         <div className='fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 p-2 z-50'>
@@ -146,13 +206,18 @@ const clearSearchFilter = async () => {
               </div>
               <div className='lg:flex lg:flex-row lg:justify-between flex-col pt-2 lg:items-center'>
               <div className='flex flex-wrap mt-2 justify-center'>
-              {Array.isArray(leadDetails.tags) ? (
-                leadDetails.tags.map((tag, index) => (
-                  <span key={index} className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{tag}</span>
-                ))
-              ) : (
-                <span className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{leadDetails.tags}</span>
-              )}
+                {Array.isArray(leadDetails.tags) 
+                  ? leadDetails.tags.map((tagArray, index) => (
+                      Array.isArray(tagArray)
+                        ? tagArray.map((tag, idx) => (
+                            <span key={idx} className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{tag}</span>
+                          ))
+                        : <span key={index} className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{tagArray}</span>
+                    ))
+                  : leadDetails.tags.split('\r\n').map((tag, index) => (
+                      <span key={index} className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{tag}</span>
+                    ))
+                }
               </div>
               <div className='text-xs flex justify-between font-semibold'>
                 <div className='me-2'>{leadDetails.duration}</div>

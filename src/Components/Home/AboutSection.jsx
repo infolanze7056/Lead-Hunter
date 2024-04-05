@@ -6,10 +6,9 @@ function AboutSection() {
 
     const includedFeatures = [
         'Leads added daily',
-        'Search, filter, save & track leads',
+        'Search, filter & track leads',
         'Proven marketing strategies',
         'Exclusive growth only leads',
-        'Email templates',
         'Up to date reports and reporting',
       ]
 

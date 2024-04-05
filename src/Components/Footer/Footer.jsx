@@ -13,7 +13,7 @@ function Footer() {
       </a>
       <div className="mt-6 lg:max-w-sm">
         <p className="text-sm text-gray-800">
-          Find the perfect leads for your project. Explore thousands of skilled professionals ready to bring your ideas to life.
+          Find the perfect leads for you. Explore thousands of skilled professionals ready to bring your ideas to life.
         </p>
         <p className="mt-4 text-sm text-gray-800">
         Unlock endless possibilities. Connect with top leads and accomplish your goals, one project at a time.
@@ -24,7 +24,7 @@ function Footer() {
       <p className="text-base font-bold tracking-wide text-gray-900">Contacts</p>
       <div className="flex">
         <p className="mr-1 text-gray-800">Phone:</p>
-        <a href="tel:850-123-5021" aria-label="Our phone" title="Our phone" className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">701-616-0435</a>
+        <a href="tel:850-123-5021" aria-label="Our phone" title="Our phone" className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">+91&nbsp;7016160435</a>
       </div>
       <div className="flex">
         <p className="mr-1 text-gray-800">Email:</p>
@@ -64,7 +64,7 @@ function Footer() {
         </a>
       </div>
       <p className="mt-4 text-sm text-gray-800">
-        Your success is our priority. Let us help you find the right talent or the perfect project.
+        Your success is our priority. Let us help you find the right talent or the perfect leads.
       </p>
     </div>
   </div>

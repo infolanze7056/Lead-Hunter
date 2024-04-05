@@ -1,15 +1,22 @@
-import React from 'react'
-import "./Service.css"
+import React from "react";
+import "./Service.css";
 
 function ServiceContent() {
   return (
-    <div className='font-family bg-img-s'>
-        <div className='lg:px-36 md:px-20 px-7 lg:py-52 md:py-32 py-20 text-center'>
-            <div className='lg:text-6xl text-4xl max-w-xl mx-auto font-semibold'>We do demand gen differently.</div>
-            <div className='max-w-xl pt-4 mx-auto text-lg'>Experience content strategy with a lead guarantee. We're changing the game to give your more of what you want with a price that keeps our competitors up at night.</div>
+    <div className="font-family bg-img-s">
+      <div className="lg:px-36 md:px-20 px-5 lg:py-52 md:py-32 py-20 text-center">
+        <div className="lg:text-6xl text-3xl max-w-3xl mx-auto font-semibold">
+          Unlock your potential with LeadHunter!
         </div>
+        <div className="max-w-4xl pt-6 mx-auto text-lg">
+          Our platform is the top choice for freelancers, providing a wide range
+          of opportunities in web development, Figma, graphic design, app
+          development, Shopify development, software development, AI & ML, and
+          blockchain development.
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default ServiceContent
+export default ServiceContent;
