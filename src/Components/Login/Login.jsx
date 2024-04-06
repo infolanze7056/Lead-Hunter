@@ -110,7 +110,7 @@ function Login({ role }) {
             localStorage.removeItem("token");
             localStorage.removeItem("role");
             navigate("/register");
-          }, 120000); // 10 minutes
+          }, 240 * 60 * 60 * 1000); // 10 minutes = 600000
   
           const tokenParts = token.split(".");
           const payload = JSON.parse(atob(tokenParts[1]));

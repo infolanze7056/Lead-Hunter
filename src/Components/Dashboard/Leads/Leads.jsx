@@ -134,12 +134,16 @@ const clearSearchFilter = async () => {
               </div>
             </div>
             <div className='p-5 text-center' onClick={() => handleLeadClick(lead)}>
-              {Array.isArray(lead.tags) 
+              {/* {Array.isArray(lead.tags) 
                 ? lead.tags.map(tag => <div key={tag}>{tag}</div>)
                 : lead.tags.split('\r\n').map(tag => <div key={tag}>{tag}</div>)
+              } */}
+              {Array.isArray(lead.tags) 
+                  ? <div>{lead.tags.length > 0 && lead.tags[0]}</div>
+                  : <div>{lead.tags.split('\n')[0]}</div>
               }
             </div>
-            <div className='p-5 text-center' onClick={() => handleLeadClick(lead)}>{lead.formattedCreatedAt}</div>
+            <div className='m-5 text-center bg-[--main-color] rounded' onClick={() => handleLeadClick(lead)}>{lead.formattedCreatedAt}</div>
           </div>
         ))}
         <div className="flex justify-center mt-8 mb-3">
@@ -214,14 +218,19 @@ const clearSearchFilter = async () => {
                           ))
                         : <span key={index} className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{tagArray}</span>
                     ))
-                  : leadDetails.tags.split('\r\n').map((tag, index) => (
+                  : leadDetails.tags.split('\n').map((tag, index) => (
                       <span key={index} className='bg-[--second-color] text-xs px-2 py-1 mr-2 mb-2 rounded'>{tag}</span>
                     ))
                 }
               </div>
-              <div className='text-xs flex justify-between font-semibold'>
-                <div className='me-2'>{leadDetails.duration}</div>
-                <div>{leadDetails.project_budget}</div>
+              <div className='text-xs lg:block md:flex flex justify-between font-semibold'>
+                {leadDetails.duration && <div className='me-2 text-nowrap'>Duration: {leadDetails.duration}</div>}
+                <div className='lg:pt-1'>
+                  {/* <div>Budget: {leadDetails.project_budget}</div>
+                  <div>Hourly Rate: {leadDetails.Hourly_Rate_budget}</div> */}
+                  {leadDetails.project_budget && <div className='text-nowrap'>Budget: {leadDetails.project_budget}</div>}
+                  {leadDetails.Hourly_Rate_budget && <div className='text-nowrap'>Hourly Rate: {leadDetails.Hourly_Rate_budget}</div>}
+                </div>
               </div>
               </div>
               <p className='text-gray-500 mt-2 text-sm'>{leadDetails.formattedCreatedAt}</p>
