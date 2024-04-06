@@ -6,6 +6,7 @@ import { MdClose } from "react-icons/md";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
 import "./Leads.css";
+import { FaSpinner } from 'react-icons/fa';
 
 function Leads() {
   const [showPopup, setShowPopup] = useState(false);
@@ -13,14 +14,13 @@ function Leads() {
   const [leads, setLeads] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Fetch data from API when component mounts
     async function fetchData() {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads`);
-        setLeads(response.data); // Assuming your API returns an array of leads
-        // console.log("data", response.data);
+        setLeads(response.data); 
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -53,18 +53,22 @@ function Leads() {
   };
 
   const fetchLeadsByTag = async () => {
-    try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads/tag`, {
-            params: {
-                tags: searchTerm
-            }
-        });
-        setLeads(response.data); // Update leads state with fetched data
-        console.log("data", response.data);
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
+  setLoading(true); // Set loading to true before making the API call
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads/tag`, {
+      params: {
+        tags: searchTerm
+      }
+    });
+    setLeads(response.data);
+    console.log("data", response.data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    setLoading(false); // Set loading to false after the API call is completed (whether success or error)
+  }
 };
+
 
 const clearSearchFilter = async () => {
   setSearchTerm('');
@@ -113,11 +117,41 @@ const clearSearchFilter = async () => {
                       <MdClose className='text-xl text-gray-500 hover:text-black' />
                   </button>
               </div>
-              <button type="submit" class="inline-flex items-center p-3 ms-2 text-sm font-medium text-white bg-[--three-color] rounded-lg border border-[--three-color] hover:bg-white hover:text-[--three-color] ">
-                  <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                  </svg>Search
-              </button>
+              <button
+  type="submit"
+  className="inline-flex items-center p-3 ms-2 text-sm font-medium text-white bg-[--three-color] rounded-lg border border-[--three-color] hover:bg-white hover:text-[--three-color] relative"
+  disabled={loading} // Disable the button while loading
+  onClick={handleSearchSubmit}
+>
+  {/* Conditional rendering of FaSpinner */}
+  {loading && (
+    <FaSpinner className="animate-spin h-4 w-4 mr-1.5" />
+  )}
+  
+  {/* Conditional rendering of SVG icon */}
+  {!loading && (
+    <svg
+      className="w-3.5 h-3.5 me-2"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 20 20"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+      />
+    </svg>
+  )}
+  
+  {/* "Search" text */}
+  Search
+</button>
+
+
           </form>
         </div>
         {currentLeads.map((lead, index) => (
