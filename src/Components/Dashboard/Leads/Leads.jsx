@@ -15,6 +15,7 @@ function Leads() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [loadingClose, setLoadingClose] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -72,12 +73,15 @@ function Leads() {
 
 const clearSearchFilter = async () => {
   setSearchTerm('');
+  setLoadingClose(true);
   try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads`);
       setLeads(response.data);
       setCurrentPage(1);
   } catch (error) {
       console.error('Error fetching data:', error);
+  } finally {
+    setLoadingClose(false);
   }
 };
 
@@ -114,44 +118,47 @@ const clearSearchFilter = async () => {
               <div class="relative w-full">
                   <input type="text" id="voice-search" value={searchTerm} onChange={handleSearchChange} class="bg-[--main-color] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3 " placeholder="Search HTML, CSS..." required />
                   <button onClick={clearSearchFilter} type="button" class="absolute inset-y-0 end-0 flex outline-none items-center pe-3">
-                      <MdClose className='text-xl text-gray-500 hover:text-black' />
+                      {loadingClose && (
+                        <FaSpinner className="animate-spin h-4 w-4" />
+                      )}
+                      {!loadingClose && (
+                            <MdClose className='text-xl text-gray-500 hover:text-black' />
+                      )}
                   </button>
               </div>
               <button
-  type="submit"
-  className="inline-flex items-center p-3 ms-2 text-sm font-medium text-white bg-[--three-color] rounded-lg border border-[--three-color] hover:bg-white hover:text-[--three-color] relative"
-  disabled={loading} // Disable the button while loading
-  onClick={handleSearchSubmit}
->
-  {/* Conditional rendering of FaSpinner */}
-  {loading && (
-    <FaSpinner className="animate-spin h-4 w-4 mr-1.5" />
-  )}
-  
-  {/* Conditional rendering of SVG icon */}
-  {!loading && (
-    <svg
-      className="w-3.5 h-3.5 me-2"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 20 20"
-    >
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-      />
-    </svg>
-  )}
-  
-  {/* "Search" text */}
-  Search
-</button>
-
-
+                type="submit"
+                className="inline-flex items-center p-3 ms-2 text-sm font-medium text-white bg-[--three-color] rounded-lg border border-[--three-color] hover:bg-white hover:text-[--three-color] relative"
+                disabled={loading} // Disable the button while loading
+                onClick={handleSearchSubmit}
+              >
+                {/* Conditional rendering of FaSpinner */}
+                {loading && (
+                  <FaSpinner className="animate-spin h-4 w-4 mr-1.5" />
+                )}
+                
+                {/* Conditional rendering of SVG icon */}
+                {!loading && (
+                  <svg
+                    className="w-3.5 h-3.5 me-2"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                )}
+                
+                {/* "Search" text */}
+                Search
+              </button>
           </form>
         </div>
         {currentLeads.map((lead, index) => (
