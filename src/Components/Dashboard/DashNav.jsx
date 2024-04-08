@@ -47,7 +47,7 @@
             <div className="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
             <NavLink 
               // to="/" 
-              activeClassName="active"
+              activeclassname="active"
               id="0"
               // onClick={(e) => handleNavSelected(e)}
               onClick={(e) => handleLogout()}
@@ -84,7 +84,7 @@
                 <NavLink
                   id="1"
                   to='/admin'
-                  activeClassName="active"
+                  activeclassname="active"
                   onClick={(e) => handleNavSelected(e)}
                   className={
                     isActive === "1"
@@ -101,7 +101,7 @@
                 <NavLink
                   to="/dashboard"
                   id="2"
-                  activeClassName="active"
+                  activeclassname="active"
                   onClick={(e) => handleNavSelected(e)}
                   className={
                     isActive === "2"

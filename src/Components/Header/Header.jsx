@@ -48,7 +48,7 @@ function Header() {
           <div className="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
           <NavLink 
             to="/register" 
-            activeClassName="active"
+            activeclassname="active"
             id="0"
             onClick={(e) => handleNavSelected(e)}
             className={`lg:px-8 md:px-8 px-6 z-40 bg-white hover:bg-[--three-color] outline outline-2 hover:text-white outline-[--three-color] text-[--three-color] font-medium rounded-md text-sm py-2 text-center ${
@@ -82,7 +82,7 @@ function Header() {
               <li className="text-gray-400">
               <NavLink
                 to="/"
-                activeClassName="active"
+                activeclassname="active"
                 id="1"
                 onClick={(e) => handleNavSelected(e)}
                 className={
@@ -98,7 +98,7 @@ function Header() {
               <NavLink
                 to="/about"
                 id="2"
-                activeClassName="active"
+                activeclassname="active"
                 onClick={(e) => handleNavSelected(e)}
                 className={
                   isActive === "2"
@@ -112,7 +112,7 @@ function Header() {
               <li className="text-gray-400">
               <NavLink
                 to="/contact"
-                activeClassName="active"
+                activeclassname="active"
                 id="3"
                 onClick={(e) => handleNavSelected(e)}
                 className={
@@ -127,7 +127,7 @@ function Header() {
               <li className="text-gray-400">
               <NavLink
                 to="/service"
-                activeClassName="active"
+                activeclassname="active"
                 id="4"
                 onClick={(e) => handleNavSelected(e)}
                 className={

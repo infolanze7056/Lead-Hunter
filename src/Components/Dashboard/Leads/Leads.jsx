@@ -113,11 +113,11 @@ const clearSearchFilter = async () => {
       <div className='bg-white rounded-lg shadow-lg pb-5'>
         {/* <div className='text-center py-8 text-[--three-color] uppercase text-4xl border-b mb-10'>Get Your Leads Here</div> */}
         <div className='border-b px-4 py-7 mb-10'>
-          <form onSubmit={handleSearchSubmit} class="flex items-center max-w-lg mx-auto">   
-              <label for="voice-search" class="sr-only">Search</label>
-              <div class="relative w-full">
-                  <input type="text" id="voice-search" value={searchTerm} onChange={handleSearchChange} class="bg-[--main-color] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3 " placeholder="Search HTML, CSS..." required />
-                  <button onClick={clearSearchFilter} type="button" class="absolute inset-y-0 end-0 flex outline-none items-center pe-3">
+          <form onSubmit={handleSearchSubmit} className="flex items-center max-w-lg mx-auto">   
+              <label htmlFor="voice-search" className="sr-only">Search</label>
+              <div className="relative w-full">
+                  <input type="text" id="voice-search" value={searchTerm} onChange={handleSearchChange} className="bg-[--main-color] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3 " placeholder="Search HTML, CSS..." required />
+                  <button onClick={clearSearchFilter} type="button" className="absolute inset-y-0 end-0 flex outline-none items-center pe-3">
                       {loadingClose && (
                         <FaSpinner className="animate-spin h-4 w-4" />
                       )}
@@ -170,7 +170,7 @@ const clearSearchFilter = async () => {
                 </div>
                 <div>
                   <div className='title font-semibold'>{lead.title}</div>
-                  <div className='text-sm'>{renderFirstParagraph(lead.description)}</div>
+                  <div className='text-sm leads_wrap'>{renderFirstParagraph(lead.description)}</div>
                 </div>
               </div>
             </div>

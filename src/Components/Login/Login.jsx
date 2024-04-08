@@ -189,7 +189,6 @@ function Login({ role }) {
         toast.error("Please agree to the Terms and Conditions!");
         return;
       }
-      
       setIsPaymentLoading(true);
       let amount;
   

@@ -57,3 +57,6 @@
     }
   }
   
+  .leads_wrap{
+    overflow-wrap: anywhere;
+  }
