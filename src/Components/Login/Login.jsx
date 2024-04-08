@@ -181,7 +181,8 @@ function Login({ role }) {
     setShowPopup(true);
   };
 
-  const handlePaymentSubmit = async () => {
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault();
     try {
       // Check if terms are checked
       if (!termsChecked) {
