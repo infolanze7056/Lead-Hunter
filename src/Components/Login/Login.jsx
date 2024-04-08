@@ -162,45 +162,33 @@ function Login({ role }) {
   };
 
   
+
+
+  const handleSignupFormSubmit = async (e) => {
+    e.preventDefault();
+    // Validation for signup form fields
+    if (!name || !email || !phonenumber || !signupPassword) {
+      setNameError(!name);
+      setEmailError(!email);
+      setPhonenumberError(!phonenumber);
+      setSignupPasswordError(!signupPassword);
+      return;
+    }
+    handlePopup();
+  };
+
   const handlePopup = () => {
     setShowPopup(true);
   };
 
-
-  // const handleSignupFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   // Validation for signup form fields
-  //   if (!name || !email || !phonenumber || !signupPassword) {
-  //     setNameError(!name);
-  //     setEmailError(!email);
-  //     setPhonenumberError(!phonenumber);
-  //     setSignupPasswordError(!signupPassword);
-  //     return;
-  //   }
-  //   handlePopup();
-  // };
-
-
-  const handlePaymentSubmit = async (e) => {
+  const handlePaymentSubmit = async () => {
     try {
-      e.preventDefault(); // Prevent default form submission
-  
-      // Validation for signup form fields
-      if (!name || !email || !phonenumber || !signupPassword) {
-        setNameError(!name);
-        setEmailError(!email);
-        setPhonenumberError(!phonenumber);
-        setSignupPasswordError(!signupPassword);
-        return;
-      }
-  
       // Check if terms are checked
       if (!termsChecked) {
         // Notify user if terms are not checked
         toast.error("Please agree to the Terms and Conditions!");
         return;
       }
-  
       setIsPaymentLoading(true);
       let amount;
   
@@ -245,7 +233,6 @@ function Login({ role }) {
       setIsPaymentLoading(false);
     }
   };
-  
   
 
   const handleSwitchForm = () => {
@@ -360,12 +347,14 @@ function Login({ role }) {
 
               {/* Signup Form */}
 
+              {/* onSubmit={handleSignupFormSubmit} */}
+
               <div
                 className={`signup lg:rounded-md rounded-b-md form-peice ${
                   isLoginForm ? "" : "switched"
                 }`}
               >
-                <form className="signup-form" onSubmit={handlePaymentSubmit}>
+                <form className="signup-form" onSubmit={handleSignupFormSubmit}>
                   <div className="text-center">
                     <div>
                       <RiLoginBoxLine className="text-5xl mx-auto text-[--three-color]" />
@@ -443,12 +432,12 @@ function Login({ role }) {
                     )}
                   </div>
                   <div className="CTA">
-                    {/* <input
+                    <input
                       className="button_1 hover:cursor-pointer"
                       type="submit"
                       value="Sign Up"
-                    /> */}
-                    <button onClick={handlePopup}>Submit</button>
+                    />
+                    {/* <button onClick={handlePopup}>Submit</button> */}
                     <div className="text-sm pt-3 flex justify-center">
                       Already have an account?&nbsp;
                       <div
@@ -521,9 +510,8 @@ function Login({ role }) {
                         <div className="CTA">
                         <button
                           className="button_1 p-1 px-3"
-                          type="submit"
-                          // onClick={handlePaymentSubmit}
-                          disabled={isPaymentLoading}
+                          onClick={handlePaymentSubmit}
+                          disabled={isPaymentLoading} // Disable button when loading
                         >
                           {isPaymentLoading ? "Loading..." : "Submit Payment"}
                         </button>
