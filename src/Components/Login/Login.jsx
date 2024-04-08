@@ -162,6 +162,9 @@ function Login({ role }) {
   };
 
   
+  const handlePopup = () => {
+    setShowPopup(true);
+  };
 
 
   const handleSignupFormSubmit = async (e) => {
@@ -177,12 +180,8 @@ function Login({ role }) {
     handlePopup();
   };
 
-  const handlePopup = () => {
-    setShowPopup(true);
-  };
 
-  const handlePaymentSubmit = async (e) => {
-    e.preventDefault();
+  const handlePaymentSubmit = async () => {
     try {
       // Check if terms are checked
       if (!termsChecked) {
@@ -190,7 +189,7 @@ function Login({ role }) {
         toast.error("Please agree to the Terms and Conditions!");
         return;
       }
-      // setIsPaymentLoading(true);
+      setIsPaymentLoading(true);
       let amount;
   
       // Determine the amount based on paymentStatus
@@ -227,11 +226,11 @@ function Login({ role }) {
         window.location.href = response.data;
         // navigate("/dashboard");
       }
-      // setIsPaymentLoading(false);
+      setIsPaymentLoading(false);
     } catch (error) {
       console.error("Signup failed", error);
       notifyError("Signup failed");
-      // setIsPaymentLoading(false);
+      setIsPaymentLoading(false);
     }
   };
   
@@ -347,8 +346,6 @@ function Login({ role }) {
               </div>
 
               {/* Signup Form */}
-
-              {/* onSubmit={handleSignupFormSubmit} */}
 
               <div
                 className={`signup lg:rounded-md rounded-b-md form-peice ${
@@ -512,10 +509,9 @@ function Login({ role }) {
                         <button
                           className="button_1 p-1 px-3"
                           onClick={handlePaymentSubmit}
-                          // disabled={isPaymentLoading} // Disable button when loading
+                          disabled={isPaymentLoading}
                         >
-                          {/* {isPaymentLoading ? "Loading..." : "Submit Payment"} */}
-                          Submit Payment
+                          {isPaymentLoading ? "Loading..." : "Submit Payment"}
                         </button>
                         </div>
                       </div>
