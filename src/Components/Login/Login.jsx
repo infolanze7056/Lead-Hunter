@@ -166,17 +166,30 @@ function Login({ role }) {
 
   const handleSignupFormSubmit = async (e) => {
     e.preventDefault();
+  
+    // Collect form data
+    const formData = {
+      name,
+      email,
+      phonenumber,
+      signupPassword
+    };
+  
     // Validation for signup form fields
-    if (!name || !email || !phonenumber || !signupPassword) {
-      setNameError(!name);
-      setEmailError(!email);
-      setPhonenumberError(!phonenumber);
-      setSignupPasswordError(!signupPassword);
+    if (!formData.name || !formData.email || !formData.phonenumber || !formData.signupPassword) {
+      setNameError(!formData.name);
+      setEmailError(!formData.email);
+      setPhonenumberError(!formData.phonenumber);
+      setSignupPasswordError(!formData.signupPassword);
       return;
     }
+    // Store form data in state
+    // setFormData(formData);
+  
+    // Call handlePopup() after storing form data
     handlePopup();
   };
-
+  
   const handlePopup = () => {
     setShowPopup(true);
   };
@@ -190,8 +203,8 @@ function Login({ role }) {
         return;
       }
       setIsPaymentLoading(true);
+
       let amount;
-  
       // Determine the amount based on paymentStatus
       switch (paymentStatus) {
         case "99":
