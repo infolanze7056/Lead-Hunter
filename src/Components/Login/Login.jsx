@@ -164,48 +164,97 @@ function Login({ role }) {
   
 
 
-  const handleSignupFormSubmit = async (e) => {
-    e.preventDefault();
-  
-    // Collect form data
-    const formData = {
-      name,
-      email,
-      phonenumber,
-      signupPassword
-    };
-  
-    // Validation for signup form fields
-    if (!formData.name || !formData.email || !formData.phonenumber || !formData.signupPassword) {
-      setNameError(!formData.name);
-      setEmailError(!formData.email);
-      setPhonenumberError(!formData.phonenumber);
-      setSignupPasswordError(!formData.signupPassword);
-      return;
-    }
-    // Store form data in state
-    // setFormData(formData);
-  
-    // Call handlePopup() after storing form data
-    handlePopup();
-  };
-  
+  // const handleSignupFormSubmit = async (e) => {
+  //   e.preventDefault();
+  //   // Validation for signup form fields
+  //   if (!name || !email || !phonenumber || !signupPassword) {
+  //     setNameError(!name);
+  //     setEmailError(!email);
+  //     setPhonenumberError(!phonenumber);
+  //     setSignupPasswordError(!signupPassword);
+  //     return;
+  //   }
+  //   handlePopup();
+  // };
+
   const handlePopup = () => {
     setShowPopup(true);
   };
 
-  const handlePaymentSubmit = async () => {
-    try {
-      // Check if terms are checked
-      if (!termsChecked) {
-        // Notify user if terms are not checked
-        toast.error("Please agree to the Terms and Conditions!");
-        return;
-      }
-      setIsPaymentLoading(true);
+  // const handlePaymentSubmit = async () => {
+  //   try {
+  //     // Check if terms are checked
+  //     if (!termsChecked) {
+  //       // Notify user if terms are not checked
+  //       toast.error("Please agree to the Terms and Conditions!");
+  //       return;
+  //     }
+  //     setIsPaymentLoading(true);
+      
+  //     let amount;
+  //     // Determine the amount based on paymentStatus
+  //     switch (paymentStatus) {
+  //       case "99":
+  //         amount = 99;
+  //         break;
+  //       case "999":
+  //         amount = 999;
+  //         break;
+  //       default:
+  //         setPaymentStatusError(true);
+  //         return;
+  //     }
+  
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_API_URL}/api/phonepe/payment`,
+  //       {
+  //         name,
+  //         email,
+  //         phonenumber,
+  //         password: signupPassword,
+  //         amount,
+  //       }
+  //     );
+  
+  //     // Check if response contains existence flag
+  //     if (response.data.exist) {
+  //       alert(response.data.exist); // Alert user about existence
+  //     } else {
+  //       // Handle successful signup
+  //       console.log("Signup successful", response.data);
+  //       // notifySuccess("Signup successful");
+  //       window.location.href = response.data;
+  //       // navigate("/dashboard");
+  //     }
+  //     setIsPaymentLoading(false);
+  //   } catch (error) {
+  //     console.error("Signup failed", error);
+  //     notifyError("Signup failed");
+  //     setIsPaymentLoading(false);
+  //   }
+  // };
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validation for signup form fields
+    if (!name || !email || !phonenumber || !signupPassword) {
+      setNameError(!name);
+      setEmailError(!email);
+      setPhonenumberError(!phonenumber);
+      setSignupPasswordError(!signupPassword);
+      return;
+    }
+  
+    // if (!termsChecked) {
+    //   toast.error("Please agree to the Terms and Conditions!");
+    //   return;
+    // }
+  
+    setIsPaymentLoading(true);
+    
+    try {
       let amount;
-      // Determine the amount based on paymentStatus
       switch (paymentStatus) {
         case "99":
           amount = 99;
@@ -360,14 +409,13 @@ function Login({ role }) {
 
               {/* Signup Form */}
 
-              {/* onSubmit={handleSignupFormSubmit} */}
 
               <div
                 className={`signup lg:rounded-md rounded-b-md form-peice ${
                   isLoginForm ? "" : "switched"
                 }`}
               >
-                <form className="signup-form" onSubmit={handleSignupFormSubmit}>
+                <form className="signup-form" onSubmit={handleFormSubmit}>
                   <div className="text-center">
                     <div>
                       <RiLoginBoxLine className="text-5xl mx-auto text-[--three-color]" />
@@ -445,12 +493,13 @@ function Login({ role }) {
                     )}
                   </div>
                   <div className="CTA">
-                    <input
-                      className="button_1 hover:cursor-pointer"
-                      type="submit"
-                      value="Sign Up"
-                    />
-                    {/* <button onClick={handlePopup}>Submit</button> */}
+
+                    {!name || !email || !phonenumber || !signupPassword ? (
+                      <button className="button_1 p-1 px-3 uppercase text-sm cursor-pointer" disabled>Submit</button>
+                    ) : (
+                      <button className="button_1 p-1 px-3 uppercase text-sm cursor-pointer" onClick={handlePopup}>Submit</button>
+                    )}
+
                     <div className="text-sm pt-3 flex justify-center">
                       Already have an account?&nbsp;
                       <div
@@ -521,13 +570,12 @@ function Login({ role }) {
                             </div>
                         </div>
                         <div className="CTA">
-                        <button
-                          className="button_1 p-1 px-3"
-                          onClick={handlePaymentSubmit}
-                          disabled={isPaymentLoading} // Disable button when loading
-                        >
-                          {isPaymentLoading ? "Loading..." : "Submit Payment"}
-                        </button>
+                          <input
+                            className="button_1 hover:cursor-pointer"
+                            type="submit"
+                            value={isPaymentLoading ? "Submit Payment" : "Loading..."}
+                            // disabled={isPaymentLoading}
+                          />
                         </div>
                       </div>
                     </div>
