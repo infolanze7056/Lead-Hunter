@@ -182,29 +182,23 @@ function Login({ role }) {
   };
 
   const handlePaymentSubmit = async () => {
+
+    if (!termsChecked) {
+      alert("Please agree to the Terms and Conditions.");
+      return;
+  }
+
     try {
-      // Check if terms are checked
-      if (!termsChecked) {
-        // Notify user if terms are not checked
-        toast.error("Please agree to the Terms and Conditions!");
+      let amount;
+      if (paymentStatus === "99") {
+        amount = 99;
+      } else if (paymentStatus === "999") {
+        amount = 999;
+      } else {
+        setPaymentStatusError(true);
         return;
       }
-      setIsPaymentLoading(true);
-      let amount;
-  
-      // Determine the amount based on paymentStatus
-      switch (paymentStatus) {
-        case "99":
-          amount = 99;
-          break;
-        case "999":
-          amount = 999;
-          break;
-        default:
-          setPaymentStatusError(true);
-          return;
-      }
-  
+
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/phonepe/payment`,
         {
@@ -215,22 +209,21 @@ function Login({ role }) {
           amount,
         }
       );
-  
+
       // Check if response contains existence flag
       if (response.data.exist) {
         alert(response.data.exist); // Alert user about existence
       } else {
         // Handle successful signup
         console.log("Signup successful", response.data);
-        // notifySuccess("Signup successful");
+        notifySuccess("Signup successful");
         window.location.href = response.data;
         // navigate("/dashboard");
       }
-      setIsPaymentLoading(false);
     } catch (error) {
       console.error("Signup failed", error);
       notifyError("Signup failed");
-      setIsPaymentLoading(false);
+      // Handle signup error
     }
   };
   
@@ -509,12 +502,12 @@ function Login({ role }) {
                         </div>
                         <div className="CTA">
                         <button
-                          className="button_1 p-1 px-3"
-                          onClick={handlePaymentSubmit}
-                          disabled={isPaymentLoading} // Disable button when loading
-                        >
-                          {isPaymentLoading ? "Loading..." : "Submit Payment"}
-                        </button>
+                            className="button_1 p-1 px-3"
+                            onClick={handlePaymentSubmit}
+                            disabled={!termsChecked}
+                          >
+                            Submit Payment
+                          </button>
                         </div>
                       </div>
                     </div>
