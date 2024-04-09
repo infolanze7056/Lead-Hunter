@@ -85,7 +85,7 @@ function Login() {
     // Send login request to the API
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://leadhunter-backend.vercel.app/api/auth/login",
         {
           email: loginEmail,
           password: loginPassword,
@@ -147,7 +147,7 @@ function Login() {
       }
   
       const response = await axios.post(
-        "http://localhost:5000/api/phonepe/payment",
+        "https://leadhunter-backend.vercel.app/api/phonepe/payment",
         {
           name,
           email,
