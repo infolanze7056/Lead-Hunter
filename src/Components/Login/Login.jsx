@@ -157,7 +157,7 @@ function Login({ role }) {
         notifyError("Login failed");
       }
     } finally {
-      setIsLoading(false); // Set loading to false after try-catch block execution
+      setIsLoading(false);
     }
   };
 
