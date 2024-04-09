@@ -9,7 +9,7 @@ import { SiGnuprivacyguard } from "react-icons/si";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
 
-function Login({ role }) {
+function Login() {
   const navigate = useNavigate();
 
   const notifySuccess = (message) => toast.success(message);
@@ -20,7 +20,6 @@ function Login({ role }) {
   const [loginPassword, setLoginPassword] = useState("");
   const [loginEmailError, setLoginEmailError] = useState(false);
   const [loginPasswordError, setLoginPasswordError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   // State variables for signup form
   const [name, setName] = useState("");
@@ -35,8 +34,6 @@ function Login({ role }) {
   const [showPopup, setShowPopup] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("");
   const [paymentStatusError, setPaymentStatusError] = useState(false);
-  const [termsChecked, setTermsChecked] = useState(false);
-  const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
   const handleLoginInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,90 +76,45 @@ function Login({ role }) {
 
   const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
+    // Validation for login form fields
     if (!loginEmail || !loginPassword) {
       setLoginEmailError(!loginEmail);
       setLoginPasswordError(!loginPassword);
-      setIsLoading(false); // Set loading to false if validation fails
       return;
     }
-
+    // Send login request to the API
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/payment`,
+        "http://localhost:5000/api/auth/login",
         {
           email: loginEmail,
           password: loginPassword,
         }
       );
+      // Handle successful login
+      console.log("Login successful", response.data);
+      notifySuccess("Login successful");
+      const { token } = response.data;
+      localStorage.setItem("token", token);
 
-      if (response.data.user === true) {
-        console.log(response.data.payment_status, "sdfsdf");
-        if (response.data.payment_status === "SUCCESSFUL") {
-          // Handle successful login
-          console.log("Login successful", response.data);
-          const { token } = response.data;
-          notifySuccess("Login successful");
+      const tokenParts = token.split(".");
+      const payload = JSON.parse(atob(tokenParts[1]));
+      const currentTime = Math.floor(Date.now() / 1000);
+      console.log("Token expiration time:", payload.exp);
+      console.log("Current time:", currentTime);
 
-          localStorage.setItem("token", token);
-          const role = response.data.role;
-          localStorage.setItem("role", role);
-
-          setTimeout(() => {
-            // Remove token after 10 minutes
-            localStorage.removeItem("token");
-            localStorage.removeItem("role");
-            navigate("/register");
-          }, 240 * 60 * 60 * 1000); // 10 minutes = 600000
-
-          const tokenParts = token.split(".");
-          const payload = JSON.parse(atob(tokenParts[1]));
-          const currentTime = Math.floor(Date.now() / 1000);
-          console.log("Token expiration time:", payload.exp);
-          console.log("Current time:", currentTime);
-
-          if (payload.exp < currentTime) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("role");
-            navigate("/register");
-          } else {
-            const role = response.data.role; // Extract role from response data
-            console.log("Role:", role);
-            // Redirect based on role
-            if (role && role === "Admin") {
-              navigate("/admin");
-            } else {
-              navigate("/dashboard");
-            }
-          }
-        } else if (response.data.payment_status === "PENDING") {
-          const paymentLink = response.data.payment_link;
-          window.location.href = paymentLink;
-        } else {
-          // Handle other payment statuses
-          console.log("Payment status is neither SUCCESSFUL nor PENDING");
-          notifyError("Payment failed");
-        }
+      if (payload.exp < currentTime) {
+        localStorage.removeItem("token");
+        navigate("/register");
       } else {
-        // User not found
-        notifyError("User does not exist");
+        navigate("/dashboard");
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        // Unauthorized - Password invalid
-        notifyError("Invalid password");
-      } else {
-        console.error("Login failed", error);
-        notifyError("Login failed");
-      }
-    } finally {
-      setIsLoading(false);
+      console.error("Login failed", error);
+      notifyError("Login failed");
+      // Handle login error
     }
   };
-
-  
-
 
   const handleSignupFormSubmit = async (e) => {
     e.preventDefault();
@@ -183,28 +135,19 @@ function Login({ role }) {
 
   const handlePaymentSubmit = async () => {
     try {
-      // if (!termsChecked) {
-      //   toast.error("Please agree to the Terms and Conditions!");
-      //   return;
-      // }
-      setIsPaymentLoading(true);
       let amount;
-  
-      // Determine the amount based on paymentStatus
-      switch (paymentStatus) {
-        case "99":
-          amount = 99;
-          break;
-        case "999":
-          amount = 999;
-          break;
-        default:
-          setPaymentStatusError(true);
-          return;
+      // Determine the amount based on the selected paymentStatus
+      if (paymentStatus === "99") {
+        amount = 99;
+      } else if (paymentStatus === "999") {
+        amount = 999;
+      } else {
+        setPaymentStatusError(true);
+        return;
       }
   
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/phonepe/payment`,
+        "http://localhost:5000/api/phonepe/payment",
         {
           name,
           email,
@@ -220,15 +163,15 @@ function Login({ role }) {
       } else {
         // Handle successful signup
         console.log("Signup successful", response.data);
-        // notifySuccess("Signup successful");
+        notifySuccess("Signup successful");
         window.location.href = response.data;
+        // window.location.href = response.data.paymentUrl;
         // navigate("/dashboard");
       }
-      setIsPaymentLoading(false);
     } catch (error) {
       console.error("Signup failed", error);
       notifyError("Signup failed");
-      setIsPaymentLoading(false);
+      // Handle signup error
     }
   };
   
@@ -327,8 +270,7 @@ function Login({ role }) {
                     <input
                       className="button_1 hover:cursor-pointer"
                       type="submit"
-                      value={isLoading ? "Loading..." : "Login"}
-                      disabled={isLoading}
+                      value="Login"
                     />
                     <div className="text-sm pt-4 flex justify-center">
                       Don't have an account?&nbsp;
@@ -449,7 +391,7 @@ function Login({ role }) {
                   {showPopup && (
                     <div className="popup fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 p-5 z-50">
                       <div className="bg-white rounded-md p-5">
-                        <div className="justify-between flex pb-5">
+                        <div className="justify-between flex pb-3">
                           <div className="text-lg">Choose Subscribtion:</div>
                           <button
                             className="hover:text-red-700"
@@ -459,9 +401,9 @@ function Login({ role }) {
                           </button>
                         </div>
                         <div className="grid grid-cols-2 max-w-xl mx-auto gap-3">
-                          <div className="border text-center p-7 rounded shadow-md bg-[--main-color]">
+                          <div className="border p-7 text-center rounded-md shadow-md">
                             <div className="text-3xl font-semibold">
-                              99<sub>/Month</sub>
+                              99 <sub>/ INR</sub>
                             </div>
                             <div className="pt-2">
                               <input
@@ -471,9 +413,9 @@ function Login({ role }) {
                               />
                             </div>
                           </div>
-                          <div className="border p-7 text-center rounded shadow-md bg-[--main-color]">
+                          <div className="border p-7 text-center rounded-md shadow-md">
                             <div className="text-3xl font-semibold">
-                              999<sub>/Year</sub>
+                              999 <sub>/ INR</sub>
                             </div>
                             <div className="pt-2">
                               <input
@@ -489,30 +431,14 @@ function Login({ role }) {
                             Please select one option
                           </span>
                         )}
-                        {/* <div className="mt-10 flex items-center">
-                        <div>
-                          <label className="">
-                            <input
-                              type="checkbox"
-                              className="mr-2"
-                              checked={termsChecked}
-                              onChange={() => setTermsChecked(!termsChecked)}
-                            />
-                            
-                          </label>
-                          </div>
-                          <div className="text-sm pt-1">
-                          I agree to the <NavLink to="/terms" className="text-[--three-color] hover:text-black">Terms and Conditions!</NavLink>
-                            </div>
-                        </div> */}
+
                         <div className="CTA">
-                        <button
-                          className="button_1 p-1 px-3"
-                          onClick={handlePaymentSubmit}
-                          disabled={isPaymentLoading} // Disable button when loading
-                        >
-                          {isPaymentLoading ? "Loading..." : "Submit Payment"}
-                        </button>
+                          <button
+                            className="button_1 p-1 px-3"
+                            onClick={handlePaymentSubmit}
+                          >
+                            Submit Payment
+                          </button>
                         </div>
                       </div>
                     </div>
