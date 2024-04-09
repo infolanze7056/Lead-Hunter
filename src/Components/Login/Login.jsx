@@ -183,12 +183,10 @@ function Login({ role }) {
 
   const handlePaymentSubmit = async () => {
     try {
-      // Check if terms are checked
-      if (!termsChecked) {
-        // Notify user if terms are not checked
-        toast.error("Please agree to the Terms and Conditions!");
-        return;
-      }
+      // if (!termsChecked) {
+      //   toast.error("Please agree to the Terms and Conditions!");
+      //   return;
+      // }
       setIsPaymentLoading(true);
       let amount;
   
@@ -491,7 +489,7 @@ function Login({ role }) {
                             Please select one option
                           </span>
                         )}
-                        <div className="mt-10 flex items-center">
+                        {/* <div className="mt-10 flex items-center">
                         <div>
                           <label className="">
                             <input
@@ -506,7 +504,7 @@ function Login({ role }) {
                           <div className="text-sm pt-1">
                           I agree to the <NavLink to="/terms" className="text-[--three-color] hover:text-black">Terms and Conditions!</NavLink>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="CTA">
                         <button
                           className="button_1 p-1 px-3"
