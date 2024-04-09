@@ -90,7 +90,7 @@ function ResetPassword() {
       setPassword("");
       setConfirmPassword("");
       setPasswordError("");
-      navigate('/login'); // Redirect to login page or any other appropriate page after successful password reset
+      // navigate('/login'); // Redirect to login page or any other appropriate page after successful password reset
     } catch (error) {
       console.error('Error updating password:', error.message);
     }
