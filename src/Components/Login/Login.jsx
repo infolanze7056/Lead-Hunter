@@ -218,9 +218,9 @@ function LoginDemo({ role }) {
       } else {
         // Handle successful signup
         console.log("Signup successful", response.data);
-        // notifySuccess("Signup successful");
+        notifySuccess("Signup successful");
         // window.location.href = response.data;
-        navigate("/dashboard");
+        navigate("/register");
       }
       setIsPaymentLoading(false);
     } catch (error) {
