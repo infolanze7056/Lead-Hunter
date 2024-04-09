@@ -13,6 +13,7 @@ function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -67,7 +68,7 @@ function ResetPassword() {
       setPasswordError('Passwords do not match.');
       return;
     }
-
+    setIsLoading(true);
     // Make API call to update password
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/passwordReset/${userId}/${token}`, {
@@ -90,6 +91,7 @@ function ResetPassword() {
       setPassword("");
       setConfirmPassword("");
       setPasswordError("");
+      setIsLoading(false);
       // navigate('/login'); // Redirect to login page or any other appropriate page after successful password reset
     } catch (error) {
       console.error('Error updating password:', error.message);
@@ -139,7 +141,7 @@ function ResetPassword() {
               </span>
             </div>
             {passwordError && <div className="text-red-500 text-sm mt-1">{passwordError}</div>}
-            <button className='bg-[--three-color] hover:bg-white hover:text-[--three-color] outline outline-[--three-color] p-2 px-5 rounded-md text-sm text-white uppercase mt-5' onClick={handleSubmit}>Submit</button>
+            <button className='bg-[--three-color] hover:bg-white hover:text-[--three-color] outline outline-[--three-color] p-2 px-5 rounded-md text-sm text-white uppercase mt-5' onClick={handleSubmit}>{isLoading ? "Loading..." : "Submit"}</button>
           </div>
           <div><NavLink to="/login" className="text-sm text-[--three-color] hover:text-black">Back to Login</NavLink></div>
         </div>

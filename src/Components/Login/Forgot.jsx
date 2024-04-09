@@ -9,12 +9,14 @@ function Forgot() {
   // State variables for email input and error message
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const notifySuccess = (message) => toast.success(message);
   const notifyError = (message) => toast.error(message);
 
   // Function to handle the API call
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       // Perform your API call here
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/passwordReset`, {
@@ -31,6 +33,7 @@ function Forgot() {
         setEmail('');
         setError('');
         notifySuccess("Email send successfully");
+        setIsLoading(false);
         // Handle success scenario, for example redirect to a success page
       } else {
         // Error: Set error message based on response
@@ -42,6 +45,7 @@ function Forgot() {
       console.error('Error:', error);
       // setError('User with given email does not exist.');
       notifyError("User with given email does not exist.")
+      setIsLoading(false);
     }
   };
 
@@ -68,7 +72,7 @@ function Forgot() {
               />
             </div>
             {error && <div className="text-red-500 mt-2 text-xs text-end">{error}</div>}
-            <button className=' bg-[--three-color] text-white hover:text-[--three-color] p-2 px-5 hover:bg-white outline outline-[--three-color] rounded-md text-sm text-[--three-color] uppercase mt-5' onClick={handleSubmit}>Submit</button>
+            <button className=' bg-[--three-color] text-white hover:text-[--three-color] p-2 px-5 hover:bg-white outline outline-[--three-color] rounded-md text-sm text-[--three-color] uppercase mt-5' onClick={handleSubmit}>{isLoading ? "Loading..." : "Submit"}</button>
           </div>
           <div><NavLink to="/register" className="text-sm text-[--three-color] hover:text-black">Back To Login</NavLink></div>
         </div>
