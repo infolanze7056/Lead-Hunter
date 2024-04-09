@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdKey, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -12,6 +12,7 @@ function ResetPassword() {
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -30,6 +31,31 @@ function ResetPassword() {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
+  useEffect(() => {
+    const verifyLink = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/passwordReset/${userId}/${token}`, {
+          method: 'GET',
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (!data.status) {
+            navigate('/reset-error');
+          }
+        } else {
+          // toast.error("Failed to verify link.");
+          navigate('/reset-error');
+        }
+      } catch (error) {
+        console.error('Error verifying link:', error.message);
+        toast.error("An error occurred while verifying link.");
+      }
+    };
+
+    verifyLink();
+  }, [userId, token, navigate]);
 
   const handleSubmit = async () => {
     // Password validation logic
@@ -64,6 +90,7 @@ function ResetPassword() {
       setPassword("");
       setConfirmPassword("");
       setPasswordError("");
+      navigate('/login'); // Redirect to login page or any other appropriate page after successful password reset
     } catch (error) {
       console.error('Error updating password:', error.message);
     }
@@ -75,7 +102,7 @@ function ResetPassword() {
         <div className='border rounded-md lg:p-10 md:p-10 p-5 py-10 text-center bg-white'>
           <div><RiLockPasswordLine className='text-6xl mx-auto text-[--three-color]' /></div>
           <div className='text-2xl font-semibold pt-5 pb-2'>Reset Password</div>
-          <div className='text-sm text-gray-500'>Enter your email and we'll send you a link to reset your password.</div>
+          <div className='text-sm text-gray-500'>Enter your new password.</div>
           <div className='pt-4 pb-5'>
             <div className="relative mt-2 rounded-md shadow-sm">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -88,7 +115,7 @@ function ResetPassword() {
                 value={password}
                 onChange={handlePasswordChange}
                 className="block w-full rounded-md border-0 py-1.5 ps-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Enter Your password"
+                placeholder="Enter your new password"
               />
               <span className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onClick={togglePasswordVisibility}>
                 {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
@@ -105,7 +132,7 @@ function ResetPassword() {
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
                 className="block w-full rounded-md border-0 py-1.5 ps-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Re-Enter Your password"
+                placeholder="Re-enter your new password"
               />
               <span className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer" onClick={toggleConfirmPasswordVisibility}>
                 {showConfirmPassword ? <MdVisibilityOff /> : <MdVisibility />}
@@ -114,7 +141,7 @@ function ResetPassword() {
             {passwordError && <div className="text-red-500 text-sm mt-1">{passwordError}</div>}
             <button className='bg-[--three-color] hover:bg-white hover:text-[--three-color] outline outline-[--three-color] p-2 px-5 rounded-md text-sm text-white uppercase mt-5' onClick={handleSubmit}>Submit</button>
           </div>
-          <div><NavLink to="/register" className="text-sm text-[--three-color] hover:text-black">Back To Login</NavLink></div>
+          <div><NavLink to="/login" className="text-sm text-[--three-color] hover:text-black">Back to Login</NavLink></div>
         </div>
       </div>
     </div>

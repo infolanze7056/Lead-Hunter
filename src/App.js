@@ -19,6 +19,7 @@ import { AuthProvider } from './AuthContext';
 import Free from './Components/Free';
 import Payment from './Components/Payment/Payment';
 import Terms from './Components/Terms';
+import ResetError from './Components/Login/ResetError';
 
 function App() {
   return (
@@ -49,8 +50,9 @@ function AppContent() {
         <Route path='/register' element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path='/pay-success/:transaction_id' element={<Payment />}  />
-        <Route path='terms' element={<Terms />} />
+        <Route path='/terms' element={<Terms />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/reset-error' element={<ResetError />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/api/passwordReset/:userId/:token' element={<ResetPassword />} />
         <Route path="*" element={<Home />} />
