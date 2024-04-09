@@ -174,13 +174,14 @@ function Login({ role }) {
       setSignupPasswordError(!signupPassword);
       return;
     }
+    console.log("Form data is valid:", { name, email, phonenumber, signupPassword });
     handlePopup();
   };
-
+  
   const handlePopup = () => {
     setShowPopup(true);
   };
-
+  
   const handlePaymentSubmit = async () => {
     try {
       if (!termsChecked) {
@@ -202,17 +203,16 @@ function Login({ role }) {
           setPaymentStatusError(true);
           return;
       }
+      console.log("Payment amount:", amount);
+  
+      const requestData = { name, email, phonenumber, password: signupPassword, amount };
+      console.log("Sending payment request data:", requestData);
   
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/phonepe/payment`,
-        {
-          name,
-          email,
-          phonenumber,
-          password: signupPassword,
-          amount,
-        }
+        requestData
       );
+      console.log("Response from payment request:", response.data);
   
       // Check if response contains existence flag
       if (response.data.exist) {
@@ -231,6 +231,7 @@ function Login({ role }) {
       setIsPaymentLoading(false);
     }
   };
+  
   
 
   const handleSwitchForm = () => {
