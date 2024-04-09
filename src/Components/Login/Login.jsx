@@ -220,7 +220,8 @@ function LoginDemo({ role }) {
         console.log("Signup successful", response.data);
         notifySuccess("Signup successful");
         // window.location.href = response.data;
-        navigate("/register");
+        // navigate("/register");
+        window.location.href = "/register";
       }
       setIsPaymentLoading(false);
     } catch (error) {
