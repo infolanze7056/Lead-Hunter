@@ -3,7 +3,7 @@
   import { FaBars } from "react-icons/fa6";
   import { AiOutlineClose } from "react-icons/ai";
   import "../../Components/Header/Header.css";
-  import Logo from "../../Images/Lead Hunter Logo.png";
+  import Logo from "../../Images/Logo-Blue-1.png";
 
   function DashNav({ role }) {
     const [isActive, setIsActive] = useState(1);
@@ -42,7 +42,7 @@
         <nav className="bg-white w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b ">
           <div className=" flex flex-wrap items-center justify-between mx-auto">
             <div className="z-40">
-            <img className="w-40 lg:w-44 md:w-40 z-40 " src={Logo} alt="nishant" />
+            <img className="w-44 lg:w-48 md:w-44 z-40 " src={Logo} alt="nishant" />
             </div>
             <div className="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
             <NavLink 
