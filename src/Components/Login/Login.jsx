@@ -458,8 +458,8 @@ function LoginDemo({ role }) {
                           </button>
                         </div>
                         <div className="grid grid-cols-2 max-w-xl mx-auto gap-3">
-                          <div className="border text-center p-7 rounded shadow-md bg-[--main-color]">
-                            <div className="text-3xl font-semibold">
+                          <div className="border text-center lg:p-7 p-5 rounded shadow-md bg-[--main-color]">
+                            <div className="lg:text-3xl text-2xl font-semibold">
                               99<sub>/Month</sub>
                             </div>
                             <div className="pt-2">
@@ -470,8 +470,8 @@ function LoginDemo({ role }) {
                               />
                             </div>
                           </div>
-                          <div className="border p-7 text-center rounded shadow-md bg-[--main-color]">
-                            <div className="text-3xl font-semibold">
+                          <div className="border lg:p-7 p-5 text-center rounded shadow-md bg-[--main-color]">
+                            <div className="lg:text-3xl text-2xl font-semibold">
                               999<sub>/Year</sub>
                             </div>
                             <div className="pt-2">
