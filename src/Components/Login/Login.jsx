@@ -501,7 +501,7 @@ function LoginDemo({ role }) {
                           </label>
                           </div>
                           <div className="text-sm pt-1">
-                          I agree to the <NavLink to="/terms" className="text-[--three-color] hover:text-black">Terms and Conditions!</NavLink>
+                          I agree to the <NavLink to="/terms-and-conditions" className="text-[--three-color] hover:text-black">Terms and Conditions!</NavLink>
                             </div>
                         </div>
                         <div className="CTA">

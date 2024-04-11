@@ -20,6 +20,7 @@ import Free from './Components/Free';
 import Payment from './Components/Payment/Payment';
 import Terms from './Components/Terms';
 import ResetError from './Components/Login/ResetError';
+import PrivacyPolicy from './Components/PrivacyPolicy';
 
 function App() {
   return (
@@ -50,7 +51,8 @@ function AppContent() {
         <Route path='/register' element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path='/pay-success/:transaction_id' element={<Payment />}  />
-        <Route path='/terms' element={<Terms />} />
+        <Route path='/terms-and-conditions' element={<Terms />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/reset-error' element={<ResetError />} />
         <Route path='/admin' element={<Admin />} />

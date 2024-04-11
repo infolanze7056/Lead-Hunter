@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 import logo from "../../Images/logo.png";
 
 function Footer() {
@@ -74,13 +75,13 @@ function Footer() {
     </p>
     <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
       <li>
-        <a href="/" className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">F.A.Q</a>
+        <NavLink className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400" to="/contact">F.A.Q</NavLink>
       </li>
       <li>
-        <a href="/" className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">Privacy Policy</a>
+        <NavLink className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400" to="/privacy-policy">Privacy Policy</NavLink>
       </li>
       <li>
-        <a href="/" className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">Terms &amp; Conditions</a>
+        <NavLink className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400" to="/terms-and-conditions">Terms &amp; Conditions</NavLink>
       </li>
     </ul>
   </div>
