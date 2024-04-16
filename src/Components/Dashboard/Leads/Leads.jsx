@@ -70,6 +70,20 @@ function Leads() {
   }
 };
 
+const fetchLeadsByTechnology = async (tag) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads/technology`, {
+      params: {
+        Technology: tag
+      }
+    });
+    setLeads(response.data);
+    console.log("data", response.data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
 
 const clearSearchFilter = async () => {
   setSearchTerm('');
@@ -84,6 +98,8 @@ const clearSearchFilter = async () => {
     setLoadingClose(false);
   }
 };
+
+
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -109,11 +125,12 @@ const clearSearchFilter = async () => {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
-    <div className='px-4 lg:px-28 md:px-20 lg:py-16 md:py-16 py-4 bg-[--main-color] font-family'>
+    <div className='px-4 lg:px-28 md:px-20 lg:py-10 md:py-10 py-4 bg-[--main-color] font-family'>
       <div className='bg-white rounded-lg shadow-lg pb-5'>
         {/* <div className='text-center py-8 text-[--three-color] uppercase text-4xl border-b mb-10'>Get Your Leads Here</div> */}
         <div className='border-b px-4 py-7 mb-10'>
-          <form onSubmit={handleSearchSubmit} className="flex items-center max-w-lg mx-auto">   
+        <div className=''>
+          <form onSubmit={handleSearchSubmit} className="flex items-center max-w-lg mx-auto">  
               <label htmlFor="voice-search" className="sr-only">Search</label>
               <div className="relative w-full">
                   <input type="text" id="voice-search" value={searchTerm} onChange={handleSearchChange} className="bg-[--main-color] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3 " placeholder="Search HTML, CSS..." required />
@@ -160,6 +177,12 @@ const clearSearchFilter = async () => {
                 Search
               </button>
           </form>
+          </div>
+          <div className='pt-5 lg:flex justify-evenly text-center'>
+            <button value="Web" onClick={() => fetchLeadsByTechnology("Web")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2'>Web Development</button>
+            <button value="Blockchain" onClick={() => fetchLeadsByTechnology("Blockchain")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2'>Blockchain Development</button>
+            <button value="App" onClick={() => fetchLeadsByTechnology("App")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2'>App Development</button>
+          </div>
         </div>
         {currentLeads.map((lead, index) => (
           <div key={lead.id} className='grid lg:grid-cols-6 grid-col-3 border rounded-lg hover:shadow-md shadow-sm cursor-pointer items-center lead mb-5 m-4'>
