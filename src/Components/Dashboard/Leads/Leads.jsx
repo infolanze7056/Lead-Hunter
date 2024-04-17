@@ -16,7 +16,6 @@ function Leads() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [loadingClose, setLoadingClose] = useState(false);
-  const [loading1, setLoading1] = useState({ web: false, blockchain: false, app: false });
 
   useEffect(() => {
     async function fetchData() {
@@ -67,15 +66,11 @@ function Leads() {
   } catch (error) {
     console.error('Error fetching data:', error);
   } finally {
-    setLoading(false);
+    setLoading(false); // Set loading to false after the API call is completed (whether success or error)
   }
 };
 
 const fetchLeadsByTechnology = async (tag) => {
-  setLoading1((prevLoading) => ({
-    ...prevLoading,
-    [tag]: true
-  }));
   try {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads/technology`, {
       params: {
@@ -86,11 +81,6 @@ const fetchLeadsByTechnology = async (tag) => {
     console.log("data", response.data);
   } catch (error) {
     console.error('Error fetching data:', error);
-  } finally {
-    setLoading1((prevLoading) => ({
-      ...prevLoading,
-      [tag]: false
-    }));
   }
 };
 
@@ -189,9 +179,9 @@ const clearSearchFilter = async () => {
           </form>
           </div>
           <div className='pt-5 lg:flex justify-evenly text-center'>
-            <button value="Web" onClick={() => fetchLeadsByTechnology("Web")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2' disabled={loading1.web}>{loading1.web ?  "Searching.." : "Web Development"}</button>
-            <button value="Blockchain" onClick={() => fetchLeadsByTechnology("Blockchain")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2' disabled={loading1.blockchain}>{loading1.blockchain ?  "Searching.." : "Blockchain Development"}</button>
-            <button value="App" onClick={() => fetchLeadsByTechnology("App")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2' disabled={loading1.app}>{loading1.app ?  "Searching.." : "App Development"}</button>
+            <button value="Web" onClick={() => fetchLeadsByTechnology("Web")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2'>Web Development</button>
+            <button value="Blockchain" onClick={() => fetchLeadsByTechnology("Blockchain")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2'>Blockchain Development</button>
+            <button value="App" onClick={() => fetchLeadsByTechnology("App")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2'>App Development</button>
           </div>
         </div>
         {currentLeads.map((lead, index) => (
