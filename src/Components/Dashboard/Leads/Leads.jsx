@@ -16,6 +16,10 @@ function Leads() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [loadingClose, setLoadingClose] = useState(false);
+  const [webLoading, setWebLoading] = useState(false);
+  const [blockchainLoading, setBlockchainLoading] = useState(false);
+  const [appLoading, setAppLoading] = useState(false);
+  const [isActive, setIsActive] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -54,7 +58,9 @@ function Leads() {
   };
 
   const fetchLeadsByTag = async () => {
-  setLoading(true); // Set loading to true before making the API call
+  setCurrentPage(1);
+  setIsActive("")
+  setLoading(true);
   try {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads/tag`, {
       params: {
@@ -66,12 +72,38 @@ function Leads() {
   } catch (error) {
     console.error('Error fetching data:', error);
   } finally {
-    setLoading(false); // Set loading to false after the API call is completed (whether success or error)
+    setLoading(false);
   }
 };
 
 const fetchLeadsByTechnology = async (tag) => {
+  setCurrentPage(1);
+  setSearchTerm('');
   try {
+    // Set loading state for the clicked button
+    switch (tag) {
+      case "Web":
+        setWebLoading(true);
+        setBlockchainLoading(false); // Reset other loading states
+        setAppLoading(false); // Reset other loading states
+        setIsActive("Web");
+        break;
+      case "Blockchain":
+        setWebLoading(false); // Reset other loading states
+        setBlockchainLoading(true);
+        setAppLoading(false); // Reset other loading states
+        setIsActive("Blockchain");
+        break;
+      case "App":
+        setWebLoading(false); // Reset other loading states
+        setBlockchainLoading(false); // Reset other loading states
+        setAppLoading(true);
+        setIsActive("App");
+        break;
+      default:
+        break;
+    }
+
     const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/leads/technology`, {
       params: {
         Technology: tag
@@ -81,11 +113,27 @@ const fetchLeadsByTechnology = async (tag) => {
     console.log("data", response.data);
   } catch (error) {
     console.error('Error fetching data:', error);
+  } finally {
+    // Reset loading state after API call is complete
+    switch (tag) {
+      case "Web":
+        setWebLoading(false);
+        break;
+      case "Blockchain":
+        setBlockchainLoading(false);
+        break;
+      case "App":
+        setAppLoading(false);
+        break;
+      default:
+        break;
+    }
   }
 };
 
 
 const clearSearchFilter = async () => {
+  setIsActive("")
   setSearchTerm('');
   setLoadingClose(true);
   try {
@@ -179,10 +227,16 @@ const clearSearchFilter = async () => {
           </form>
           </div>
           <div className='pt-5 lg:flex justify-evenly text-center'>
-            <button value="Web" onClick={() => fetchLeadsByTechnology("Web")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2'>Web Development</button>
-            <button value="Blockchain" onClick={() => fetchLeadsByTechnology("Blockchain")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2'>Blockchain Development</button>
-            <button value="App" onClick={() => fetchLeadsByTechnology("App")} className='border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2'>App Development</button>
-          </div>
+          <button value="Web" onClick={() => fetchLeadsByTechnology("Web")} className={`${isActive === "Web" ? "border-2 rounded p-1 px-4 border-[--three-color] text-white bg-[--three-color] mb-2 me-2" : "border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2"}`}>
+        {webLoading ? "Searching..." : "Web Development"}
+      </button>
+      <button value="Blockchain" onClick={() => fetchLeadsByTechnology("Blockchain")} className={`${isActive === "Blockchain" ? "border-2 rounded p-1 px-4 border-[--three-color] text-white bg-[--three-color] mb-2 me-2" : "border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2"}`}>
+        {blockchainLoading ? "Searching..." : "Blockchain Development"}
+      </button>
+      <button value="App" onClick={() => fetchLeadsByTechnology("App")} className={`${isActive === "App" ? "border-2 rounded p-1 px-4 border-[--three-color] text-white bg-[--three-color] mb-2 me-2" : "border-2 rounded p-1 px-4 border-[--three-color] hover:text-white hover:bg-[--three-color] text-[--three-color] bg-white mb-2 me-2"}`}>
+        {appLoading ? "Serching..." : "App Development"}
+      </button>
+      </div>
         </div>
         {currentLeads.map((lead, index) => (
           <div key={lead.id} className='grid lg:grid-cols-6 grid-col-3 border rounded-lg hover:shadow-md shadow-sm cursor-pointer items-center lead mb-5 m-4'>
