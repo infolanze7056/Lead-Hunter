@@ -6,7 +6,7 @@ function Contact() {
   return (
     <div>
       <Helmet>
-        <title>Conatct | Lead Hunter</title>
+        <title>Contact | Lead Hunter</title>
       </Helmet>
       <ContactHero />
     </div>
