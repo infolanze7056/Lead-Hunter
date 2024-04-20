@@ -30,7 +30,7 @@ function App() {
         <AuthProvider>
           <Helmet>
             <title>Home | Lead Hunter</title>
-            <meta name='description' content='Find the perfect leads for you. Explore thousands of skilled professionals ready to bring your ideas to life.'/>
+            <meta name='description' content='Find the perfect leads for you Lead Hunter Are Provides. Explore thousands of skilled professionals ready to bring your ideas to life.'/>
           </Helmet>
             <BrowserRouter> 
               <AppContent />
