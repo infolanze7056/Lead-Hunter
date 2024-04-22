@@ -8,7 +8,7 @@ const HeroSection = () => {
                 <div className="grid lg:grid-cols-2 items-center">
                     <div className="lg:order-1 order-2">
                         <div className="w-max bg-[--second-color] p-2 px-3 rounded-lg uppercase shadow-md">Lead Generation</div>
-                        <h1 className="text-5xl lg:text-6xl md:text-6xl font-semibold pt-3">Lead Subscription</h1>
+                        <div className="text-5xl lg:text-6xl md:text-6xl font-semibold pt-3">Lead Subscription</div>
                         <div className="text-lg py-5">
                             <p className="pb-4">Looking for freelance or remote work? Look no further than LeadHunter! As a top-notch freelancer site, we provide a platform where you can find and apply for exciting job leads. Don't miss out on the chance to work on your own terms - sign up with LeadHunter now!</p>
                             <p>Join our community today and unlock your potential in the gig economy!</p>
