@@ -19,7 +19,8 @@ function WorkSection() {
             <div className='p-12 rounded-lg bg-[--main-color] lg:text-start md:text-center text-start'>
                 <div className='rounded-lg pb-2'><img className='rounded-lg md:mx-auto' src={Img2} alt="Sign UP" /></div>
                 <div className='text-4xl py-5 font-semibold'>Step - 2</div>
-                <div className='text-lg'>Find the best leads for you. Search & filter leads by site technology, platform, location, and more.</div>
+                <div className='text-lg'>Find the best digital marketing opportunities for you. Search and filter opportunities by industry, target audience, location, and more.</div>
+
             </div>
             <div className='p-12 rounded-lg bg-[--main-color]    lg:text-start md:text-center text-start'>
                 <div className='rounded-lg pb-2'><img className='rounded-lg md:mx-auto h-[310px]' src={Img3} alt="Sign UP" /></div>

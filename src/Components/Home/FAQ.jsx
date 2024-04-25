@@ -52,7 +52,7 @@ function FAQ() {
                         <SiSemanticweb className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5 pe-7">
-                        Is Lead Hunter for me?
+                        Is LeadHunter Right for Your Digital Marketing Needs?
                       </div>
                     </div>
                     <span
@@ -84,9 +84,13 @@ function FAQ() {
                   aria-labelledby="flush-headingOne"
                 >
                   <div className="text-sm">
-                    Lead Hunter is perfect for web design agencies and freelancers
-                    that are looking to quickly grow their businesses and
-                    clientele.
+                    LeadHunter is the ideal solution for businesses and
+                    professionals in the digital marketing industry. Whether
+                    you're a web design agency, freelancer, or marketing
+                    consultant, LeadHunter can help you quickly grow your
+                    business and clientele. Our platform provides you with the
+                    tools and resources you need to succeed in the competitive
+                    digital marketing landscape.
                   </div>
                 </div>
               </div>
@@ -109,7 +113,7 @@ function FAQ() {
                         <MdLeaderboard className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
-                        Where are the leads from?
+                        How Do We Find Opportunities for You?
                       </div>
                     </div>
                     <span
@@ -141,10 +145,11 @@ function FAQ() {
                   aria-labelledby="flush-headingTwo"
                 >
                   <div className="text-sm">
-                    All of our leads are sourced by our team. We scour the web
-                    looking for companies that have horrible websites. We then
-                    vet each site through a rigorous checklist process before
-                    they are given to you.
+                    All of our opportunities are carefully curated by our team
+                    of digital marketing experts. We search the web to find
+                    businesses that are in need of digital marketing services.
+                    Each opportunity undergoes a rigorous vetting process to
+                    ensure quality and relevance before being provided to you.
                   </div>
                 </div>
               </div>
@@ -167,7 +172,8 @@ function FAQ() {
                         <GoTools className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
-                        Is this another lead generation tools?
+                        How is LeadHunter Different from Other Digital Marketing
+                        Tools?
                       </div>
                     </div>
                     <span
@@ -199,10 +205,12 @@ function FAQ() {
                   aria-labelledby="flush-headingThree"
                 >
                   <div className="text-sm">
-                    No! We're not like other lead generation tools that utilize
-                    LinkedIn search and outdated data sets. All of the leads in
-                    our system came from countless hours of online research and
-                    verification. You won't find these leads anywhere else.
+                    No, LeadHunter is not like other digital marketing tools
+                    that rely on outdated data and generic leads. All of our
+                    leads are carefully curated from extensive online research
+                    and verification. We ensure that our leads are fresh,
+                    accurate, and exclusive to LeadHunter, so you won't find
+                    them anywhere else.
                   </div>
                 </div>
               </div>
@@ -224,7 +232,7 @@ function FAQ() {
                         <FaRegThumbsUp className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
-                        Does this work for a freelancer?
+                        Is LeadHunter Suitable for Freelancers?
                       </div>
                     </div>
                     <span
@@ -256,10 +264,12 @@ function FAQ() {
                   aria-labelledby="flush-headingFour"
                 >
                   <div className="text-sm">
-                    Absolutely! This is a great way to turn your freelancing
-                    business into a full fledged agency. Our leads come from a
-                    variety of industries. If you're just starting out you'll
-                    easily find your next client.
+                    Absolutely! LeadHunter is perfect for freelancers looking to
+                    grow their business. Our leads come from a variety of
+                    industries, making it easy for you to find your next client.
+                    Whether you're just starting out or looking to expand your
+                    freelancing business into a full-fledged agency, LeadHunter
+                    has the leads you need to succeed.
                   </div>
                 </div>
               </div>
@@ -281,7 +291,7 @@ function FAQ() {
                         <MdGppGood className="bg-[--second-color] text-[--three-color] text-7xl p-5 rounded-lg md:mx-0 lg:mx-0 mx-auto" />
                       </div>
                       <div className="text-xl font-semibold ps-5">
-                        What do I need to do?
+                        How Does LeadHunter Work?
                       </div>
                     </div>
                     <span
@@ -313,10 +323,13 @@ function FAQ() {
                   aria-labelledby="flush-headingFour"
                 >
                   <div className="text-sm">
-                    Jump into the Lead Hunter dashboard and start finding the
-                    perfect leads for your business. After that start reaching
-                    out to the business. We provide verified email addresses,
-                    phone numbers, social contacts and more.
+                    Getting started with LeadHunter is easy! Simply log in to
+                    the LeadHunter dashboard and start finding the perfect leads
+                    for your digital marketing business. Once you've found a
+                    lead that fits your criteria, you can reach out to them
+                    directly. We provide verified email addresses, phone
+                    numbers, social contacts, and more to help you connect with
+                    potential clients effectively.
                   </div>
                 </div>
               </div>
