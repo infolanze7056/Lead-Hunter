@@ -90,7 +90,7 @@ function LoginDemo({ role }) {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/payment`,
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
         {
           email: loginEmail,
           password: loginPassword,
@@ -190,11 +190,11 @@ function LoginDemo({ role }) {
   
       // Determine the amount based on paymentStatus
       switch (paymentStatus) {
-        case "99":
-          amount = 99;
+        case "1":
+          amount = 1;
           break;
-        case "999":
-          amount = 999;
+        case "2":
+          amount = 2;
           break;
         default:
           setPaymentStatusError(true);
@@ -202,7 +202,7 @@ function LoginDemo({ role }) {
       }
   
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/register`,
+        `${process.env.REACT_APP_API_URL}/api/phonepe/payment`,
         {
           name,
           email,
@@ -211,17 +211,19 @@ function LoginDemo({ role }) {
           amount,
         }
       );
+      console.log(response)
   
       // Check if response contains existence flag
-      if (response.data.exist) {
-        alert(response.data.exist); // Alert user about existence
-      } else {
+      if (response.data.status === false) {
+        alert(response.data.msg);
+        console.log("mesagsdgfyugf", response.data.status)
+      } else if (response.data.status === true) {
         // Handle successful signup
         console.log("Signup successful", response.data);
-        notifySuccess("Signup successful");
-        // window.location.href = response.data;
+        // notifySuccess("Signup successful");
+        window.location.href = response.data.url;
         // navigate("/register");
-        window.location.href = "/register";
+        // window.location.href = "/register";
       }
       setIsPaymentLoading(false);
     } catch (error) {
@@ -258,7 +260,7 @@ function LoginDemo({ role }) {
                   Welcome to the Lead Hunter
                 </div>
                 <div className="text-sm font-semibold text-gray-600 pt-3">
-                  Login / Registration
+                  Log in / Registration
                 </div>
               </div>
             </div>
@@ -465,8 +467,8 @@ function LoginDemo({ role }) {
                             <div className="pt-2">
                               <input
                                 type="checkbox"
-                                checked={paymentStatus === "99"}
-                                onChange={() => setPaymentStatus("99")}
+                                checked={paymentStatus === "1"}
+                                onChange={() => setPaymentStatus("1")}
                               />
                             </div>
                           </div>
@@ -477,8 +479,8 @@ function LoginDemo({ role }) {
                             <div className="pt-2">
                               <input
                                 type="checkbox"
-                                checked={paymentStatus === "999"}
-                                onChange={() => setPaymentStatus("999")}
+                                checked={paymentStatus === "2"}
+                                onChange={() => setPaymentStatus("2")}
                               />
                             </div>
                           </div>
