@@ -22,12 +22,15 @@ import Terms from './Components/Terms';
 import ResetError from './Components/Login/ResetError';
 import PrivacyPolicy from './Components/PrivacyPolicy';
 import Return from './Components/Return';
-import Remote from './Components/Dashboard/Remote';
 
 function App() {
   return (
     <div> 
         <AuthProvider>
+          <Helmet>
+            <title>Home | Lead Hunter</title>
+            <meta name='description' content='Find the perfect leads for you Lead Hunter Are Provides. Explore thousands of skilled professionals ready to bring your ideas to life.'/>
+          </Helmet>
             <BrowserRouter> 
               <AppContent />
             </BrowserRouter>

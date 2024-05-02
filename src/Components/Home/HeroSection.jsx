@@ -7,10 +7,10 @@ const HeroSection = () => {
         <div className="lg:px-20 md:px-7 px-5 py-10 font-family bg-[--main-color]">
                 <div className="grid lg:grid-cols-2 items-center">
                     <div className="lg:order-1 order-2">
-                        <div className="w-max bg-[--second-color] p-2 px-3 rounded-lg uppercase shadow-md">Lead Generation</div>
-                        <div className="text-5xl lg:text-6xl md:text-6xl font-semibold pt-3">Lead Subscription</div>
+                        <div className="w-max bg-[--second-color] p-2 px-3 rounded-lg uppercase shadow-md">Digital Marketing</div>
+                        <div className="text-5xl lg:text-6xl md:text-6xl font-semibold pt-3">Digital Subscription</div>
                         <div className="text-lg py-5">
-                            <p className="pb-4">Looking for freelance or remote work? Look no further than LeadHunter! As a top-notch freelancer site, we provide a platform where you can find and apply for exciting job leads. Don't miss out on the chance to work on your own terms - sign up with LeadHunter now!</p>
+                            <p className="pb-4">Are you looking to expand your online presence and reach your target audience effectively? Look no further than LeadHunter! We specialize in digital marketing services that drive results. Whether you need SEO, social media marketing, content creation, or email marketing, we've got you covered.</p>
                             <p>Join our community today and unlock your potential in the gig economy!</p>
                         </div>
                         <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-10 lg:pt-3 lg:px-0 md:px-0 px-5">

@@ -42,7 +42,7 @@
         <nav className="bg-white w-full shadow-lg lg:px-20 md:px-7 px-4 font-family border-b ">
           <div className=" flex flex-wrap items-center justify-between mx-auto">
             <div className="z-40">
-            <img className="w-44 lg:w-48 md:w-44 z-40 " src={Logo} alt="nishant" />
+            <img className="w-44 lg:w-48 md:w-44 z-40 " src={Logo} alt="Lead Hunter" />
             </div>
             <div className="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
             <NavLink 

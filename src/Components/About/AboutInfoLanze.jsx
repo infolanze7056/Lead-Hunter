@@ -10,21 +10,23 @@ function AboutInfo() {
             <img className="mx-auto w-[550px]" src={AboutInfoImg} alt="" />
           </div>
           <div className="text-lg lg:order-1">
-          <div className="text-5xl font-semibold text-[--three-color] pb-5">About Lead Hunter</div>
+            <div className="text-5xl font-semibold text-[--three-color] pb-5">
+              About LeadHunter
+            </div>
             <div className="pb-4 lg:pe-4">
               LeadHunter is a dynamic platform that serves as a dedicated
-              marketplace for freelancers seeking employment opportunities and
-              project assignments. Our platform efficiently connects skilled
-              professionals with prospective clients, facilitating seamless
-              collaboration and project fulfillment.
+              marketplace for digital marketing professionals seeking employment
+              opportunities and project assignments. Our platform efficiently
+              connects skilled marketers with prospective clients, facilitating
+              seamless collaboration and project fulfillment.
             </div>
             <div>
               Our commitment to quality and reliability ensures that both
-              freelancers and clients experience a streamlined and effective
-              process, ultimately fostering success and satisfaction on all
-              fronts. Join LeadHunter today to unlock a world of possibilities
-              for your freelance career or to fulfill your project needs with
-              top-tier talent.
+              digital marketing professionals and clients experience a
+              streamlined and effective process, ultimately fostering success
+              and satisfaction on all fronts. Join LeadHunter today to unlock a
+              world of possibilities for your digital marketing career or to
+              fulfill your project needs with top-tier talent.
             </div>
           </div>
         </div>
