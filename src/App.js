@@ -22,6 +22,8 @@ import Terms from './Components/Terms';
 import ResetError from './Components/Login/ResetError';
 import PrivacyPolicy from './Components/PrivacyPolicy';
 import Return from './Components/Return';
+import { Helmet } from 'react-helmet';
+import Remote from './Components/Dashboard/Remote';
 
 function App() {
   return (
