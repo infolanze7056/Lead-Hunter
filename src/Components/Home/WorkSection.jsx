@@ -28,7 +28,7 @@ function WorkSection() {
             </div>
         </div>
         <div className='pt-10'>
-<div className="elfsight-app-1246d0e7-b89b-4cbd-b346-d36a9ce07560 h-[500px] w-full" data-elfsight-app-lazy></div>
+        <div class="taggbox"  style="width:100%;height:100%" data-widget-id="154563" data-tags="false" ></div>
         </div>
     </div>
   )
