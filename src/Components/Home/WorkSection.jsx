@@ -28,7 +28,7 @@ function WorkSection() {
             </div>
         </div>
         <div className='pt-10'>
-        <div class="taggbox"  style="width:100%;height:100%" data-widget-id="154563" data-tags="false" ></div>
+        <div classname="taggbox w-full h-full"   data-widget-id="154563" data-tags="false" ></div>
         </div>
     </div>
   )
