@@ -29,6 +29,7 @@ function WorkSection() {
         </div>
         <div className='pt-10'>
         <div classname="taggbox w-full h-full"   data-widget-id="154563" data-tags="false" ></div>
+        <script src="https://widget.taggbox.com/embed-lite.min.js" type="text/javascript"></script>
         </div>
     </div>
   )
