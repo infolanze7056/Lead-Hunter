@@ -172,6 +172,27 @@ function LoginDemo({ role }) {
       setSignupPasswordError(!signupPassword);
       return;
     }
+    // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    setEmailError(true);
+    toast.error("Please enter a valid email address");
+    return;
+  }
+
+  // Validate phone number length
+  if (!/^\d{10}$/.test(phonenumber)) {
+    setPhonenumberError(true);
+    toast.error("Please enter a valid phone number");
+    return;
+  }
+
+  // Validate password minimum length
+  if (signupPassword.length < 6) {
+    setSignupPasswordError(true);
+    toast.error("Password must be at least 6 characters");
+    return;
+  }
     handlePopup();
   };
 
