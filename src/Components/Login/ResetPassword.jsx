@@ -84,15 +84,13 @@ function ResetPassword() {
       if (!response.ok) {
         throw new Error('Failed to update password');
       }
-
-      // Password updated successfully
       console.log('Password updated successfully');
       toast.success("Password reset successful!");
       setPassword("");
       setConfirmPassword("");
       setPasswordError("");
       setIsLoading(false);
-      // navigate('/login'); // Redirect to login page or any other appropriate page after successful password reset
+      // navigate('/login'); 
     } catch (error) {
       console.error('Error updating password:', error.message);
     }
