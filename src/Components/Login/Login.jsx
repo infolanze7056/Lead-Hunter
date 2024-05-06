@@ -42,6 +42,7 @@ function LoginDemo({ role }) {
     const { name, value } = e.target;
     if (name === "loginEmail") {
       setLoginEmail(value);
+      // setLoginEmailError(value.length === 0);
     } else if (name === "loginPassword") {
       setLoginPassword(value);
     } 
@@ -207,10 +208,10 @@ function LoginDemo({ role }) {
       setIsPaymentLoading(true);
       let amount;
       switch (paymentStatus) {
-        case "1":
+        case "99":
           amount = 99;
           break;
-        case "2":
+        case "999":
           amount = 999;
           break;
         default:
