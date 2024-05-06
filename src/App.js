@@ -23,6 +23,7 @@ import ResetError from './Components/Login/ResetError';
 import PrivacyPolicy from './Components/PrivacyPolicy';
 import Return from './Components/Return';
 import Remote from './Components/Dashboard/Remote';
+import Failed from './Components/Login/Failed';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function AppContent() {
         <Route path='/register' element={<Login />} />
         <Route path="/forgot-password" element={<Forgot />} />
         <Route path='/pay-success/:transaction_id' element={<Payment />}  />
+        <Route path="/register/status=failed" element={<Failed />} />
         <Route path='/terms-and-conditions' element={<Terms />} />
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/return-policy' element={<Return />} />

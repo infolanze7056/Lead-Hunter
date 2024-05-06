@@ -42,11 +42,9 @@ function LoginDemo({ role }) {
     const { name, value } = e.target;
     if (name === "loginEmail") {
       setLoginEmail(value);
-      setLoginEmailError(value.length === 0);
     } else if (name === "loginPassword") {
       setLoginPassword(value);
-      setLoginPasswordError(value.length === 0);
-    }
+    } 
   };
 
   const handleSignupInputChange = (e) => {
@@ -54,40 +52,50 @@ function LoginDemo({ role }) {
     switch (name) {
       case "name":
         setName(value);
-        setNameError(value.length === 0 || value.length <= 6);
         break;
       case "email":
         setEmail(value);
-        setEmailError(value.length === 0);
         break;
       case "phonenumber":
         setPhoneNumber(value);
-        setPhonenumberError(value.length === 0 || value.length <= 10);
         break;
       case "signupPassword":
         setSignupPassword(value);
-        setSignupPasswordError(value.length <= 6);
         break;
       case "paymentStatus":
         setPaymentStatus(value);
-        setPaymentStatusError(value.length === 0);
         break;
       default:
         break;
     }
   };
+  
 
   const handleLoginFormSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     if (!loginEmail || !loginPassword) {
       setLoginEmailError(!loginEmail);
       setLoginPasswordError(!loginPassword);
-      setIsLoading(false); // Set loading to false if validation fails
+      setIsLoading(false); 
       return;
     }
-
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(loginEmail)) {
+      setLoginEmailError(true);
+      setIsLoading(false);
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    if (loginPassword.length < 6) {
+      setLoginPasswordError(true);
+      setIsLoading(false);
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+  
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/auth/login`,
@@ -96,70 +104,55 @@ function LoginDemo({ role }) {
           password: loginPassword,
         }
       );
-
-      if (response.data.user === true) {
-        console.log(response.data.payment_status, "sdfsdf");
-        if (response.data.payment_status === "SUCCESSFUL") {
-          // Handle successful login
-          console.log("Login successful", response.data);
-          const { token } = response.data;
-          notifySuccess("Login successful");
-
-          localStorage.setItem("token", token);
-          const role = response.data.role;
-          localStorage.setItem("role", role);
-
-          setTimeout(() => {
-            // Remove token after 10 minutes
-            localStorage.removeItem("token");
-            localStorage.removeItem("role");
-            navigate("/register");
-          }, 240 * 60 * 60 * 1000); // 10 minutes = 600000
-
-          const tokenParts = token.split(".");
-          const payload = JSON.parse(atob(tokenParts[1]));
-          const currentTime = Math.floor(Date.now() / 1000);
-          console.log("Token expiration time:", payload.exp);
-          console.log("Current time:", currentTime);
-
-          if (payload.exp < currentTime) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("role");
-            navigate("/register");
-          } else {
-            const role = response.data.role; // Extract role from response data
-            console.log("Role:", role);
-            // Redirect based on role
-            if (role && role === "Admin") {
-              navigate("/admin");
-            } else {
-              navigate("/dashboard");
-            }
-          }
-        } else if (response.data.payment_status === "PENDING") {
-          const paymentLink = response.data.payment_link;
-          window.location.href = paymentLink;
+  
+       if (response.data.user === true) {
+        console.log("Login successful", response.data);
+        const { token } = response.data;
+        notifySuccess(response.data.message);
+  
+        localStorage.setItem("token", token);
+        const role = response.data.role;
+        localStorage.setItem("role", role);
+  
+        setTimeout(() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
+          navigate("/register");
+        }, 240 * 60 * 60 * 1000); // 10 minutes = 600000
+  
+        const tokenParts = token.split(".");
+        const payload = JSON.parse(atob(tokenParts[1]));
+        const currentTime = Math.floor(Date.now() / 1000);
+        console.log("Token expiration time:", payload.exp);
+        console.log("Current time:", currentTime);
+  
+        if (payload.exp < currentTime) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
+          navigate("/register");
         } else {
-          // Handle other payment statuses
-          console.log("Payment status is neither SUCCESSFUL nor PENDING");
-          notifyError("Payment failed");
+          const role = response.data.role;
+          console.log("Role:", role);
+          if (role && role === "Admin") {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
+          }
         }
-      } else {
-        // User not found
-        notifyError("User does not exist");
-      }
+      } 
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        // Unauthorized - Password invalid
-        notifyError("Invalid password");
+      if (error.response && error.response.data) {
+        notifyError(error.response.data.message);
       } else {
         console.error("Login failed", error);
-        notifyError("Login failed");
+        notifyError(error.message);
       }
     } finally {
       setIsLoading(false);
     }
   };
+  
+  
 
 
   const handleSignupFormSubmit = async (e) => {
@@ -202,20 +195,23 @@ function LoginDemo({ role }) {
 
   const handlePaymentSubmit = async () => {
     try {
+      if (!paymentStatus) {
+        toast.error("Please select a payment option!");
+        return;
+      }
       if (!termsChecked) {
         toast.error("Please agree to the Terms and Conditions!");
         return;
       }
+
       setIsPaymentLoading(true);
       let amount;
-  
-      // Determine the amount based on paymentStatus
       switch (paymentStatus) {
         case "1":
-          amount = 1;
+          amount = 99;
           break;
         case "2":
-          amount = 2;
+          amount = 999;
           break;
         default:
           setPaymentStatusError(true);
@@ -232,24 +228,15 @@ function LoginDemo({ role }) {
           amount,
         }
       );
-      console.log(response)
-  
-      // Check if response contains existence flag
       if (response.data.status === false) {
-        alert(response.data.msg);
-        console.log("mesagsdgfyugf", response.data.status)
+        notifyError(response.data.message);
       } else if (response.data.status === true) {
-        // Handle successful signup
-        console.log("Signup successful", response.data);
-        // notifySuccess("Signup successful");
         window.location.href = response.data.url;
         // navigate("/register");
-        // window.location.href = "/register";
       }
       setIsPaymentLoading(false);
     } catch (error) {
-      console.error("Signup failed", error);
-      notifyError("Signup failed");
+      notifyError(error.message);
       setIsPaymentLoading(false);
     }
   };
@@ -488,8 +475,8 @@ function LoginDemo({ role }) {
                             <div className="pt-2">
                               <input
                                 type="checkbox"
-                                checked={paymentStatus === "1"}
-                                onChange={() => setPaymentStatus("1")}
+                                checked={paymentStatus === "99"}
+                                onChange={() => setPaymentStatus("99")}
                               />
                             </div>
                           </div>
@@ -500,8 +487,8 @@ function LoginDemo({ role }) {
                             <div className="pt-2">
                               <input
                                 type="checkbox"
-                                checked={paymentStatus === "2"}
-                                onChange={() => setPaymentStatus("2")}
+                                checked={paymentStatus === "999"}
+                                onChange={() => setPaymentStatus("999")}
                               />
                             </div>
                           </div>
