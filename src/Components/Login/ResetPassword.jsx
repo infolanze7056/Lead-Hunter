@@ -93,6 +93,9 @@ function ResetPassword() {
       // navigate('/login'); 
     } catch (error) {
       console.error('Error updating password:', error.message);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
