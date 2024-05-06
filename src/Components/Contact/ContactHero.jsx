@@ -123,7 +123,7 @@ function ContactHero() {
                   <FaLocationDot className="text-xl text-[--three-color]" />
                 </div>
                 <div className="text-lg font-semibold pt-4 pb-1">
-                  Visit office
+                  Office
                 </div>
                 <div className="text-sm">
                   A-807, Empire Business Hub, Sola, Ahmedabad - 380060.
@@ -141,7 +141,7 @@ function ContactHero() {
                   <MdEmail className="text-xl text-[--three-color]" />
                 </div>
                 <div className="text-lg font-semibold pt-4 pb-1">
-                  Chat to us
+                  Chat with us
                 </div>
                 <div className="text-sm">infolanze.tech@gmail.com</div>
               </div>
