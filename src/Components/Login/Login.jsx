@@ -175,7 +175,7 @@ function LoginDemo({ role }) {
   }
 
   // Validate phone number length
-  if (!/^\d{10}$/.test(phonenumber)) {
+  if (!/^\d{8,12}$/.test(phonenumber)) {
     setPhonenumberError(true);
     toast.error("Please enter a valid phone number");
     return;
