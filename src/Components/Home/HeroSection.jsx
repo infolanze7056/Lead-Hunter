@@ -28,28 +28,28 @@ const HeroSection = () => {
             </p>
           </div>
           <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-10 lg:pt-3 lg:px-0 md:px-0 px-5">
-            <div className=" rounded-lg text-center bg-[--second-color] py-7 shadow-md">
-              <h3>
                 <Link
                   to="/register"
-                  className="text-black text-5xl font-semibold"
+                  className="text-black"
                 >
+            <div className=" rounded-lg text-center bg-[--second-color] py-7 shadow-md">
+              <h3 className="text-5xl font-semibold">
                   99<sub className="text-sm">INR</sub>
-                </Link>
               </h3>
               <p className="pt-2">Cost Per Month(CPM)</p>
             </div>
-            <div className=" rounded-lg text-center bg-[--second-color] py-7 shadow-md">
-            <h3>
+                </Link>
                 <Link
                   to="/register"
-                  className="text-black text-5xl font-semibold"
+                  className="text-black"
                 >
+            <div className=" rounded-lg text-center bg-[--second-color] py-7 shadow-md">
+            <h3 className="text-5xl font-semibold">
                   999<sub className="text-sm">INR</sub>
-                </Link>
               </h3>
               <p className="pt-2">Contract Per Year</p>
             </div>
+                </Link>
           </div>
         </div>
         <div className="lg:order-2 order-1">
