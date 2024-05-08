@@ -19,7 +19,7 @@ function ContactSection() {
             <div className=" lg:pt-0 md:pt-7 pt-7 lg:px-10 md:px-4 lg:text-start md:text-center text-center">
               <div className="pb-1 font-semibold text-lg">Get in touch!</div>
               <div className="text-4xl font-bold pb-5">
-                Explore how to our services can be integrated with{" "}
+                Explore how our services can be integrated with{" "}
                 <span className=" text-[--three-color]">Your Business.</span>
               </div>
               <div className="font-semibold">
