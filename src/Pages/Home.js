@@ -6,6 +6,7 @@ import FAQ from "../Components/Home/FAQ";
 import ServiceSection from "../Components/Home/ServiceSection";
 import WorkSection from "../Components/Home/WorkSection";
 import ContactSection from "../Components/Home/ContactSection";
+import Whatsapp from "../Components/Home/Whatsapp";
 
 const Home = () => {
 
@@ -27,6 +28,7 @@ const Home = () => {
       <ServiceSection />
       <ContactSection />
       <WorkSection />
+      <Whatsapp />
     </>
    );
 };
