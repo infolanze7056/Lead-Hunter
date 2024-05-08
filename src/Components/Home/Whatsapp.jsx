@@ -19,9 +19,9 @@ function Whatsapp() {
             </div>
         <NavLink to="/contact">
             <div className="flex bg-white p-4 shadow-lg rounded-md">
-                <div className="border-blue-600 border-s-8 pe-4"></div>
+                <div className="border-[--three-color] border-s-8 pe-4"></div>
                 <div>
-                    <p className="text-blue-600 text-lg font-semibold">Contact !</p>
+                    <p className="text-[--three-color] text-lg font-semibold">Contact !</p>
                     <p className="text-sm text-gray-800">Contact Us & Get 10 leads for Free</p>
                 </div>
             </div>
