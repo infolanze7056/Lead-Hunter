@@ -8,6 +8,10 @@ import { RiLoginBoxLine } from "react-icons/ri";
 import { SiGnuprivacyguard } from "react-icons/si";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
+import { MdKey, MdVisibilityOff, MdVisibility } from "react-icons/md";
+import { SiGmail } from "react-icons/si";
+import { IoPerson } from "react-icons/io5";
+import { IoIosCall } from "react-icons/io";
 
 function LoginDemo({ role }) {
   const navigate = useNavigate();
@@ -21,6 +25,7 @@ function LoginDemo({ role }) {
   const [loginEmailError, setLoginEmailError] = useState(false);
   const [loginPasswordError, setLoginPasswordError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // State variables for signup form
   const [name, setName] = useState("");
@@ -37,15 +42,15 @@ function LoginDemo({ role }) {
   const [paymentStatusError, setPaymentStatusError] = useState(false);
   const [termsChecked, setTermsChecked] = useState(false);
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
 
   const handleLoginInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "loginEmail") {
       setLoginEmail(value);
-      setLoginEmailError(value.length === 0);
+      // setLoginEmailError(value.length === 0);
     } else if (name === "loginPassword") {
       setLoginPassword(value);
-      setLoginPasswordError(value.length === 0);
     }
   };
 
@@ -54,23 +59,18 @@ function LoginDemo({ role }) {
     switch (name) {
       case "name":
         setName(value);
-        setNameError(value.length === 0 || value.length <= 6);
         break;
       case "email":
         setEmail(value);
-        setEmailError(value.length === 0);
         break;
       case "phonenumber":
         setPhoneNumber(value);
-        setPhonenumberError(value.length === 0 || value.length <= 10);
         break;
       case "signupPassword":
         setSignupPassword(value);
-        setSignupPasswordError(value.length <= 6);
         break;
       case "paymentStatus":
         setPaymentStatus(value);
-        setPaymentStatusError(value.length === 0);
         break;
       default:
         break;
@@ -84,7 +84,21 @@ function LoginDemo({ role }) {
     if (!loginEmail || !loginPassword) {
       setLoginEmailError(!loginEmail);
       setLoginPasswordError(!loginPassword);
-      setIsLoading(false); // Set loading to false if validation fails
+      setIsLoading(false);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(loginEmail)) {
+      setLoginEmailError(true);
+      setIsLoading(false);
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    if (loginPassword.length < 6) {
+      setLoginPasswordError(true);
+      setIsLoading(false);
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
@@ -98,69 +112,51 @@ function LoginDemo({ role }) {
       );
 
       if (response.data.user === true) {
-        console.log(response.data.payment_status, "sdfsdf");
-        if (response.data.payment_status === "SUCCESSFUL") {
-          // Handle successful login
-          console.log("Login successful", response.data);
-          const { token } = response.data;
-          notifySuccess("Login successful");
+        console.log("Login successful", response.data);
+        const { token } = response.data;
+        notifySuccess(response.data.message);
 
-          localStorage.setItem("token", token);
-          const role = response.data.role;
-          localStorage.setItem("role", role);
+        localStorage.setItem("token", token);
+        const role = response.data.role;
+        localStorage.setItem("role", role);
 
-          setTimeout(() => {
-            // Remove token after 10 minutes
-            localStorage.removeItem("token");
-            localStorage.removeItem("role");
-            navigate("/register");
-          }, 240 * 60 * 60 * 1000); // 10 minutes = 600000
+        setTimeout(() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
+          navigate("/register");
+        }, 240 * 60 * 60 * 1000); // 10 minutes = 600000
 
-          const tokenParts = token.split(".");
-          const payload = JSON.parse(atob(tokenParts[1]));
-          const currentTime = Math.floor(Date.now() / 1000);
-          console.log("Token expiration time:", payload.exp);
-          console.log("Current time:", currentTime);
+        const tokenParts = token.split(".");
+        const payload = JSON.parse(atob(tokenParts[1]));
+        const currentTime = Math.floor(Date.now() / 1000);
+        console.log("Token expiration time:", payload.exp);
+        console.log("Current time:", currentTime);
 
-          if (payload.exp < currentTime) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("role");
-            navigate("/register");
-          } else {
-            const role = response.data.role; // Extract role from response data
-            console.log("Role:", role);
-            // Redirect based on role
-            if (role && role === "Admin") {
-              navigate("/admin");
-            } else {
-              navigate("/dashboard");
-            }
-          }
-        } else if (response.data.payment_status === "PENDING") {
-          const paymentLink = response.data.payment_link;
-          window.location.href = paymentLink;
+        if (payload.exp < currentTime) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
+          navigate("/register");
         } else {
-          // Handle other payment statuses
-          console.log("Payment status is neither SUCCESSFUL nor PENDING");
-          notifyError("Payment failed");
+          const role = response.data.role;
+          console.log("Role:", role);
+          if (role && role === "Admin") {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
+          }
         }
-      } else {
-        // User not found
-        notifyError("User does not exist");
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        // Unauthorized - Password invalid
-        notifyError("Invalid password");
+      if (error.response && error.response.data) {
+        notifyError(error.response.data.message);
       } else {
         console.error("Login failed", error);
-        notifyError("Login failed");
+        notifyError(error.message);
       }
     } finally {
       setIsLoading(false);
     }
   };
-
 
   const handleSignupFormSubmit = async (e) => {
     e.preventDefault();
@@ -172,6 +168,27 @@ function LoginDemo({ role }) {
       setSignupPasswordError(!signupPassword);
       return;
     }
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError(true);
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    // Validate phone number length
+    if (!/^\d{8,12}$/.test(phonenumber)) {
+      setPhonenumberError(true);
+      toast.error("Please enter a valid phone number");
+      return;
+    }
+
+    // Validate password minimum length
+    if (signupPassword.length < 6) {
+      setSignupPasswordError(true);
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
     handlePopup();
   };
 
@@ -181,26 +198,29 @@ function LoginDemo({ role }) {
 
   const handlePaymentSubmit = async () => {
     try {
+      if (!paymentStatus) {
+        toast.error("Please select a payment option!");
+        return;
+      }
       if (!termsChecked) {
         toast.error("Please agree to the Terms and Conditions!");
         return;
       }
+
       setIsPaymentLoading(true);
       let amount;
-  
-      // Determine the amount based on paymentStatus
       switch (paymentStatus) {
-        case "1":
-          amount = 1;
+        case "99":
+          amount = 99;
           break;
-        case "2":
-          amount = 2;
+        case "999":
+          amount = 999;
           break;
         default:
           setPaymentStatusError(true);
           return;
       }
-  
+
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/phonepe/payment`,
         {
@@ -211,28 +231,18 @@ function LoginDemo({ role }) {
           amount,
         }
       );
-      console.log(response)
-  
-      // Check if response contains existence flag
       if (response.data.status === false) {
-        alert(response.data.msg);
-        console.log("mesagsdgfyugf", response.data.status)
+        notifyError(response.data.message);
       } else if (response.data.status === true) {
-        // Handle successful signup
-        console.log("Signup successful", response.data);
-        // notifySuccess("Signup successful");
         window.location.href = response.data.url;
         // navigate("/register");
-        // window.location.href = "/register";
       }
       setIsPaymentLoading(false);
     } catch (error) {
-      console.error("Signup failed", error);
-      notifyError("Signup failed");
+      notifyError(error.message);
       setIsPaymentLoading(false);
     }
   };
-  
 
   const handleSwitchForm = () => {
     setIsLoginForm(!isLoginForm);
@@ -282,39 +292,65 @@ function LoginDemo({ role }) {
                       Sign In
                     </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="loginemail">Email Address :</label>
-                    <input
-                      type="email"
-                      name="loginEmail"
-                      id="loginemail"
-                      className="shadow-sm input_1"
-                      autoComplete="username"
-                      value={loginEmail}
-                      onChange={handleLoginInputChange}
-                      required
-                    />
-                    {loginEmailError && (
-                      <span className="error">
-                        Please enter your email address
-                      </span>
-                    )}
+                  <div className="form-group mt-1">
+                    <label htmlFor="loginemail" className="">
+                      Email Address :
+                    </label>
+                    <div className="relative rounded-md shadow-sm">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-gray-500 sm:text-sm">
+                          <SiGmail className="text-xs" />
+                        </span>
+                      </div>
+                      <input
+                        type="email"
+                        name="loginEmail"
+                        id="loginEmail"
+                        className="block w-full rounded-md border-0 py-1.5 ps-9 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm leading-6"
+                        placeholder="Enter Your Email"
+                        value={loginEmail}
+                        onChange={handleLoginInputChange}
+                        required
+                      />
+                      {loginEmailError && (
+                        <span className="error">
+                          Please enter your email address
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="loginPassword">Password :</label>
-                    <input
-                      type="password"
-                      name="loginPassword"
-                      id="loginPassword"
-                      autoComplete="current-password"
-                      className="shadow-sm input_1"
-                      value={loginPassword}
-                      onChange={handleLoginInputChange}
-                      required
-                    />
-                    {loginPasswordError && (
-                      <span className="error">Please enter your password</span>
-                    )}
+                  <div className="form-group mt-1">
+                    <label htmlFor="loginPassword" className="">
+                      Password :
+                    </label>
+                    <div className="relative rounded-md shadow-sm">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-gray-500 sm:text-sm">
+                          <MdKey />
+                        </span>
+                      </div>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="loginPassword"
+                        id="loginPassword"
+                        value={loginPassword}
+                        onChange={handleLoginInputChange}
+                        className="block w-full rounded-md border-0 py-1.5 ps-9 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm leading-6"
+                        placeholder="Enter Your Password"
+                        required
+                      />
+                      <span
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                      </span>
+                      {loginPasswordError && (
+                        <span className="error">
+                          Please enter your password
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="text-end">
                     <NavLink
@@ -362,73 +398,117 @@ function LoginDemo({ role }) {
                       Sign Up
                     </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="name">Full Name :</label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      className="shadow-sm input_1"
-                      value={name}
-                      onChange={handleSignupInputChange}
-                      required
-                    />
-                    {nameError && (
+                  <div className="form-group mt-1">
+                    <label htmlFor="name" className="">
+                      Full Name :
+                    </label>
+                    <div className="relative rounded-md shadow-sm">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-gray-500 sm:text-sm">
+                          <IoPerson className="text-xs" />
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        className="block w-full rounded-md border-0 py-1.5 ps-9 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm leading-6"
+                        placeholder="Enter Your Name"
+                        value={name}
+                        onChange={handleSignupInputChange}
+                        required
+                      />
+                      {nameError && (
                       <span className="error">Please enter your full name</span>
                     )}
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Email Address :</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      autoComplete="username"
-                      className="shadow-sm input_1"
-                      value={email}
-                      onChange={handleSignupInputChange}
-                      required
-                    />
-                    {emailError && (
+                  <div className="form-group mt-1">
+                    <label htmlFor="email" className="">
+                      Email Address :
+                    </label>
+                    <div className="relative rounded-md shadow-sm">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-gray-500 sm:text-sm">
+                          <SiGmail className="text-xs" />
+                        </span>
+                      </div>
+                      <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        className="block w-full rounded-md border-0 py-1.5 ps-9 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm leading-6"
+                        placeholder="Enter Your Email"
+                        value={email}
+                        onChange={handleSignupInputChange}
+                        required
+                      />
+                      {emailError && (
                       <span className="error">
                         Please enter your email address
                       </span>
                     )}
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="phonenumber">Phone Number :</label>
-                    <input
-                      type="text"
-                      name="phonenumber"
-                      id="phonenumber"
-                      className="shadow-sm input_1"
-                      value={phonenumber}
-                      onChange={handleSignupInputChange}
-                      required
-                    />
-                    {phonenumberError && (
+                  <div className="form-group mt-1">
+                    <label htmlFor="phonenumber" className="">
+                      Phone Number :
+                    </label>
+                    <div className="relative rounded-md shadow-sm">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-gray-500 sm:text-sm">
+                          <IoIosCall className="text-sm" />
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        name="phonenumber"
+                        id="phonenumber"
+                        className="block w-full rounded-md border-0 py-1.5 ps-9 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm leading-6"
+                        placeholder="Enter Your Number"
+                        value={phonenumber}
+                        onChange={handleSignupInputChange}
+                        required
+                      />
+                      {phonenumberError && (
                       <span className="error">
                         Please enter your phone number
                       </span>
                     )}
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="signupPassword">Password :</label>
-                    <input
-                      type="password"
-                      name="signupPassword"
-                      id="signupPassword"
-                      className="shadow-sm input_1"
-                      autoComplete="new-password"
-                      value={signupPassword}
-                      onChange={handleSignupInputChange}
-                      required
-                    />
-                    {signupPasswordError && (
+                  <div className="form-group mt-1">
+                    <label htmlFor="signupPassword" className="">
+                      Password :
+                    </label>
+                    <div className="relative rounded-md shadow-sm">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-gray-500 sm:text-sm">
+                          <MdKey />
+                        </span>
+                      </div>
+                      <input
+                        type={showPassword1 ? "text" : "password"}
+                        name="signupPassword"
+                        id="signupPassword"
+                        value={signupPassword}
+                        onChange={handleSignupInputChange}
+                        required
+                        className="block w-full rounded-md border-0 py-1.5 ps-9 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm leading-6"
+                        placeholder="Enter Your Password"
+                      />
+                      <span
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                        onClick={() => setShowPassword1(!showPassword1)}
+                      >
+                        {showPassword1 ? <MdVisibilityOff /> : <MdVisibility />}
+                      </span>
+                      {signupPasswordError && (
                       <span className="error">
                         Password must be at least 8 characters
                       </span>
                     )}
+                    </div>
                   </div>
                   <div className="CTA">
                     <input
@@ -467,8 +547,8 @@ function LoginDemo({ role }) {
                             <div className="pt-2">
                               <input
                                 type="checkbox"
-                                checked={paymentStatus === "1"}
-                                onChange={() => setPaymentStatus("1")}
+                                checked={paymentStatus === "99"}
+                                onChange={() => setPaymentStatus("99")}
                               />
                             </div>
                           </div>
@@ -479,8 +559,8 @@ function LoginDemo({ role }) {
                             <div className="pt-2">
                               <input
                                 type="checkbox"
-                                checked={paymentStatus === "2"}
-                                onChange={() => setPaymentStatus("2")}
+                                checked={paymentStatus === "999"}
+                                onChange={() => setPaymentStatus("999")}
                               />
                             </div>
                           </div>
@@ -491,29 +571,34 @@ function LoginDemo({ role }) {
                           </span>
                         )}
                         <div className="mt-10 flex items-center">
-                        <div>
-                          <label className="">
-                            <input
-                              type="checkbox"
-                              className="mr-2"
-                              checked={termsChecked}
-                              onChange={() => setTermsChecked(!termsChecked)}
-                            />
-                            
-                          </label>
+                          <div>
+                            <label className="">
+                              <input
+                                type="checkbox"
+                                className="mr-2"
+                                checked={termsChecked}
+                                onChange={() => setTermsChecked(!termsChecked)}
+                              />
+                            </label>
                           </div>
                           <div className="text-sm pt-1">
-                          I agree to the <NavLink to="/terms-and-conditions" className="text-[--three-color] hover:text-black">Terms and Conditions!</NavLink>
-                            </div>
+                            I agree to the{" "}
+                            <NavLink
+                              to="/terms-and-conditions"
+                              className="text-[--three-color] hover:text-black"
+                            >
+                              Terms and Conditions!
+                            </NavLink>
+                          </div>
                         </div>
                         <div className="CTA">
-                        <button
-                          className="button_1 p-1 px-3"
-                          onClick={handlePaymentSubmit}
-                          disabled={isPaymentLoading} // Disable button when loading
-                        >
-                          {isPaymentLoading ? "Loading..." : "Submit Payment"}
-                        </button>
+                          <button
+                            className="button_1 p-1 px-3"
+                            onClick={handlePaymentSubmit}
+                            disabled={isPaymentLoading} // Disable button when loading
+                          >
+                            {isPaymentLoading ? "Loading..." : "Submit Payment"}
+                          </button>
                         </div>
                       </div>
                     </div>

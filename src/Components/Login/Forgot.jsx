@@ -6,19 +6,16 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Forgot() {
-  // State variables for email input and error message
   const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const notifySuccess = (message) => toast.success(message);
   const notifyError = (message) => toast.error(message);
 
-  // Function to handle the API call
+
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      // Perform your API call here
       const response = await fetch(`${process.env.REACT_APP_API_URL}/api/passwordReset`, {
         method: 'POST',
         headers: {
@@ -26,25 +23,18 @@ function Forgot() {
         },
         body: JSON.stringify({ email }),
       });
-
-      // Handle response
       if (response.ok) {
-        // Success: Reset email input and clear error message
         setEmail('');
-        setError('');
-        notifySuccess("Email send successfully");
         setIsLoading(false);
-        // Handle success scenario, for example redirect to a success page
+        notifySuccess("Email send successfully");
       } else {
-        // Error: Set error message based on response
         const data = await response.json();
-        setError(data.message || 'Something went wrong.');
-        notifyError("Send failed");
+        notifyError(data.message);
       }
     } catch (error) {
-      console.error('Error:', error);
-      // setError('User with given email does not exist.');
-      notifyError("User with given email does not exist.")
+      notifyError(error.response.message)
+      setIsLoading(false);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -65,13 +55,13 @@ function Forgot() {
                 type="text"
                 name="email"
                 id="email"
-                className="block w-full rounded-md border-0 py-1.5 ps-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 ps-9 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm leading-6"
                 placeholder="Enter Your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {error && <div className="text-red-500 mt-2 text-xs text-end">{error}</div>}
+            {/* {error && <div className="text-red-500 mt-2 text-xs text-end">{error}</div>} */}
             <button className=' bg-[--three-color] text-white hover:text-[--three-color] p-2 px-5 hover:bg-white outline outline-[--three-color] rounded-md text-sm text-[--three-color] uppercase mt-5' onClick={handleSubmit}>{isLoading ? "Loading..." : "Submit"}</button>
           </div>
           <div><NavLink to="/register" className="text-sm text-[--three-color] hover:text-black">Back To Login</NavLink></div>
