@@ -23,10 +23,14 @@ import ResetError from './Components/Login/ResetError';
 import PrivacyPolicy from './Components/PrivacyPolicy';
 import Return from './Components/Return';
 import Remote from './Components/Dashboard/Remote';
+import { Helmet } from 'react-helmet';
 
 function App() {
   return (
     <div> 
+      <Helmet>
+        <title>Lead Hunter</title>
+      </Helmet>
         <AuthProvider>
             <BrowserRouter> 
               <AppContent />
