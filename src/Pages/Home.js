@@ -21,9 +21,6 @@ const Home = () => {
 
    return (
     <>
-    <Helmet>
-      <title>Home | Lead Hunter</title>
-    </Helmet>
       <HeroSection />
       <AboutSection />
       <FAQ />
