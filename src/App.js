@@ -15,6 +15,7 @@ import Forgot from './Components/Login/Forgot';
 import Admin from './Components/Admin/Admin';
 import ResetPassword from './Components/Login/ResetPassword';
 import { AuthProvider } from './AuthContext';
+import Failed from "./Components/Login/Failed"
 // import PrivateRoute from './PrivateRoute';
 import Free from './Components/Free';
 import Payment from './Components/Payment/Payment';
