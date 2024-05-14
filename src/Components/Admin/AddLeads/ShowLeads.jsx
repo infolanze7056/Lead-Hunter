@@ -207,8 +207,9 @@ function ShowLeads() {
               </button>
             </div>
             <div>
-              {activeTab === 'freelance' && freelanceLeads.map(lead => (
+              {activeTab === 'freelance' && freelanceLeads.map((lead,index) => (
                 <div key={lead._id} className="lg:p-10 md:p-10 p-2 border rounded-md shadow-lg mb-5">
+                  <p><strong>Id:</strong>{index + 1}</p>
                   <p><strong>Title:</strong> {lead.title}</p>
                   <p><strong>Description:</strong> {Array.isArray(lead.description) ? lead.description.reduce((acc, cur, idx) => acc + (idx !== 0 ? ', ' : '') + cur, '') : lead.description}</p>
                   <p><strong>Tags:</strong> {Array.isArray(lead.tags) ? lead.tags.reduce((acc, cur, idx) => acc + (idx !== 0 ? ', ' : '') + cur, '') : lead.tags}</p>
@@ -217,14 +218,16 @@ function ShowLeads() {
                   <p><strong>Duration:</strong> {lead.duration}</p>
                   <p><strong>Budget:</strong> {lead.project_budget}</p>
                   <p className='break-words'><strong>Link:</strong> {lead.link}</p>
+                  <p><strong>Created At:</strong>{lead.formattedCreatedAt}</p>
                   <div className='text-center pt-3'>
                     <button onClick={() => handleEditLead(lead._id, 'freelance')} className='font-semibold text-gray-600 hover:text-black shadow-md cursor-pointer border p-2 px-5 rounded-md hover:bg-gray-300'>Edit</button>
                     <button onClick={() => handleDeleteLead(lead._id, 'freelance')} className='font-semibold text-gray-600 hover:text-black shadow-md cursor-pointer border p-2 px-5 rounded-md hover:bg-gray-300'>Delete</button>
                   </div>
                 </div>
               ))}
-              {activeTab === 'remote' && remoteLeads.map(lead => (
+              {activeTab === 'remote' && remoteLeads.map((lead,index) => (
                 <div key={lead._id} className="lg:p-10 md:p-10 p-2 border rounded-md shadow-lg mb-5">
+                    <p><strong>Id:</strong>{index + 1}</p>
                   <p><strong>Title:</strong> {lead.Title}</p>
                   <p><strong>Description:</strong> {Array.isArray(lead.Description) ? lead.Description.reduce((acc, cur, idx) => acc + (idx !== 0 ? ', ' : '') + cur, '') : lead.Description}</p>
                   <p><strong>Tags:</strong> {Array.isArray(lead.Tags) ? lead.Tags.reduce((acc, cur, idx) => acc + (idx !== 0 ? ', ' : '') + cur, '') : lead.Tags}</p>
@@ -233,6 +236,7 @@ function ShowLeads() {
                   <p><strong>Duration:</strong> {lead.Duration}</p>
                   <p><strong>Budget:</strong> {lead.Project_Budget}</p>
                   <p className='break-words'><strong>Link:</strong> {lead.Link}</p>
+                  <p><strong>Created At:</strong>{lead.formattedCreatedAt}</p>
                   <div className='text-center pt-3'>
                     <button onClick={() => handleEditLead(lead._id, 'remote')} className='font-semibold text-gray-600 hover:text-black shadow-md cursor-pointer border p-2 px-5 rounded-md hover:bg-gray-300'>Edit</button>
                     <button onClick={() => handleDeleteLead(lead._id, 'remote')} className='font-semibold text-gray-600 hover:text-black shadow-md cursor-pointer border p-2 px-5 rounded-md hover:bg-gray-300'>Delete</button>
